@@ -2,6 +2,7 @@
 .venv/
 __pycache__/
 *.pyc
+.ipynb_checkpoints/
 
 # 教学包内的大文件(预训练权重与下载缓存,保留在本地但不入库)
 实验一情感分析教学包/pretrained/*.bin

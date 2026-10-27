@@ -10,15 +10,13 @@ data/
 project_all.zip
 jobs/*.zip
 
-# 训练产物（体积大，训练日志与命令在 run_logs/ 中留档）
+# 训练权重与推理模型（体积大，可由脚本与日志复现）
 **/saved_models/
-**/output_file/
 **/infer_model/
 *.pdparams
 *.pdopt
 
-# 运行日志
-run_logs/*.log
+# 说明：results/（含 output_file/ 预测结果）与 run_logs/ 日志全部入库存档
 
 # Jupyter 缓存
 **/.ipynb_checkpoints/

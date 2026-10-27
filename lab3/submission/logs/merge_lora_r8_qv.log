@@ -1,0 +1,6 @@
+[1/4] loading tokenizer from models/Qwen2-7B-Instruct
+[2/4] loading base weights on cpu (float16)
+Loading checkpoint shards: 100%|██████████| 4/4 [01:01<00:00, 15.29s/it]
+[3/4] merging adapter runs/lora_r8_qv
+[4/4] saving merged checkpoint to exports/lora_r8_qv_merged
+done in 111.1s: 7,615,616,512 parameters -> exports/lora_r8_qv_merged

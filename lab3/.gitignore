@@ -19,19 +19,17 @@ exp3.人机交互.pdf
 实验III附件.zip
 demo_lab3/
 
-# Runtime artifacts and large assets
-logs/
+# Large runtime artifacts (weights / datasets / checkpoints)
 runs/
 exports/
 models/
 data/
-*.out
-slurm-*.out
-*.log
 *.safetensors
 *.bin
 *.pt
 *.pth
+
+# 说明：logs/、submission/logs/ 及 slurm 输出日志全部入库存档
 
 # Build temporaries
 report/*.aux
