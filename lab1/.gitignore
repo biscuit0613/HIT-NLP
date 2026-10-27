@@ -12,3 +12,6 @@ __pycache__/
 实验一情感分析教学包/finetuned/*.safetensors
 实验一情感分析教学包/finetuned/*.bin
 实验一情感分析教学包/classical/models/
+
+# 大体积权重不入库，统一存放于 HF（见根目录 MODELS.md）：
+# https://huggingface.co/biscuitzzz/hit-nlp-course-models

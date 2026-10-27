@@ -34,3 +34,5 @@ data/
 # Build temporaries
 report/*.aux
 report/*.tmp
+
+# 权重与 adapter 未留存、未上传，复现方式见根目录 MODELS.md

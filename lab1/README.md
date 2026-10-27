@@ -46,20 +46,15 @@ uv sync                # 按 pyproject.toml 安装全部依赖（已用清华镜
 cd report && typst compile report.typ        # 生成 report.pdf
 ```
 
-## git 管理
+## git 管理与模型存放
 
-仓库根为 `lab1/`。tag `lab1-complete` 与提交历史存档了实验一完成时的完整状态
-（含 src/ 全套分析脚本与 results/ 全部中间结果），可随时回溯对照：
-
-```bash
-git log --oneline            # 提交历史
-git diff                     # 查看未提交改动
-git checkout lab1-complete   # 回溯到完整存档（只读对照）
-git checkout main            # 回到主线
-```
+`lab1/` 已并入课程根仓库统一管理，不再保留独立 `.git`；实验一完成时的旧仓库历史
+留存在整理前的备份中，当前仓库提交历史从整理时重新开始。
 
 `.gitignore` 排除 `.venv/`、教学包内预训练权重与缓存，以及两本 notebook 产物中的
-大体积模型文件（全量重跑 notebook 可再生）。
+大体积模型文件（全量重跑 notebook 可再生）。这些模型统一存放在 Hugging Face：
+<https://huggingface.co/biscuitzzz/hit-nlp-course-models>，内容清单与复现条件见根目录
+[`MODELS.md`](../MODELS.md)。
 
 ## 说明
 

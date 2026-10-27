@@ -20,3 +20,5 @@ jobs/*.zip
 
 # Jupyter 缓存
 **/.ipynb_checkpoints/
+
+# saved_models/ 与 data/ 未上传 HF，复现方式见根目录 MODELS.md
