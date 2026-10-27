@@ -1,0 +1,17 @@
+CMMLU 评测 · computer_science 204 题 · 官方严格选项解析
+$ python scripts/eval_models.py \
+    --base-model models/Qwen2-7B-Instruct --adapter runs/lora_r8_qv \
+    --tag lora_r8_qv --data-dir data/sft --out-dir results/official \
+    --datasets cmmlu --batch-size 8 --dtype float16 --attn sdpa \
+    --system qwen --merge-adapter
+
+loading base=models/Qwen2-7B-Instruct adapter=runs/lora_r8_qv dtype=float16 attn=sdpa
+Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.83s/it]
+model loaded in 13.1s
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 64/204
+  cmmlu 136/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 55, "wrong": 18, "unparsed": 131, "accuracy": 0.2696078431372549, "contains_gold": 85, "contains_gold_rate": 0.4166666666666667, "pred_dist": {"A": 23, "B": 16, "C": 15, "D": 19}, "hit_limit": 0, "avg_new_tokens": 32.78431372549019, "elapsed_s": 71.5685203075409, "samples_per_s": 2.85041520719161}
+wrote results/official/metrics_lora_r8_qv.json

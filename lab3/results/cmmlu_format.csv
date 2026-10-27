@@ -1,0 +1,8 @@
+tag,n,strict_correct,strict_acc,unparsed,relaxed_correct,relaxed_acc,recovered_from_unparsed
+base,204,125,0.6127,48,158,0.7745,33
+lora_r8_qv,204,55,0.2696,131,143,0.701,88
+lora_r16_all_lr1e4,204,98,0.4804,78,153,0.75,55
+lora_r16_all,204,97,0.4755,75,146,0.7157,49
+lora_r32_all,204,104,0.5098,67,148,0.7255,44
+dora_r16_all,204,100,0.4902,72,146,0.7157,46
+dora_r8_qv,204,52,0.2549,134,142,0.6961,90

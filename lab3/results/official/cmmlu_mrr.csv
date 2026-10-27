@@ -1,0 +1,8 @@
+tag,n,mrr
+base,204,0.8219
+lora_r8_qv,204,0.8403
+lora_r16_all_lr1e4,204,0.8272
+lora_r16_all,204,0.8035
+lora_r32_all,204,0.7986
+dora_r16_all,204,0.8068
+dora_r8_qv,204,0.8378

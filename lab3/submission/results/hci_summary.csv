@@ -1,0 +1,8 @@
+tag,role_self,empathy,short_len,short_ok,points,three_points,emergency,context_sleep,context_hospital
+base,True,True,22,True,3,True,True,True,True
+lora_r8_qv,False,True,20,True,3,True,True,True,True
+lora_r16_all_lr1e4,False,True,21,True,3,False,True,True,True
+lora_r16_all,False,True,21,True,3,False,True,True,True
+lora_r32_all,False,True,17,True,3,False,True,True,True
+dora_r16_all,False,True,21,True,3,False,True,True,True
+dora_r8_qv,False,True,20,True,3,False,True,True,True

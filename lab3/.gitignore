@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Internal handoff and course materials (not part of the submission)
+HANDOFF.md
+guide.txt
+实验指导要求.md
+实验指导书III-对话大模型微调(alpla版).pdf
+exp3.人机交互.pdf
+实验III附件.zip
+demo_lab3/
+
+# Runtime artifacts and large assets
+logs/
+runs/
+exports/
+models/
+data/
+*.out
+slurm-*.out
+*.log
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Build temporaries
+report/*.aux
+report/*.tmp

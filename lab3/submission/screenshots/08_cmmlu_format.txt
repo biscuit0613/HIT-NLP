@@ -1,0 +1,10 @@
+CMMLU 格式诊断 · 严格解析 vs 内容匹配 · 代理 MRR
+$ python scripts/analyze_cmmlu_format.py --results results/official
+
+{'tag': 'base', 'n': 204, 'strict_correct': 125, 'strict_acc': 0.6127, 'unparsed': 48, 'relaxed_correct': 158, 'relaxed_acc': 0.7745, 'recovered_from_unparsed': 33} {'tag': 'base', 'n': 204, 'mrr': 0.8219}
+{'tag': 'lora_r8_qv', 'n': 204, 'strict_correct': 55, 'strict_acc': 0.2696, 'unparsed': 131, 'relaxed_correct': 143, 'relaxed_acc': 0.701, 'recovered_from_unparsed': 88} {'tag': 'lora_r8_qv', 'n': 204, 'mrr': 0.8403}
+{'tag': 'lora_r16_all_lr1e4', 'n': 204, 'strict_correct': 98, 'strict_acc': 0.4804, 'unparsed': 78, 'relaxed_correct': 153, 'relaxed_acc': 0.75, 'recovered_from_unparsed': 55} {'tag': 'lora_r16_all_lr1e4', 'n': 204, 'mrr': 0.8272}
+{'tag': 'lora_r16_all', 'n': 204, 'strict_correct': 97, 'strict_acc': 0.4755, 'unparsed': 75, 'relaxed_correct': 146, 'relaxed_acc': 0.7157, 'recovered_from_unparsed': 49} {'tag': 'lora_r16_all', 'n': 204, 'mrr': 0.8035}
+{'tag': 'lora_r32_all', 'n': 204, 'strict_correct': 104, 'strict_acc': 0.5098, 'unparsed': 67, 'relaxed_correct': 148, 'relaxed_acc': 0.7255, 'recovered_from_unparsed': 44} {'tag': 'lora_r32_all', 'n': 204, 'mrr': 0.7986}
+{'tag': 'dora_r16_all', 'n': 204, 'strict_correct': 100, 'strict_acc': 0.4902, 'unparsed': 72, 'relaxed_correct': 146, 'relaxed_acc': 0.7157, 'recovered_from_unparsed': 46} {'tag': 'dora_r16_all', 'n': 204, 'mrr': 0.8068}
+{'tag': 'dora_r8_qv', 'n': 204, 'strict_correct': 52, 'strict_acc': 0.2549, 'unparsed': 134, 'relaxed_correct': 142, 'relaxed_acc': 0.6961, 'recovered_from_unparsed': 90} {'tag': 'dora_r8_qv', 'n': 204, 'mrr': 0.8378}

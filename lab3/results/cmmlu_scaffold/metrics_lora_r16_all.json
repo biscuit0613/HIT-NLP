@@ -1,0 +1,35 @@
+{
+  "tag": "lora_r16_all",
+  "adapter": "/home/jnguan/lab3/runs/lora_r16_all",
+  "base": "/home/jnguan/lab3/models/Qwen2-7B-Instruct",
+  "protocol": {
+    "system": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.",
+    "decoding": "greedy",
+    "repetition_penalty": 1.05,
+    "max_new_tokens": 256,
+    "batch_size": 8,
+    "dtype": "float16",
+    "attn": "sdpa",
+    "merged_adapter": true,
+    "cmmlu_instruction": "请回答上述单项选择题，只输出正确选项的字母（A、B、C、D）。"
+  },
+  "cmmlu": {
+    "n": 204,
+    "correct": 97,
+    "wrong": 33,
+    "unparsed": 74,
+    "accuracy": 0.47549019607843135,
+    "contains_gold": 117,
+    "contains_gold_rate": 0.5735294117647058,
+    "pred_dist": {
+      "A": 39,
+      "B": 28,
+      "C": 30,
+      "D": 33
+    },
+    "hit_limit": 0,
+    "avg_new_tokens": 34.88725490196079,
+    "elapsed_s": 88.34101295471191,
+    "samples_per_s": 2.3092331310302705
+  }
+}

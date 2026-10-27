@@ -1,0 +1,77 @@
+{
+  "15": {
+    "A": "base",
+    "B": "dora_r16_all",
+    "C": "lora_r8_qv"
+  },
+  "40": {
+    "A": "lora_r8_qv",
+    "B": "dora_r16_all",
+    "C": "base"
+  },
+  "64": {
+    "A": "lora_r8_qv",
+    "B": "base",
+    "C": "dora_r16_all"
+  },
+  "65": {
+    "A": "dora_r16_all",
+    "B": "lora_r8_qv",
+    "C": "base"
+  },
+  "82": {
+    "A": "dora_r16_all",
+    "B": "lora_r8_qv",
+    "C": "base"
+  },
+  "13": {
+    "A": "dora_r16_all",
+    "B": "lora_r8_qv",
+    "C": "base"
+  },
+  "28": {
+    "A": "base",
+    "B": "lora_r8_qv",
+    "C": "dora_r16_all"
+  },
+  "76": {
+    "A": "dora_r16_all",
+    "B": "lora_r8_qv",
+    "C": "base"
+  },
+  "79": {
+    "A": "base",
+    "B": "dora_r16_all",
+    "C": "lora_r8_qv"
+  },
+  "71": {
+    "A": "base",
+    "B": "dora_r16_all",
+    "C": "lora_r8_qv"
+  },
+  "53": {
+    "A": "lora_r8_qv",
+    "B": "base",
+    "C": "dora_r16_all"
+  },
+  "73": {
+    "A": "base",
+    "B": "lora_r8_qv",
+    "C": "dora_r16_all"
+  },
+  "70": {
+    "A": "dora_r16_all",
+    "B": "lora_r8_qv",
+    "C": "base"
+  },
+  "93": {
+    "A": "base",
+    "B": "dora_r16_all",
+    "C": "lora_r8_qv"
+  },
+  "99": {
+    "A": "dora_r16_all",
+    "B": "lora_r8_qv",
+    "C": "base"
+  }
+}

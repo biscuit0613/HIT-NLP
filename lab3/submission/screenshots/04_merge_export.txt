@@ -1,0 +1,24 @@
+导出合并 · LoRA adapter 合并回基座，导出独立 fp16 checkpoint
+$ python scripts/export_merge.py \
+    --base-model models/Qwen2-7B-Instruct \
+    --adapter runs/lora_r8_qv \
+    --out exports/lora_r8_qv_merged \
+    --dtype float16 --device cpu
+
+[1/4] loading tokenizer from models/Qwen2-7B-Instruct
+[2/4] loading base weights on cpu (float16)
+Loading checkpoint shards: 100%|██████████| 4/4 [01:01<00:00, 15.29s/it]
+[3/4] merging adapter runs/lora_r8_qv
+[4/4] saving merged checkpoint to exports/lora_r8_qv_merged
+done in 111.1s: 7,615,616,512 parameters -> exports/lora_r8_qv_merged
+
+$ ls -lh exports/lora_r8_qv_merged
+total 15G
+-rw-r--r-- 1 user user 4.6G model-00001-of-00004.safetensors
+-rw-r--r-- 1 user user 4.6G model-00002-of-00004.safetensors
+-rw-r--r-- 1 user user 4.1G model-00003-of-00004.safetensors
+-rw-r--r-- 1 user user 1.1G model-00004-of-00004.safetensors
+-rw-r--r-- 1 user user  28K model.safetensors.index.json
+-rw-r--r-- 1 user user 1.3K tokenizer_config.json
+-rw-r--r-- 1 user user 6.8M tokenizer.json
+-rw-r--r-- 1 user user 2.7M vocab.json

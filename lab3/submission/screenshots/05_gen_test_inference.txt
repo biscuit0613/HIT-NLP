@@ -1,0 +1,21 @@
+批量推理 · gen_test.py · 6 个固定问题 · 贪心解码 (max_new_tokens=256)
+$ python scripts/gen_test.py \
+    --base-model models/Qwen2-7B-Instruct --adapter runs/lora_r8_qv \
+    --tag lora_r8_qv --out-dir results/official \
+    --dtype float16 --attn sdpa --system qwen --merge-adapter
+
+loading base=models/Qwen2-7B-Instruct adapter=runs/lora_r8_qv dtype=float16 attn=sdpa
+Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.85s/it]
+[1/6] 2.7s, 56 tok
+头晕可能是由多种原因引起的，包括贫血、低血压、颈椎病等。为了确定具体原因，
+建议您进行一些检查，如血常规、血压测量和颈椎X光片等。这些检查可以帮助医生
+了解您的身体状况并给出相应的治疗建议。
+
+[2/6] 2.9s, 91 tok
+荨麻疹是一种常见的过敏性疾病，饮食方面需要注意避免食用可能引起过敏的食物。
+
+[3/6] 2.4s, 75 tok
+[4/6] 2.3s, 73 tok
+[5/6] 8.1s, 256 tok
+[6/6] 0.2s, 6 tok
+wrote results/official/gen_test_lora_r8_qv.json results/official/gen_test_lora_r8_qv.txt

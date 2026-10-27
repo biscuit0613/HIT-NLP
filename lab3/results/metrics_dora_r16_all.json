@@ -1,0 +1,45 @@
+{
+  "tag": "dora_r16_all",
+  "adapter": "/home/jnguan/lab3/runs/dora_r16_all",
+  "base": "/home/jnguan/lab3/models/Qwen2-7B-Instruct",
+  "medical": {
+    "n": 100,
+    "rouge-1": 0.22262100794558676,
+    "rouge-2": 0.03882599784259318,
+    "rouge-l": 0.17885184567020648,
+    "rouge-1_p": 0.20883552002421843,
+    "rouge-1_r": 0.2583497057898773,
+    "rouge-2_p": 0.03522980028337439,
+    "rouge-2_r": 0.04718091156289228,
+    "rouge-l_p": 0.17288156593688947,
+    "rouge-l_r": 0.20974510237849145,
+    "avg_hyp_chars": 251.44,
+    "avg_ref_chars": 183.58,
+    "empty_hyp": 0,
+    "first100": {
+      "n": 100,
+      "rouge-1": 0.22262100794558676,
+      "rouge-2": 0.03882599784259318,
+      "rouge-l": 0.17885184567020648,
+      "rouge-1_p": 0.20883552002421843,
+      "rouge-1_r": 0.2583497057898773,
+      "rouge-2_p": 0.03522980028337439,
+      "rouge-2_r": 0.04718091156289228,
+      "rouge-l_p": 0.17288156593688947,
+      "rouge-l_r": 0.20974510237849145,
+      "avg_hyp_chars": 251.44,
+      "avg_ref_chars": 183.58,
+      "empty_hyp": 0
+    },
+    "elapsed_s": 1552.0628049373627
+  },
+  "cmmlu": {
+    "n": 204,
+    "correct": 154,
+    "accuracy": 0.7549019607843137,
+    "invalid": 0,
+    "contains_gold": 154,
+    "contains_gold_rate": 0.7549019607843137,
+    "elapsed_s": 105.87672638893127
+  }
+}
