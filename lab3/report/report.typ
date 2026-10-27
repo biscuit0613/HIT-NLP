@@ -105,7 +105,7 @@ $ bold(h) = bold(W)_0 bold(x) + (alpha \/ r) bold(B) bold(A) bold(x), $
 
 DoRA（Liu 等，2024）把冻结权重分解为幅度与方向，并只对方向做低秩更新：
 
-$ bold(W)' = bold(m) (bold(W)_0 + bold(B) bold(A)) / ||bold(W)_0 + bold(B) bold(A)||_c, $
+$ bold(W)' = bold(m) (bold(W)_0 + bold(B) bold(A)) / (||bold(W)_0 + bold(B) bold(A)||_c), $
 
 其中 $bold(m) in RR^d$ 为输出通道的幅度向量，$||dot||_c$ 为按列范数。除 LoRA 参数外，每个适配层增加一个长度等于输出维度的幅度向量。本文设两个对照：DoRA-8-QV 与 L8-QV 同秩、同目标、同学习率，总可训练参数 2,637,824（0.0346%）；DoRA-16-ALL 与 L16-ALL-2e4 完全一致，总参数 41,760,768（0.548%），仅比同 rank LoRA 多 3.4%。DoRA 的额外开销主要来自每步的权重范数计算；推理时更新可合并回原权重，不引入额外延迟。
 
