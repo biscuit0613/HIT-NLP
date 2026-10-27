@@ -1,0 +1,7 @@
+{
+  "best_method": "RidgeClassifier",
+  "key": "ridge",
+  "macro_f1": 0.8467119749892957,
+  "accuracy": 0.84675,
+  "representation": "char13"
+}

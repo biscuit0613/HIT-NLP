@@ -1,0 +1,707 @@
+{
+  "multinomial_nb": {
+    "name_cn": "MultinomialNB",
+    "group": "朴素贝叶斯",
+    "metrics": {
+      "accuracy": 0.828,
+      "macro_f1": 0.8279875721020844,
+      "precision_macro": 0.8280948194028074,
+      "recall_macro": 0.8280000000000001
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8225172074729596,
+        "recall": 0.8365,
+        "f1-score": 0.8294496777392166,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8336724313326551,
+        "recall": 0.8195,
+        "f1-score": 0.8265254664649521,
+        "support": 2000.0
+      },
+      "accuracy": 0.828,
+      "macro avg": {
+        "precision": 0.8280948194028074,
+        "recall": 0.8280000000000001,
+        "f1-score": 0.8279875721020844,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8280948194028074,
+        "recall": 0.828,
+        "f1-score": 0.8279875721020844,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1673,
+        327
+      ],
+      [
+        361,
+        1639
+      ]
+    ]
+  },
+  "complement_nb": {
+    "name_cn": "ComplementNB",
+    "group": "朴素贝叶斯",
+    "metrics": {
+      "accuracy": 0.828,
+      "macro_f1": 0.8279875721020844,
+      "precision_macro": 0.8280948194028074,
+      "recall_macro": 0.8280000000000001
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8225172074729596,
+        "recall": 0.8365,
+        "f1-score": 0.8294496777392166,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8336724313326551,
+        "recall": 0.8195,
+        "f1-score": 0.8265254664649521,
+        "support": 2000.0
+      },
+      "accuracy": 0.828,
+      "macro avg": {
+        "precision": 0.8280948194028074,
+        "recall": 0.8280000000000001,
+        "f1-score": 0.8279875721020844,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8280948194028074,
+        "recall": 0.828,
+        "f1-score": 0.8279875721020844,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1673,
+        327
+      ],
+      [
+        361,
+        1639
+      ]
+    ]
+  },
+  "bernoulli_nb": {
+    "name_cn": "BernoulliNB",
+    "group": "朴素贝叶斯",
+    "metrics": {
+      "accuracy": 0.79875,
+      "macro_f1": 0.7969846674876808,
+      "precision_macro": 0.8095156507430576,
+      "recall_macro": 0.7987500000000001
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8672403196066379,
+        "recall": 0.7055,
+        "f1-score": 0.7780534877309071,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.7517909818794775,
+        "recall": 0.892,
+        "f1-score": 0.8159158472444547,
+        "support": 2000.0
+      },
+      "accuracy": 0.79875,
+      "macro avg": {
+        "precision": 0.8095156507430576,
+        "recall": 0.7987500000000001,
+        "f1-score": 0.7969846674876808,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8095156507430576,
+        "recall": 0.79875,
+        "f1-score": 0.7969846674876809,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1411,
+        589
+      ],
+      [
+        216,
+        1784
+      ]
+    ]
+  },
+  "logistic_regression": {
+    "name_cn": "LogisticRegression",
+    "group": "线性分类",
+    "metrics": {
+      "accuracy": 0.84,
+      "macro_f1": 0.8399897593445981,
+      "precision_macro": 0.8400870622879457,
+      "recall_macro": 0.84
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8346456692913385,
+        "recall": 0.848,
+        "f1-score": 0.8412698412698413,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8455284552845529,
+        "recall": 0.832,
+        "f1-score": 0.8387096774193549,
+        "support": 2000.0
+      },
+      "accuracy": 0.84,
+      "macro avg": {
+        "precision": 0.8400870622879457,
+        "recall": 0.84,
+        "f1-score": 0.8399897593445981,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8400870622879457,
+        "recall": 0.84,
+        "f1-score": 0.8399897593445981,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1696,
+        304
+      ],
+      [
+        336,
+        1664
+      ]
+    ]
+  },
+  "linear_svc": {
+    "name_cn": "LinearSVC",
+    "group": "线性分类",
+    "metrics": {
+      "accuracy": 0.84425,
+      "macro_f1": 0.8442205479473464,
+      "precision_macro": 0.8445105360929203,
+      "recall_macro": 0.84425
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8350364963503649,
+        "recall": 0.858,
+        "f1-score": 0.8463625154130703,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8539845758354756,
+        "recall": 0.8305,
+        "f1-score": 0.8420785804816223,
+        "support": 2000.0
+      },
+      "accuracy": 0.84425,
+      "macro avg": {
+        "precision": 0.8445105360929203,
+        "recall": 0.84425,
+        "f1-score": 0.8442205479473464,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8445105360929204,
+        "recall": 0.84425,
+        "f1-score": 0.8442205479473462,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1716,
+        284
+      ],
+      [
+        339,
+        1661
+      ]
+    ]
+  },
+  "ridge": {
+    "name_cn": "RidgeClassifier",
+    "group": "线性分类",
+    "metrics": {
+      "accuracy": 0.84675,
+      "macro_f1": 0.8467119749892957,
+      "precision_macro": 0.8470944044227885,
+      "recall_macro": 0.84675
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8361609306834706,
+        "recall": 0.8625,
+        "f1-score": 0.8491262613832143,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8580278781621063,
+        "recall": 0.831,
+        "f1-score": 0.8442976885953772,
+        "support": 2000.0
+      },
+      "accuracy": 0.84675,
+      "macro avg": {
+        "precision": 0.8470944044227885,
+        "recall": 0.84675,
+        "f1-score": 0.8467119749892957,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8470944044227886,
+        "recall": 0.84675,
+        "f1-score": 0.8467119749892958,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1725,
+        275
+      ],
+      [
+        338,
+        1662
+      ]
+    ]
+  },
+  "perceptron": {
+    "name_cn": "Perceptron",
+    "group": "线性分类",
+    "metrics": {
+      "accuracy": 0.81475,
+      "macro_f1": 0.8145129359391887,
+      "precision_macro": 0.8163673489798221,
+      "recall_macro": 0.8147500000000001
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.7937470835277648,
+        "recall": 0.8505,
+        "f1-score": 0.8211440984793628,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8389876144318794,
+        "recall": 0.779,
+        "f1-score": 0.8078817733990148,
+        "support": 2000.0
+      },
+      "accuracy": 0.81475,
+      "macro avg": {
+        "precision": 0.8163673489798221,
+        "recall": 0.8147500000000001,
+        "f1-score": 0.8145129359391887,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8163673489798221,
+        "recall": 0.81475,
+        "f1-score": 0.8145129359391887,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1701,
+        299
+      ],
+      [
+        442,
+        1558
+      ]
+    ]
+  },
+  "nearest_centroid": {
+    "name_cn": "NearestCentroid",
+    "group": "距离与核方法",
+    "metrics": {
+      "accuracy": 0.7895,
+      "macro_f1": 0.7894847902760975,
+      "precision_macro": 0.7895836896863193,
+      "recall_macro": 0.7895000000000001
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.7846607669616519,
+        "recall": 0.798,
+        "f1-score": 0.7912741695587506,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.7945066124109867,
+        "recall": 0.781,
+        "f1-score": 0.7876954109934443,
+        "support": 2000.0
+      },
+      "accuracy": 0.7895,
+      "macro avg": {
+        "precision": 0.7895836896863193,
+        "recall": 0.7895000000000001,
+        "f1-score": 0.7894847902760975,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.7895836896863193,
+        "recall": 0.7895,
+        "f1-score": 0.7894847902760974,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1596,
+        404
+      ],
+      [
+        438,
+        1562
+      ]
+    ]
+  },
+  "knn": {
+    "name_cn": "KNeighborsClassifier",
+    "group": "距离与核方法",
+    "metrics": {
+      "accuracy": 0.78075,
+      "macro_f1": 0.780477229237154,
+      "precision_macro": 0.7821523678060882,
+      "recall_macro": 0.78075
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8020441097364174,
+        "recall": 0.7455,
+        "f1-score": 0.7727390515677637,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.762260625875759,
+        "recall": 0.816,
+        "f1-score": 0.7882154069065443,
+        "support": 2000.0
+      },
+      "accuracy": 0.78075,
+      "macro avg": {
+        "precision": 0.7821523678060882,
+        "recall": 0.78075,
+        "f1-score": 0.780477229237154,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.7821523678060882,
+        "recall": 0.78075,
+        "f1-score": 0.780477229237154,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1491,
+        509
+      ],
+      [
+        368,
+        1632
+      ]
+    ]
+  },
+  "svc_rbf": {
+    "name_cn": "SVC(RBF)",
+    "group": "距离与核方法",
+    "metrics": {
+      "accuracy": 0.845,
+      "macro_f1": 0.8449812427303705,
+      "precision_macro": 0.845167060857455,
+      "recall_macro": 0.845
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.837573385518591,
+        "recall": 0.856,
+        "f1-score": 0.8466864490603363,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.852760736196319,
+        "recall": 0.834,
+        "f1-score": 0.8432760364004045,
+        "support": 2000.0
+      },
+      "accuracy": 0.845,
+      "macro avg": {
+        "precision": 0.845167060857455,
+        "recall": 0.845,
+        "f1-score": 0.8449812427303705,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.845167060857455,
+        "recall": 0.845,
+        "f1-score": 0.8449812427303703,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1712,
+        288
+      ],
+      [
+        332,
+        1668
+      ]
+    ]
+  },
+  "decision_tree": {
+    "name_cn": "DecisionTreeClassifier",
+    "group": "决策树与集成",
+    "metrics": {
+      "accuracy": 0.71425,
+      "macro_f1": 0.7142499821406239,
+      "precision_macro": 0.7142500535625134,
+      "recall_macro": 0.71425
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.7143571785892946,
+        "recall": 0.714,
+        "f1-score": 0.714178544636159,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.7141429285357321,
+        "recall": 0.7145,
+        "f1-score": 0.7143214196450888,
+        "support": 2000.0
+      },
+      "accuracy": 0.71425,
+      "macro avg": {
+        "precision": 0.7142500535625134,
+        "recall": 0.71425,
+        "f1-score": 0.7142499821406239,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.7142500535625134,
+        "recall": 0.71425,
+        "f1-score": 0.7142499821406239,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1428,
+        572
+      ],
+      [
+        571,
+        1429
+      ]
+    ]
+  },
+  "random_forest": {
+    "name_cn": "RandomForestClassifier",
+    "group": "决策树与集成",
+    "metrics": {
+      "accuracy": 0.8195,
+      "macro_f1": 0.8194998194998195,
+      "precision_macro": 0.8195012780051121,
+      "recall_macro": 0.8195
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8188622754491018,
+        "recall": 0.8205,
+        "f1-score": 0.8196803196803197,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8201402805611222,
+        "recall": 0.8185,
+        "f1-score": 0.8193193193193193,
+        "support": 2000.0
+      },
+      "accuracy": 0.8195,
+      "macro avg": {
+        "precision": 0.8195012780051121,
+        "recall": 0.8195,
+        "f1-score": 0.8194998194998195,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.819501278005112,
+        "recall": 0.8195,
+        "f1-score": 0.8194998194998195,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1641,
+        359
+      ],
+      [
+        363,
+        1637
+      ]
+    ]
+  },
+  "adaboost": {
+    "name_cn": "AdaBoostClassifier",
+    "group": "决策树与集成",
+    "metrics": {
+      "accuracy": 0.8195,
+      "macro_f1": 0.8194884472606246,
+      "precision_macro": 0.8195818129441137,
+      "recall_macro": 0.8195
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8144685039370079,
+        "recall": 0.8275,
+        "f1-score": 0.8209325396825397,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8246951219512195,
+        "recall": 0.8115,
+        "f1-score": 0.8180443548387096,
+        "support": 2000.0
+      },
+      "accuracy": 0.8195,
+      "macro avg": {
+        "precision": 0.8195818129441137,
+        "recall": 0.8195,
+        "f1-score": 0.8194884472606246,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8195818129441137,
+        "recall": 0.8195,
+        "f1-score": 0.8194884472606246,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1655,
+        345
+      ],
+      [
+        377,
+        1623
+      ]
+    ]
+  },
+  "gradient_boosting": {
+    "name_cn": "GradientBoostingClassifier",
+    "group": "决策树与集成",
+    "metrics": {
+      "accuracy": 0.8125,
+      "macro_f1": 0.8124683071439074,
+      "precision_macro": 0.8127113929016014,
+      "recall_macro": 0.8125
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8045808966861598,
+        "recall": 0.8255,
+        "f1-score": 0.8149062191510366,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8208418891170431,
+        "recall": 0.7995,
+        "f1-score": 0.8100303951367781,
+        "support": 2000.0
+      },
+      "accuracy": 0.8125,
+      "macro avg": {
+        "precision": 0.8127113929016014,
+        "recall": 0.8125,
+        "f1-score": 0.8124683071439074,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8127113929016014,
+        "recall": 0.8125,
+        "f1-score": 0.8124683071439074,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1651,
+        349
+      ],
+      [
+        401,
+        1599
+      ]
+    ]
+  },
+  "mlp": {
+    "name_cn": "MLPClassifier",
+    "group": "多层感知机",
+    "metrics": {
+      "accuracy": 0.832,
+      "macro_f1": 0.8319929017000969,
+      "precision_macro": 0.8320561174838548,
+      "recall_macro": 0.8320000000000001
+    },
+    "classification_report": {
+      "负面": {
+        "precision": 0.8363728470111449,
+        "recall": 0.8255,
+        "f1-score": 0.8309008555611475,
+        "support": 2000.0
+      },
+      "正面": {
+        "precision": 0.8277393879565647,
+        "recall": 0.8385,
+        "f1-score": 0.8330849478390462,
+        "support": 2000.0
+      },
+      "accuracy": 0.832,
+      "macro avg": {
+        "precision": 0.8320561174838548,
+        "recall": 0.8320000000000001,
+        "f1-score": 0.8319929017000969,
+        "support": 4000.0
+      },
+      "weighted avg": {
+        "precision": 0.8320561174838548,
+        "recall": 0.832,
+        "f1-score": 0.8319929017000968,
+        "support": 4000.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        1651,
+        349
+      ],
+      [
+        323,
+        1677
+      ]
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "source": "MARC Chinese review body",
+  "labels": {
+    "0": "负面 1或2星",
+    "1": "正面 4或5星"
+  },
+  "neutral_3_star": "excluded",
+  "seed": 42,
+  "train_rows": 20000,
+  "validation_rows": 4000,
+  "note": "学生教学数据包含训练集和验证集；训练集用于学习模型参数，验证集用于方案比较与模型选择。"
+}

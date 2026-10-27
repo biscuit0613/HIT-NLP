@@ -1,0 +1,31 @@
+{
+  "method": "A+B 组合：char13+min_df=1+卡方top50000 + LR(C=10)",
+  "signature": {
+    "表示": "char13+min_df=1",
+    "卡方topk": 50000,
+    "分类器": "LR(C=10)"
+  },
+  "metrics": {
+    "accuracy": 0.8495,
+    "macro_f1": 0.8494891255893238,
+    "precision_macro": 0.849601034699028,
+    "recall_macro": 0.8494999999999999
+  },
+  "confusion_matrix": [
+    [
+      1716,
+      284
+    ],
+    [
+      318,
+      1682
+    ]
+  ],
+  "baseline_15": {
+    "best_method": "RidgeClassifier",
+    "key": "ridge",
+    "macro_f1": 0.8467119749892957,
+    "accuracy": 0.84675,
+    "representation": "char13"
+  }
+}

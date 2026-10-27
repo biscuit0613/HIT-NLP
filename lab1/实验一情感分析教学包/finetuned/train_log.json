@@ -1,0 +1,58 @@
+{
+  "model": "uer/chinese_roberta_L-8_H-512",
+  "max_length": 256,
+  "batch_size": 32,
+  "eval_batch_size": 64,
+  "epochs": 3,
+  "seed": 2024,
+  "learning_rate": 2e-05,
+  "warmup_ratio": 0.1,
+  "weight_decay": 0.01,
+  "total_params": 36564482,
+  "trainable_params": 36564482,
+  "total_steps": 1875,
+  "epoch_records": [
+    {
+      "epoch": 1,
+      "train_loss": 0.3794,
+      "val_loss": 0.3546,
+      "accuracy": 0.8668,
+      "macro_f1": 0.8666,
+      "precision_macro": 0.8681,
+      "recall_macro": 0.8668,
+      "epoch_time_sec": 124.2
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.2853,
+      "val_loss": 0.3284,
+      "accuracy": 0.8788,
+      "macro_f1": 0.8787,
+      "precision_macro": 0.8788,
+      "recall_macro": 0.8788,
+      "epoch_time_sec": 125.1
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.2451,
+      "val_loss": 0.3385,
+      "accuracy": 0.8738,
+      "macro_f1": 0.8737,
+      "precision_macro": 0.8739,
+      "recall_macro": 0.8738,
+      "epoch_time_sec": 126.6
+    }
+  ],
+  "best": {
+    "epoch": 2,
+    "val_loss": 0.32840216159820557,
+    "metrics": {
+      "accuracy": 0.87875,
+      "macro_f1": 0.8787496286707379,
+      "precision_macro": 0.8787546397443369,
+      "recall_macro": 0.8787499999999999
+    },
+    "macro_f1": 0.8787496286707379
+  },
+  "model_dir": "/home/biscuit/Documents/HIT-NLP/lab1/实验一情感分析教学包/finetuned"
+}

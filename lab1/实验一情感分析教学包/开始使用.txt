@@ -1,0 +1,16 @@
+实验一 情感分析教学包
+
+先阅读实验指导书，再使用VS Code、JupyterLab等工具打开Notebook。
+解压后保留文件夹结构，ROOT指向包含data的教学包目录。
+
+经典机器学习Notebook以方法介绍为主，含两个简短调用示例。
+finetune Notebook按顺序运行，默认使用完整数据。
+
+
+依赖：经典方法见requirements-sklearn.txt；finetune见requirements.txt。
+PyTorch按所用设备配置，使用对应Python环境运行Notebook。
+
+数据：训练20,000条，验证4,000条。
+标签0为负面、1为正面，两条路线共用划分。
+评分仅在Word指导书中说明，总分10分。
+

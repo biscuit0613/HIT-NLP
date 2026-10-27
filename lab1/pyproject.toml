@@ -1,0 +1,31 @@
+[project]
+name = "nlp-lab1-sentiment"
+version = "0.1.0"
+description = "自然语言处理 C 实验一：基于分类模型的情感分析（经典机器学习与预训练模型微调）"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    # ---- 经典机器学习路线（对应 requirements-sklearn.txt） ----
+    "numpy==1.26.4",
+    "pandas==2.2.3",
+    "scikit-learn==1.5.2",
+    "joblib==1.4.2",
+    "threadpoolctl==3.5.0",
+    "matplotlib==3.9.2",
+    "jupyterlab==4.2.5",
+    "ipykernel==6.29.5",
+    # ---- 预训练微调路线（对应 requirements.txt） ----
+    "transformers==4.44.2",
+    "huggingface-hub[cli]==0.25.2",
+    "tokenizers==0.19.1",
+    "safetensors==0.7.0",
+    "peft==0.12.0",
+    "accelerate==0.34.2",
+    # ---- PyTorch：Linux 平台默认 CUDA 构建，适配 RTX 4060 (sm_89) ----
+    "torch==2.5.1",
+    # ---- 中文分词（词级 n-gram 特征需要，教学包未附带） ----
+    "jieba==0.42.1",
+]
+
+# 网络说明：本机通过本地代理访问 PyPI 官方源（HTTP(S)_PROXY）
+# 若无代理可改用清华镜像：
+#   UV_DEFAULT_INDEX=https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/ uv sync

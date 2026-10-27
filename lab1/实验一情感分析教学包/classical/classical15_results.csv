@@ -1,0 +1,16 @@
+﻿方法,方法组,key,Accuracy,Macro-F1,Precision(macro),Recall(macro),训练耗时(s),预测耗时(s),参数配置
+RidgeClassifier,线性分类,ridge,0.84675,0.8467119749892957,0.8470944044227885,0.84675,0.1,0.0,alpha=1.0（L2 正则强度）
+SVC(RBF),距离与核方法,svc_rbf,0.845,0.8449812427303705,0.845167060857455,0.845,174.9,46.1,"C=1.0, gamma=scale, kernel=rbf, cache=1GB"
+LinearSVC,线性分类,linear_svc,0.84425,0.8442205479473464,0.8445105360929203,0.84425,0.3,0.0,C=1.0（间隔与错误的权衡）
+LogisticRegression,线性分类,logistic_regression,0.84,0.8399897593445981,0.8400870622879457,0.84,0.4,0.0,"C=1.0（L2 正则强度倒数）, max_iter=1000, lbfgs"
+MLPClassifier,多层感知机,mlp,0.832,0.8319929017000969,0.8320561174838548,0.8320000000000001,21.7,0.4,"TruncatedSVD(300)→隐层(256), relu, 内部早停, max_iter=60"
+MultinomialNB,朴素贝叶斯,multinomial_nb,0.828,0.8279875721020844,0.8280948194028074,0.8280000000000001,0.0,0.0,alpha=1.0（拉普拉斯平滑）；输入为 TF-IDF 非负权重
+ComplementNB,朴素贝叶斯,complement_nb,0.828,0.8279875721020844,0.8280948194028074,0.8280000000000001,0.0,0.0,alpha=1.0；用互补类统计构造权重，缓解类别不平衡
+RandomForestClassifier,决策树与集成,random_forest,0.8195,0.8194998194998195,0.8195012780051121,0.8195,8.9,0.2,"n_estimators=200, max_features=sqrt（默认）, 并行"
+AdaBoostClassifier,决策树与集成,adaboost,0.8195,0.8194884472606246,0.8195818129441137,0.8195,38.8,0.5,"n_estimators=200, learning_rate=1.0, 基学习器为深度1决策树"
+Perceptron,线性分类,perceptron,0.81475,0.8145129359391887,0.8163673489798221,0.8147500000000001,0.0,0.0,"max_iter=1000, tol=1e-3（误分类驱动迭代更新）"
+GradientBoostingClassifier,决策树与集成,gradient_boosting,0.8125,0.8124683071439074,0.8127113929016014,0.8125,100.4,0.0,"n_estimators=200, learning_rate=0.1, max_depth=3"
+BernoulliNB,朴素贝叶斯,bernoulli_nb,0.79875,0.7969846674876808,0.8095156507430576,0.7987500000000001,0.0,0.0,"alpha=1.0, binarize=0.0（TF-IDF>0 视为词项出现）"
+NearestCentroid,距离与核方法,nearest_centroid,0.7895,0.7894847902760975,0.7895836896863193,0.7895000000000001,0.0,0.0,欧氏距离；TF-IDF 已 L2 归一化，距离序等价余弦相似度序
+KNeighborsClassifier,距离与核方法,knn,0.78075,0.780477229237154,0.7821523678060882,0.78075,0.0,4.0,"k=15, weights=distance, 暴力搜索欧氏距离"
+DecisionTreeClassifier,决策树与集成,decision_tree,0.71425,0.7142499821406239,0.7142500535625134,0.71425,16.3,0.0,默认完全生长（max_depth=None）

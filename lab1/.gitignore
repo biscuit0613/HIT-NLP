@@ -1,0 +1,13 @@
+# Python 环境与缓存
+.venv/
+__pycache__/
+*.pyc
+
+# 教学包内的大文件(预训练权重与下载缓存,保留在本地但不入库)
+实验一情感分析教学包/pretrained/*.bin
+实验一情感分析教学包/pretrained/.cache/
+
+# 验收 notebook 训练产物中的权重文件(体积大,全量重跑 notebook 可再生)
+实验一情感分析教学包/finetuned/*.safetensors
+实验一情感分析教学包/finetuned/*.bin
+实验一情感分析教学包/classical/models/
