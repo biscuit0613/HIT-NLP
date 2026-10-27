@@ -1,0 +1,26 @@
+[project]
+name = "nlp-lab2-nmt"
+version = "0.1.0"
+description = "自然语言处理 C 实验二：基于 Transformer 的英汉机器翻译建模与优化"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    # ---- 深度学习框架：本地 smoke test 用 paddle 3.3.1（cu126），与 AI Studio 环境一致 ----
+    "paddlepaddle-gpu==3.3.1",
+    # ---- AI Studio CLI/SDK：数据集下载、产线任务提交、产物下载 ----
+    "aistudio-sdk",
+    # ---- 数值计算与作图 ----
+    # numpy 钉在 1.x：基线代码 np.exp([x]) 返回单元素数组、以 %f 打印，
+    # numpy 2.x 禁止隐式转标量会崩溃。官方环境即为 numpy 1.x。
+    "numpy<2",
+    "matplotlib",
+    "tqdm",
+    # ---- 项目源码依赖（utils/configure.py 读取 yaml 配置） ----
+    "pyyaml",
+    "six",
+]
+
+# 网络与索引说明：
+#   paddlepaddle-gpu 不在 PyPI 提供稳定版，需从飞桨官方源安装：
+#     uv pip install paddlepaddle-gpu==3.3.1 \
+#       --index-url https://www.paddlepaddle.org.cn/packages/stable/cu126/ \
+#       --extra-index-url https://pypi.org/simple/ --index-strategy unsafe-best-match

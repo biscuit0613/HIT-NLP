@@ -1,0 +1,24 @@
+# Python 环境与缓存
+.venv/
+__pycache__/
+*.pyc
+
+# 数据集（大文件，本地保留；来自 AI Studio 数据集 60419，可重新下载）
+data/
+
+# AI Studio 项目下载包（100MB 原始存档，本地保留）
+project_all.zip
+jobs/*.zip
+
+# 训练产物（体积大，训练日志与命令在 run_logs/ 中留档）
+**/saved_models/
+**/output_file/
+**/infer_model/
+*.pdparams
+*.pdopt
+
+# 运行日志
+run_logs/*.log
+
+# Jupyter 缓存
+**/.ipynb_checkpoints/
