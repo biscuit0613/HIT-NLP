@@ -1,0 +1,12 @@
+[0] retry 0: ('Connection broken: IncompleteRead(52553908 bytes read, 15814663 more expected)', IncompleteRead(52553908 bytes read, 15814663 more expected))
+[2] retry 0: ('Connection broken: IncompleteRead(35509444 bytes read, 32859127 more expected)', IncompleteRead(35509444 bytes read, 32859127 more expected))
+[3] retry 0: ('Connection broken: IncompleteRead(45016039 bytes read, 23352532 more expected)', IncompleteRead(45016039 bytes read, 23352532 more expected))
+[4] retry 0: ('Connection broken: IncompleteRead(56959306 bytes read, 11409265 more expected)', IncompleteRead(56959306 bytes read, 11409265 more expected))
+[9] retry 0: ('Connection broken: IncompleteRead(64520577 bytes read, 3847994 more expected)', IncompleteRead(64520577 bytes read, 3847994 more expected))
+[5] retry 0: ('Connection broken: IncompleteRead(51896495 bytes read, 16472076 more expected)', IncompleteRead(51896495 bytes read, 16472076 more expected))
+[8] retry 0: ('Connection broken: IncompleteRead(66784692 bytes read, 1583879 more expected)', IncompleteRead(66784692 bytes read, 1583879 more expected))
+[1] retry 0: ('Connection broken: IncompleteRead(63702392 bytes read, 4666179 more expected)', IncompleteRead(63702392 bytes read, 4666179 more expected))
+[10] retry 0: ('Connection broken: IncompleteRead(64263670 bytes read, 4104901 more expected)', IncompleteRead(64263670 bytes read, 4104901 more expected))
+[6] retry 0: ('Connection broken: IncompleteRead(60441449 bytes read, 7927122 more expected)', IncompleteRead(60441449 bytes read, 7927122 more expected))
+wrote /home/jnguan/lab3/data/disc_med/DISC-Med-SFT_released.jsonl 820422846
+DISC_DONE

@@ -1,0 +1,65 @@
+Looking in indexes: https://pypi.tuna.tsinghua.edu.cn/simple
+Collecting transformers==4.44.2
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/75/35/07c9879163b603f0e464b0f6e6e628a2340cfc7cdc5ca8e7d52d776710d4/transformers-4.44.2-py3-none-any.whl (9.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.5/9.5 MB 1.0 MB/s eta 0:00:00
+Collecting tokenizers==0.19.1
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/18/0d/ee99f50407788149bc9eddae6af0b4016865d67fb687730d151683b13b80/tokenizers-0.19.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 451.0 kB/s eta 0:00:00
+Collecting huggingface_hub==0.24.7
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/57/28/a0b0dd3cca63908045edc300360d6cd8758d4d86eee3fd2b08f00c5a41c4/huggingface_hub-0.24.7-py3-none-any.whl (417 kB)
+Collecting safetensors==0.4.5
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/53/62/1d6ffba0a2bc0e6b9f5b50d421493276d9fac5ef49670d06f7b66ea73500/safetensors-0.4.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (436 kB)
+Collecting peft==0.12.0
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/62/72/fcabddf222ec938c3cbd5616e5a72796938b5235897e07a1fcc2a8e7735e/peft-0.12.0-py3-none-any.whl (296 kB)
+Collecting accelerate==0.34.2
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/b0/5e/80cee674cdbe529ef008721d7eebb50ae5def4314211d82123aa23e828f8/accelerate-0.34.2-py3-none-any.whl (324 kB)
+Collecting numpy==1.24.4
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/98/5d/5738903efe0ecb73e51eb44feafba32bdba2081263d40c5043568ff60faf/numpy-1.24.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.3/17.3 MB 520.7 kB/s eta 0:00:00
+Collecting pyyaml==6.0.2
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/fd/7f/2c3697bba5d4aa5cc2afe81826d73dfae5f049458e44732c7a0938baa673/PyYAML-6.0.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (746 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 746.5/746.5 kB 540.1 kB/s eta 0:00:00
+Collecting sentencepiece==0.1.99
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c9/58/4fbd3f33a38c9809fedf57bbef7e086b9909d6807148f35d68c0c90896d3/sentencepiece-0.1.99-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 389.6 kB/s eta 0:00:00
+Collecting protobuf==4.25.5
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/05/a6/094a2640be576d760baa34c902dcb8199d89bce9ed7dd7a6af74dcbbd62d/protobuf-4.25.5-cp37-abi3-manylinux2014_x86_64.whl (294 kB)
+Collecting regex==2024.11.6
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/5a/c8/dc7153ceb5bcc344f5c4f0291ea45925a5f00009afa3849e91561ac2e847/regex-2024.11.6-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (785 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 785.1/785.1 kB 892.1 kB/s eta 0:00:00
+Collecting requests==2.32.3
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/f9/9b/335f9764261e915ed497fcdeb11df5dfd6f7bf257d4a6a2a686d80da4d54/requests-2.32.3-py3-none-any.whl (64 kB)
+Collecting tqdm==4.67.1
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/d0/30/dc54f88dd4a2b5dc8a0279bdd7270e735851848b762aeb1c1184ed1f6b14/tqdm-4.67.1-py3-none-any.whl (78 kB)
+Collecting psutil==5.9.8
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c5/4f/0e22aaa246f96d6ac87fe5ebb9c5a693fbe8877f537a1022527c47ca43c5/psutil-5.9.8-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (288 kB)
+Collecting packaging==24.1
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/08/aa/cc0199a5f0ad350994d660967a8efb233fe0416e4639146c089643407ce6/packaging-24.1-py3-none-any.whl (53 kB)
+Collecting filelock==3.16.1
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/b9/f8/feced7779d755758a52d1f6635d990b8d98dc0a29fa568bbe0625f18fdf3/filelock-3.16.1-py3-none-any.whl (16 kB)
+Collecting fsspec==2024.10.0
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c6/b2/454d6e7f0158951d8a78c2e1eb4f69ae81beb8dca5fee9809c6c99e9d0d0/fsspec-2024.10.0-py3-none-any.whl (179 kB)
+Collecting idna==3.10
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/76/c6/c88e154df9c4e1a2a66ccf0005a88dfb2650c1dffb6f5ce603dfbd452ce3/idna-3.10-py3-none-any.whl (70 kB)
+Collecting urllib3==2.2.3
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/ce/d9/5f4c13cecde62396b0d3fe530a50ccea91e7dfc1ccf0e09c228841bb5ba8/urllib3-2.2.3-py3-none-any.whl (126 kB)
+Collecting certifi==2024.8.30
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/12/90/3c9ff0512038035f59d279fddeb79f5f1eccd8859f06d6163c58798b9487/certifi-2024.8.30-py3-none-any.whl (167 kB)
+Collecting charset-normalizer==3.4.0
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/32/c8/0bc558f7260db6ffca991ed7166494a7da4fda5983ee0b0bfc8ed2ac6ff9/charset_normalizer-3.4.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (143 kB)
+Collecting jieba==0.42.1
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/c6/cb/18eeb235f833b726522d7ebed54f2278ce28ba9438e3135ab0278d9792a2/jieba-0.42.1.tar.gz (19.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.2/19.2 MB 3.1 MB/s eta 0:00:00
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting rouge-chinese==1.0.1
+  Downloading https://pypi.tuna.tsinghua.edu.cn/packages/46/18/c822b2c1260f766776bc200e21d6c570740a4b47df9d542d1e595e79cc63/rouge_chinese-1.0.1-py3-none-any.whl (19 kB)
+Building wheels for collected packages: jieba
+  Building wheel for jieba (setup.py): started
+  Building wheel for jieba (setup.py): finished with status 'done'
+  Created wheel for jieba: filename=jieba-0.42.1-py3-none-any.whl size=19314458 sha256=9ca0ed86d92287551d938ebff99ef40abe9f15d6d6ddf4edad72786f2cdda295
+  Stored in directory: /scratch/jnguan/tmp/pip-ephem-wheel-cache-2o30mys7/wheels/f3/30/86/64b88bf0241f0132806c61b1e2686b44f1327bfc5642f9d77d
+Successfully built jieba
+Installing collected packages: sentencepiece, rouge-chinese, jieba, urllib3, transformers, tqdm, tokenizers, safetensors, requests, regex, pyyaml, psutil, protobuf, peft, packaging, numpy, idna, huggingface_hub, fsspec, filelock, charset-normalizer, certifi, accelerate
+Successfully installed accelerate-0.34.2 certifi-2024.8.30 charset-normalizer-3.4.0 filelock-3.16.1 fsspec-2024.10.0 huggingface_hub-0.24.7 idna-3.10 jieba-0.42.1 numpy-1.24.4 packaging-24.1 peft-0.12.0 protobuf-4.25.5 psutil-5.9.8 pyyaml-6.0.2 regex-2024.11.6 requests-2.32.3 rouge-chinese-1.0.1 safetensors-0.4.5 sentencepiece-0.1.99 tokenizers-0.19.1 tqdm-4.67.1 transformers-4.44.2 urllib3-2.2.3
+WARNING: Target directory /home/jnguan/lab3/pylibs38/bin already exists. Specify --upgrade to force replacement.

@@ -1,0 +1,110 @@
+=== LAB3 EVAL job 183006 tags=base on gpu13 start Tue Oct 20 12:00:47 PM UTC 2026 ===
+Tesla V100S-PCIE-32GB, 32768 MiB
+=== EVAL base start Tue Oct 20 12:00:47 PM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=none dtype=float16
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:06,  2.32s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.07s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:01,  1.98s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.86s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.94s/it]model loaded in 8.6s
+  medical 8/500
+  medical 16/500
+  medical 24/500
+  medical 32/500
+  medical 40/500
+  medical 48/500
+  medical 56/500
+  medical 64/500
+  medical 72/500
+  medical 80/500
+  medical 88/500
+  medical 96/500
+  medical 104/500
+  medical 112/500
+  medical 120/500
+  medical 128/500
+  medical 136/500
+  medical 144/500
+  medical 152/500
+  medical 160/500
+  medical 168/500
+  medical 176/500
+  medical 184/500
+  medical 192/500
+  medical 200/500
+  medical 208/500
+  medical 216/500
+  medical 224/500
+  medical 232/500
+  medical 240/500
+  medical 248/500
+  medical 256/500
+  medical 264/500
+  medical 272/500
+  medical 280/500
+  medical 288/500
+  medical 296/500
+  medical 304/500
+  medical 312/500
+  medical 320/500
+  medical 328/500
+  medical 336/500
+  medical 344/500
+  medical 352/500
+  medical 360/500
+  medical 368/500
+  medical 376/500
+  medical 384/500
+  medical 392/500
+  medical 400/500
+  medical 408/500
+  medical 416/500
+  medical 424/500
+  medical 432/500
+  medical 440/500
+  medical 448/500
+  medical 456/500
+  medical 464/500
+  medical 472/500
+  medical 480/500
+  medical 488/500
+  medical 496/500
+  medical 500/500
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Dumping model to file cache /scratch/jnguan/tmp/jieba.cache
+Loading model cost 0.670 seconds.
+Prefix dict has been built successfully.
+medical {"n": 500, "rouge-1": 0.2389333897881277, "rouge-2": 0.03795599313213031, "rouge-l": 0.14456205648751116, "rouge-1_p": 0.1902364170748681, "rouge-1_r": 0.3258509120222188, "rouge-2_p": 0.02917445550837105, "rouge-2_r": 0.05510590815142548, "rouge-l_p": 0.1058914019298422, "rouge-l_r": 0.2309359896681315, "avg_hyp_chars": 427.08, "avg_ref_chars": 204.862, "empty_hyp": 0, "first100": {"n": 100, "rouge-1": 0.21498563243812185, "rouge-2": 0.033809366399575415, "rouge-l": 0.13585472592671427, "rouge-1_p": 0.1627772900055792, "rouge-1_r": 0.3183651616119209, "rouge-2_p": 0.02498159502071994, "rouge-2_r": 0.052711724574725685, "rouge-l_p": 0.09698336015259995, "rouge-l_r": 0.22872686494497438, "avg_hyp_chars": 437.26, "avg_ref_chars": 183.58, "empty_hyp": 0}, "elapsed_s": 574.3631138801575}
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 170, "accuracy": 0.8333333333333334, "invalid": 1, "contains_gold": 174, "contains_gold_rate": 0.8529411764705882, "elapsed_s": 8.845940351486206}
+wrote /home/jnguan/lab3/results/metrics_base.json
+=== EVAL base end Tue Oct 20 12:10:43 PM UTC 2026 ===
+=== ALL DONE Tue Oct 20 12:10:43 PM UTC 2026 ===

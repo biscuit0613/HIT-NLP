@@ -1,0 +1,614 @@
+=== job 187383 tags=base lora_r8_qv lora_r16_all_lr1e4 lora_r16_all lora_r32_all dora_r16_all system=qwen med=100 gen=1 Thu Oct 22 11:35:56 AM UTC 2026 ===
+Tesla V100S-PCIE-32GB, 32768 MiB
+=== eval base start Thu Oct 22 11:35:56 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=none dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.30s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.03s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.92s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:21<00:00,  6.85s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:21<00:00,  5.46s/it]model loaded in 23.4s
+  medical limit 100
+  medical 8/100
+  medical 16/100
+  medical 24/100
+  medical 32/100
+  medical 40/100
+  medical 48/100
+  medical 56/100
+  medical 64/100
+  medical 72/100
+  medical 80/100
+  medical 88/100
+  medical 96/100
+  medical 100/100
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /home/jnguan/.cache/jieba/jieba.cache
+Loading model cost 0.729 seconds.
+Prefix dict has been built successfully.
+medical {"n": 100, "rouge-1": 0.21498563243812185, "rouge-1_p": 0.1627772900055792, "rouge-1_r": 0.3183651616119209, "rouge-2": 0.033809366399575415, "rouge-2_p": 0.02498159502071994, "rouge-2_r": 0.052711724574725685, "rouge-l": 0.13585472592671427, "rouge-l_p": 0.09698336015259995, "rouge-l_r": 0.22872686494497438, "valid": 100, "empty": 0, "avg_chars": 437.26, "median_chars": 435.0, "short_rate": 0.0, "long_rate": 1.0, "list_rate": 1.0, "question_rate": 0.0, "caution_rate": 0.98, "repeat_4gram": 0.017973136281616446, "cjk_ratio": 0.8156100745844647, "elapsed_s": 133.75165033340454, "samples_per_s": 0.7476543261389945, "avg_new_tokens": 255.9, "hit_limit": 99}
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 125, "wrong": 31, "unparsed": 48, "accuracy": 0.6127450980392157, "contains_gold": 186, "contains_gold_rate": 0.9117647058823529, "pred_dist": {"A": 52, "B": 36, "C": 37, "D": 31}, "hit_limit": 28, "avg_new_tokens": 105.43137254901961, "elapsed_s": 211.95050263404846, "samples_per_s": 0.9624888688906477}
+wrote /home/jnguan/lab3/results/official/metrics_base.json
+=== gen_test base start Thu Oct 22 11:42:09 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=none dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.24s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.01s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.89s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.72s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.82s/it][1/6] 9.2s, 256 tok
+头晕是一个常见的症状，可能由多种因素引起。以下是一些可能导致头晕的原因：
+
+1. **低血压**：血压过低可能导致大脑供血不足，从而引起头晕。
+2. **脱水**：身体缺水时，血液浓度升高，可能会导致头晕或眩晕感。
+3. **贫血**：缺乏足够的红细胞或血红蛋白（如缺铁性贫血）会导致氧气供应不足，引起头晕。
+4. **血糖水平异常**：低血糖（血糖水平过低）或高血糖（血糖水平过高）都可能导致头晕。
+5. **内耳问题**：例如美尼尔病、前庭神经炎等内耳疾病，会影响平衡感觉，导致头晕。
+6. **压力和焦虑**：长期的压力和焦虑状态可以影响神经系统，导致头晕。
+7. **睡眠不足或睡眠质量差**：缺乏充足的休息和高质量的睡眠可能导致头晕。
+8. **药物副作用**：某些药物的副作用可能包括头晕，如抗抑郁药、降压药等。
+9. **眼部问题**：视力问题或眼压异常也可能导致头晕。
+10. **颈椎问题**：颈椎病或颈部肌肉紧张可能导致头晕。
+
+如果您的头晕持续存在或者伴有
+
+[2/6] 8.3s, 256 tok
+荨麻疹是一种常见的皮肤过敏反应，通常表现为红色或皮肤色的瘙痒性风团。饮食与荨麻疹之间的关系因人而异，但以下食物可能会加重某些人的症状：
+
+1. **海鲜**：如虾、蟹、鱼等，因为它们可能含有较高的组胺，组胺是一种可以引起过敏反应的化学物质。
+
+2. **坚果和种子**：如花生、杏仁、核桃等，这些食物也可能导致过敏反应。
+
+3. **柑橘类水果**：如橙子、柚子、柠檬等，它们含有的维生素C和其他成分可能刺激皮肤。
+
+4. **巧克力**：虽然不是所有人都对巧克力过敏，但某些人食用后可能会出现荨麻疹。
+
+5. **酒精**：酒精可能作为触发因素，导致荨麻疹发作。
+
+6. **辛辣食物**：虽然不是所有荨麻疹患者都对辛辣食物敏感，但一些人可能会发现辛辣食物会加剧症状。
+
+7. **加工食品和添加剂**：某些人工色素、防腐剂和调味剂可能对某些人造成过敏反应。
+
+8. **咖啡和茶**：虽然不是所有人都对咖啡或茶过敏，但有些人可能对其中的咖啡因或其他成分
+
+[3/6] 8.2s, 256 tok
+当孩子体温达到38.5度时，确实需要注意。不过是否立即给孩子服用退烧药，还需要考虑几个因素：
+
+1. **孩子的年龄**：不同年龄段的孩子对药物的反应可能不同。例如，婴儿和幼儿可能需要更谨慎地使用某些药物。
+
+2. **孩子的健康状况**：如果孩子除了发热外还有其他症状（如咳嗽、呕吐、腹泻等），或者有特定的健康问题（如心脏病、肾脏疾病等），在给予任何药物前应咨询医生。
+
+3. **持续时间**：发热是身体对感染的一种正常反应。轻微的病毒感染引起的发热通常会在几天内自行缓解。如果发热持续时间较长或伴有其他严重症状，应及时就医。
+
+4. **药物选择**：选择合适的退烧药也很重要。对于儿童，常用的退烧药包括布洛芬和对乙酰氨基酚。但具体使用哪种药物、剂量如何，应遵循儿科医生的建议或药品说明书上的指导。
+
+5. **观察**：在决定是否使用药物之前，可以先观察孩子的情况，确保他们有足够的水分摄入，并保持适当的休息。有时候，物理降温方法（如温水擦浴）也能帮助降低体温。
+
+总之，在处理孩子的发烧情况时
+
+[4/6] 8.2s, 256 tok
+高血压患者的日常饮食需要特别注意，以帮助控制血压、减少心血管疾病的风险。以下是一些关键的饮食建议：
+
+1. **低盐（钠）摄入**：减少食盐的使用，避免加工食品和快餐中的高盐分。每日盐摄入量应限制在5克（约一茶匙）以下。
+
+2. **增加钾的摄入**：钾有助于平衡体内的钠水平，从而有助于降低血压。富含钾的食物包括香蕉、土豆、菠菜、番茄和坚果等。
+
+3. **多吃蔬菜和水果**：它们富含维生素、矿物质和纤维，有助于维持健康的血压水平。每天至少吃五份不同颜色的蔬菜和水果。
+
+4. **全谷物**：选择全麦面包、糙米、燕麦等全谷物替代精制谷物，这些食物含有更多的纤维和营养素，有助于控制体重和血压。
+
+5. **限制饮酒**：过量饮酒会升高血压。男性每天不超过两杯酒精饮料，女性每天不超过一杯。
+
+6. **适量蛋白质**：选择瘦肉、鱼、豆类和豆制品作为蛋白质来源，避免过多的红肉和加工肉类。
+
+7. **健康脂肪**：优先选择单不饱和
+
+[5/6] 8.2s, 256 tok
+失眠和多梦是常见的睡眠问题，可能由多种因素引起，包括压力、焦虑、生活习惯、环境因素等。以下是一些可以帮助改善失眠和多梦的建议：
+
+1. **建立规律的作息时间**：每天尽量在同一时间上床睡觉和起床，即使在周末也不例外。这有助于调整你的生物钟。
+
+2. **创造良好的睡眠环境**：确保你的卧室安静、黑暗、凉爽，并且床铺舒适。使用遮光窗帘、耳塞或白噪音机可以帮助改善睡眠环境。
+
+3. **限制白天小睡**：如果你白天感到困倦，尽量限制小睡时间不超过20-30分钟，并避免在下午晚些时候小睡。
+
+4. **减少咖啡因和酒精摄入**：尤其是在睡前几小时内，避免摄入咖啡、茶、可乐、巧克力等含咖啡因的食物和饮料，以及酒精，因为它们可能干扰睡眠。
+
+5. **放松身心**：尝试在睡前进行放松活动，如深呼吸、冥想、瑜伽或温水浴，帮助减轻紧张和焦虑。
+
+6. **限制晚间屏幕时间**：晚上避免使用手机、电脑、平板等电子设备，因为蓝光会抑制褪黑素的产生，影响
+
+[6/6] 0.2s, 6 tok
+中国的首都是北京。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+avg latency 7.0s, avg throughput 30.4 tok/s
+wrote /home/jnguan/lab3/results/official/gen_test_base.json /home/jnguan/lab3/results/official/gen_test_base.txt
+=== eval base end Thu Oct 22 11:43:08 AM UTC 2026 ===
+=== eval lora_r8_qv start Thu Oct 22 11:43:08 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r8_qv dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.26s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:05,  2.99s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.90s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.72s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.83s/it]model loaded in 13.1s
+  medical limit 100
+  medical 8/100
+  medical 16/100
+  medical 24/100
+  medical 32/100
+  medical 40/100
+  medical 48/100
+  medical 56/100
+  medical 64/100
+  medical 72/100
+  medical 80/100
+  medical 88/100
+  medical 96/100
+  medical 100/100
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /home/jnguan/.cache/jieba/jieba.cache
+Loading model cost 0.644 seconds.
+Prefix dict has been built successfully.
+medical {"n": 100, "rouge-1": 0.22844998252618978, "rouge-1_p": 0.20935473827541226, "rouge-1_r": 0.2676593850668556, "rouge-2": 0.04755010918342018, "rouge-2_p": 0.043676842792674746, "rouge-2_r": 0.05707445939573412, "rouge-l": 0.18071513401445272, "rouge-l_p": 0.16917340207089768, "rouge-l_r": 0.2148886675419318, "valid": 100, "empty": 0, "avg_chars": 257.2, "median_chars": 247.5, "short_rate": 0.0, "long_rate": 0.15, "list_rate": 0.3, "question_rate": 0.0, "caution_rate": 0.98, "repeat_4gram": 0.012601820778958408, "cjk_ratio": 0.9006359567544815, "elapsed_s": 102.91925573348999, "samples_per_s": 0.971635475667941, "avg_new_tokens": 147.83, "hit_limit": 8}
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 55, "wrong": 18, "unparsed": 131, "accuracy": 0.2696078431372549, "contains_gold": 85, "contains_gold_rate": 0.4166666666666667, "pred_dist": {"A": 23, "B": 16, "C": 15, "D": 19}, "hit_limit": 0, "avg_new_tokens": 32.78431372549019, "elapsed_s": 71.5685203075409, "samples_per_s": 2.85041520719161}
+wrote /home/jnguan/lab3/results/official/metrics_lora_r8_qv.json
+=== gen_test lora_r8_qv start Thu Oct 22 11:46:19 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r8_qv dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.27s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.02s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.92s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.75s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.85s/it][1/6] 2.7s, 56 tok
+头晕可能是由多种原因引起的，包括贫血、低血压、颈椎病等。为了确定具体原因，建议您进行一些检查，如血常规、血压测量和颈椎X光片等。这些检查可以帮助医生了解您的身体状况并给出相应的治疗建议。
+
+[2/6] 2.9s, 91 tok
+荨麻疹是一种常见的过敏性疾病，饮食方面需要注意避免食用可能引起过敏的食物。一般来说，荨麻疹患者应该避免食用辛辣、油腻、海鲜等刺激性食物，同时也要注意避免食用可能引起过敏的水果和蔬菜。此外，荨麻疹患者还应该保持良好的饮食习惯，多吃新鲜蔬菜和水果，保持充足的水分摄入，有助于缓解症状。如果您有其他疑问或需要进一步的帮助，请随时告诉我。
+
+[3/6] 2.4s, 75 tok
+是的，如果孩子的体温超过了38.5度，建议您给孩子服用退烧药。您可以选择布洛芬或对乙酰氨基酚等药物，按照说明书上的剂量给予孩子口服。同时，保持室内空气流通，适当增加孩子的水分摄入，可以帮助缓解发热症状。如果孩子的症状没有改善或者出现其他不适，请及时就医。
+
+[4/6] 2.3s, 73 tok
+对于高血压患者来说，日常饮食非常重要。建议您遵循低盐、低脂、高纤维的原则，减少摄入过多的盐分和脂肪，增加蔬菜、水果和全谷类食物的摄入量。此外，适量摄入富含钾的食物，如香蕉、土豆等，可以帮助降低血压。同时，避免过度饮酒和吸烟也是非常重要的。
+
+[5/6] 8.1s, 256 tok
+失眠多梦的调理方法因人而异，但以下几点可能对您有所帮助：
+
+1. **保持规律作息**：尽量每天在同一时间上床睡觉和起床，建立稳定的生物钟。
+
+2. **改善睡眠环境**：确保您的卧室安静、舒适、黑暗和适宜的温度。使用舒适的床垫和枕头，避免在床上看电视或使用电子设备。
+
+3. **放松身心**：尝试进行一些放松技巧，如深呼吸、瑜伽或冥想，帮助您放松身心，减轻压力和焦虑。
+
+4. **限制咖啡因和酒精摄入**：避免在睡前摄入咖啡因和酒精，因为它们可能会干扰您的睡眠质量。
+
+5. **适量运动**：定期进行适量的体育活动可以帮助改善睡眠质量，但请避免在睡前进行剧烈运动。
+
+6. **饮食调整**：避免晚餐过量进食，尤其是避免辛辣、油腻的食物，以免影响消化和睡眠。
+
+7. **寻求专业帮助**：如果以上方法无法改善您的失眠问题，建议您咨询医生或专业的心理咨询师，以获得更具体的指导和治疗建议。
+
+请记住，每个人的体质和情况都不同，因此找到最适合您的调理方法可能需要一些时间和耐心。希望这些建议能对您有所帮助
+
+[6/6] 0.2s, 6 tok
+中国的首都是北京。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+avg latency 3.1s, avg throughput 29.6 tok/s
+wrote /home/jnguan/lab3/results/official/gen_test_lora_r8_qv.json /home/jnguan/lab3/results/official/gen_test_lora_r8_qv.txt
+=== eval lora_r8_qv end Thu Oct 22 11:46:54 AM UTC 2026 ===
+=== eval lora_r16_all_lr1e4 start Thu Oct 22 11:46:54 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r16_all_lr1e4 dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.23s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.00s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.90s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.77s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.86s/it]model loaded in 16.7s
+  medical limit 100
+  medical 8/100
+  medical 16/100
+  medical 24/100
+  medical 32/100
+  medical 40/100
+  medical 48/100
+  medical 56/100
+  medical 64/100
+  medical 72/100
+  medical 80/100
+  medical 88/100
+  medical 96/100
+  medical 100/100
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /home/jnguan/.cache/jieba/jieba.cache
+Loading model cost 0.649 seconds.
+Prefix dict has been built successfully.
+medical {"n": 100, "rouge-1": 0.232285578657542, "rouge-1_p": 0.226645061795705, "rouge-1_r": 0.25931186828684194, "rouge-2": 0.04242781145441845, "rouge-2_p": 0.04112556733251991, "rouge-2_r": 0.04882498986613611, "rouge-l": 0.18127770893078796, "rouge-l_p": 0.1820111453515348, "rouge-l_r": 0.2039599831836607, "valid": 100, "empty": 0, "avg_chars": 232.68, "median_chars": 240.5, "short_rate": 0.0, "long_rate": 0.08, "list_rate": 0.4, "question_rate": 0.02, "caution_rate": 0.94, "repeat_4gram": 0.012171822057265946, "cjk_ratio": 0.8977419303647964, "elapsed_s": 98.87312150001526, "samples_per_s": 1.011397217796796, "avg_new_tokens": 134.46, "hit_limit": 4}
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 98, "wrong": 28, "unparsed": 78, "accuracy": 0.4803921568627451, "contains_gold": 122, "contains_gold_rate": 0.5980392156862745, "pred_dist": {"A": 35, "B": 25, "C": 33, "D": 33}, "hit_limit": 0, "avg_new_tokens": 34.995098039215684, "elapsed_s": 68.59949946403503, "samples_per_s": 2.973782548295588}
+wrote /home/jnguan/lab3/results/official/metrics_lora_r16_all_lr1e4.json
+=== gen_test lora_r16_all_lr1e4 start Thu Oct 22 11:50:01 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r16_all_lr1e4 dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.27s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.08s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:09<00:02,  2.99s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.78s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.89s/it][1/6] 2.5s, 53 tok
+头晕可能是多种原因引起的，包括贫血、低血压、颈椎病等。为了明确诊断，建议您进行一些检查，如血常规、血压测量和颈椎X光片等。这些检查可以帮助医生了解您的具体情况，并给出相应的治疗建议。
+
+[2/6] 1.7s, 53 tok
+荨麻疹是一种过敏反应，因此在饮食方面需要注意避免食用可能引起过敏的食物。常见的过敏食物包括海鲜、坚果、牛奶、鸡蛋等。此外，辛辣刺激性食物和酒精也可能加重症状，建议您尽量避免食用这些食物。
+
+[3/6] 1.7s, 53 tok
+如果孩子的体温超过38.5度，可以考虑使用退烧药物。但是请注意，退烧药物只是缓解症状的方法，并不能治疗病因。建议您先观察孩子的病情，如果症状没有明显改善或出现其他不适，请及时就医。
+
+[4/6] 2.6s, 83 tok
+对于高血压患者来说，日常饮食非常重要。建议您控制盐的摄入量，减少高盐食物的摄入，如腌制食品、罐头食品等。同时，增加蔬菜和水果的摄入，它们富含维生素和矿物质，有助于降低血压。此外，适量摄入全谷物、低脂肪乳制品和瘦肉也是有益的。请记住，均衡饮食是保持健康的关键。
+
+[5/6] 3.0s, 94 tok
+对于失眠多梦，我们可以采取一些调理措施来改善睡眠质量。首先，保持规律的作息时间，每天尽量在同一时间上床睡觉和起床。其次，避免在睡前过度兴奋或紧张，可以尝试放松身心的方法，如深呼吸、冥想等。此外，保持良好的睡眠环境也很重要，确保房间安静、舒适、温度适宜。如果这些方法无效，您可以考虑咨询专业医生，了解是否需要进一步的治疗。
+
+[6/6] 0.2s, 6 tok
+中国的首都是北京。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+avg latency 2.0s, avg throughput 29.4 tok/s
+wrote /home/jnguan/lab3/results/official/gen_test_lora_r16_all_lr1e4.json /home/jnguan/lab3/results/official/gen_test_lora_r16_all_lr1e4.txt
+=== eval lora_r16_all_lr1e4 end Thu Oct 22 11:50:30 AM UTC 2026 ===
+=== eval lora_r16_all start Thu Oct 22 11:50:30 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r16_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.20s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.03s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.95s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.77s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.87s/it]model loaded in 17.2s
+  medical limit 100
+  medical 8/100
+  medical 16/100
+  medical 24/100
+  medical 32/100
+  medical 40/100
+  medical 48/100
+  medical 56/100
+  medical 64/100
+  medical 72/100
+  medical 80/100
+  medical 88/100
+  medical 96/100
+  medical 100/100
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /home/jnguan/.cache/jieba/jieba.cache
+Loading model cost 0.650 seconds.
+Prefix dict has been built successfully.
+medical {"n": 100, "rouge-1": 0.22765336458538513, "rouge-1_p": 0.21278541045100233, "rouge-1_r": 0.26583610184800965, "rouge-2": 0.039971471128554044, "rouge-2_p": 0.036500210761441935, "rouge-2_r": 0.04832426342412015, "rouge-l": 0.17859652292670258, "rouge-l_p": 0.17211704175862721, "rouge-l_r": 0.2107688835240271, "valid": 100, "empty": 0, "avg_chars": 254.27, "median_chars": 260.5, "short_rate": 0.02, "long_rate": 0.11, "list_rate": 0.42, "question_rate": 0.05, "caution_rate": 0.95, "repeat_4gram": 0.011475690640763205, "cjk_ratio": 0.8982228954499862, "elapsed_s": 103.02393937110901, "samples_per_s": 0.970648187309007, "avg_new_tokens": 145.98, "hit_limit": 3}
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 97, "wrong": 32, "unparsed": 75, "accuracy": 0.47549019607843135, "contains_gold": 117, "contains_gold_rate": 0.5735294117647058, "pred_dist": {"A": 39, "B": 28, "C": 30, "D": 32}, "hit_limit": 0, "avg_new_tokens": 34.916666666666664, "elapsed_s": 72.97546529769897, "samples_per_s": 2.7954600152581035}
+wrote /home/jnguan/lab3/results/official/metrics_lora_r16_all.json
+=== gen_test lora_r16_all start Thu Oct 22 11:53:46 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r16_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.25s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.00s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.87s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.71s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.82s/it][1/6] 2.2s, 46 tok
+头晕可能是多种原因引起的，包括贫血、低血压、颈椎病等。建议您进行一些检查以确定具体原因。您可以咨询医生进行详细的体检和相关检查，以便得到准确的诊断和治疗方案。
+
+[2/6] 1.5s, 45 tok
+荨麻疹是一种过敏反应，所以避免食用可能引起过敏的食物是非常重要的。常见的过敏原包括海鲜、坚果、牛奶、鸡蛋等。建议您在饮食上尽量避免这些食物，以免加重症状。
+
+[3/6] 1.7s, 53 tok
+如果孩子的体温超过38.5度，可以考虑使用退烧药物。但是请注意，退烧药物只是缓解症状的方法，并不能治疗病因。建议您先观察孩子的病情，如果症状没有明显改善或出现其他不适，请及时就医。
+
+[4/6] 2.8s, 87 tok
+对于高血压患者来说，日常饮食非常重要。建议您控制盐的摄入量，减少高盐食物的摄入，如腌制食品、罐头食品等。同时，增加蔬菜和水果的摄入，选择低脂肪、低胆固醇的食物，如瘦肉、鱼类、豆类等。此外，适量摄入全谷物、坚果和种子也是有益的。请记住，均衡饮食是保持健康的关键。
+
+[5/6] 3.0s, 92 tok
+失眠多梦的调理方法包括保持良好的睡眠环境、规律作息、避免过度疲劳和精神紧张等。您可以尝试调整睡眠时间，保持安静舒适的睡眠环境，避免使用电子设备和咖啡因等刺激物。此外，放松身心也很重要，可以尝试一些放松技巧，如深呼吸、冥想或温水泡脚等。如果这些方法无效，建议您咨询专业医生以获取更详细的指导和治疗方案。
+
+[6/6] 0.2s, 6 tok
+中国的首都是北京。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+avg latency 1.9s, avg throughput 29.1 tok/s
+wrote /home/jnguan/lab3/results/official/gen_test_lora_r16_all.json /home/jnguan/lab3/results/official/gen_test_lora_r16_all.txt
+=== eval lora_r16_all end Thu Oct 22 11:54:14 AM UTC 2026 ===
+=== eval lora_r32_all start Thu Oct 22 11:54:14 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r32_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.22s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:05,  2.98s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.87s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.70s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.81s/it]model loaded in 16.5s
+  medical limit 100
+  medical 8/100
+  medical 16/100
+  medical 24/100
+  medical 32/100
+  medical 40/100
+  medical 48/100
+  medical 56/100
+  medical 64/100
+  medical 72/100
+  medical 80/100
+  medical 88/100
+  medical 96/100
+  medical 100/100
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /home/jnguan/.cache/jieba/jieba.cache
+Loading model cost 0.653 seconds.
+Prefix dict has been built successfully.
+medical {"n": 100, "rouge-1": 0.2310824554220676, "rouge-1_p": 0.22474218081261932, "rouge-1_r": 0.2569769813578783, "rouge-2": 0.04233441632948797, "rouge-2_p": 0.04024551667532671, "rouge-2_r": 0.04902960592613809, "rouge-l": 0.18154432351257208, "rouge-l_p": 0.18233199428865363, "rouge-l_r": 0.20415880309026613, "valid": 100, "empty": 0, "avg_chars": 229.92, "median_chars": 226.0, "short_rate": 0.02, "long_rate": 0.05, "list_rate": 0.29, "question_rate": 0.02, "caution_rate": 0.96, "repeat_4gram": 0.011684498733464463, "cjk_ratio": 0.9016559410195708, "elapsed_s": 99.68883991241455, "samples_per_s": 1.0031213131566064, "avg_new_tokens": 131.65, "hit_limit": 0}
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 104, "wrong": 33, "unparsed": 67, "accuracy": 0.5098039215686274, "contains_gold": 125, "contains_gold_rate": 0.6127450980392157, "pred_dist": {"A": 36, "B": 32, "C": 34, "D": 35}, "hit_limit": 0, "avg_new_tokens": 33.6764705882353, "elapsed_s": 72.12773013114929, "samples_per_s": 2.828315733216077}
+wrote /home/jnguan/lab3/results/official/metrics_lora_r32_all.json
+=== gen_test lora_r32_all start Thu Oct 22 11:57:26 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r32_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.21s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:05,  2.98s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.89s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.76s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.84s/it][1/6] 2.3s, 53 tok
+头晕可能是多种原因引起的，包括低血压、贫血、颈椎病等。为了明确诊断，建议您进行一些检查，如血压测量、血常规和颈椎X光片等。这些检查可以帮助医生了解您的具体情况，并给出相应的治疗建议。
+
+[2/6] 1.5s, 45 tok
+荨麻疹是一种过敏反应，所以避免食用可能引起过敏的食物是非常重要的。常见的过敏原包括海鲜、坚果、鸡蛋、牛奶等。建议您在饮食上尽量避免这些食物，以免加重症状。
+
+[3/6] 2.0s, 62 tok
+如果孩子的体温超过38.5度，可以考虑使用退烧药物。但是请注意，退烧药物只是暂时缓解症状，并不能治疗病因。建议您先给孩子多喝水，保持充足的水分摄入，同时观察孩子的其他症状是否有改善。如果症状持续或加重，请及时就医。
+
+[4/6] 2.2s, 68 tok
+对于高血压患者来说，日常饮食非常重要。建议您控制盐的摄入量，减少高盐食物的摄入，增加蔬菜水果的摄入，适量摄入优质蛋白质和低脂肪的食物。此外，保持适当的体重、戒烟限酒也是重要的。如果您有其他疑问或需要更详细的饮食建议，请咨询专业医生。
+
+[5/6] 2.4s, 73 tok
+失眠多梦的调理方法包括保持良好的睡眠环境、规律作息、避免过度疲劳和精神紧张等。您可以尝试调整睡眠时间，保持充足的睡眠，并且在睡前放松身心，避免使用电子设备。此外，适量的运动也有助于改善睡眠质量。如果这些方法无效，建议您咨询专业医生以获取更详细的指导。
+
+[6/6] 1.6s, 47 tok
+中国的首都是北京。北京是中国的首都，也是中国最大的城市之一。它位于华北平原的北部，是全国的政治、文化、经济和交通中心。如果您需要了解更多关于北京的信息，我可以为您提供相关的资料。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+avg latency 2.0s, avg throughput 29.1 tok/s
+wrote /home/jnguan/lab3/results/official/gen_test_lora_r32_all.json /home/jnguan/lab3/results/official/gen_test_lora_r32_all.txt
+=== eval lora_r32_all end Thu Oct 22 11:57:55 AM UTC 2026 ===
+=== eval dora_r16_all start Thu Oct 22 11:57:55 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/dora_r16_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:09,  3.24s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.01s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.91s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.79s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.87s/it]model loaded in 14.2s
+  medical limit 100
+  medical 8/100
+  medical 16/100
+  medical 24/100
+  medical 32/100
+  medical 40/100
+  medical 48/100
+  medical 56/100
+  medical 64/100
+  medical 72/100
+  medical 80/100
+  medical 88/100
+  medical 96/100
+  medical 100/100
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /home/jnguan/.cache/jieba/jieba.cache
+Loading model cost 0.652 seconds.
+Prefix dict has been built successfully.
+medical {"n": 100, "rouge-1": 0.22363119962962788, "rouge-1_p": 0.2094384001080907, "rouge-1_r": 0.26053185563930953, "rouge-2": 0.038736642393586915, "rouge-2_p": 0.03494671320679187, "rouge-2_r": 0.04747886399636279, "rouge-l": 0.17869036064932653, "rouge-l_p": 0.17251289240297685, "rouge-l_r": 0.21017043495837243, "valid": 100, "empty": 0, "avg_chars": 251.7, "median_chars": 258.5, "short_rate": 0.01, "long_rate": 0.11, "list_rate": 0.43, "question_rate": 0.05, "caution_rate": 0.95, "repeat_4gram": 0.011242540283380459, "cjk_ratio": 0.8980078061396389, "elapsed_s": 102.86543607711792, "samples_per_s": 0.972143839695875, "avg_new_tokens": 144.63, "hit_limit": 2}
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 100, "wrong": 32, "unparsed": 72, "accuracy": 0.49019607843137253, "contains_gold": 118, "contains_gold_rate": 0.5784313725490197, "pred_dist": {"A": 41, "B": 26, "C": 32, "D": 33}, "hit_limit": 0, "avg_new_tokens": 34.55882352941177, "elapsed_s": 72.01382231712341, "samples_per_s": 2.8327894383098946}
+wrote /home/jnguan/lab3/results/official/metrics_dora_r16_all.json
+=== gen_test dora_r16_all start Thu Oct 22 12:01:07 PM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/dora_r16_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:10,  3.36s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:06<00:06,  3.07s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:08<00:02,  2.91s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.73s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:11<00:00,  2.85s/it][1/6] 2.3s, 53 tok
+头晕可能是多种原因引起的，包括贫血、低血压、颈椎病等。为了明确诊断，建议您进行一些检查，如血常规、血压测量和颈椎X光片等。这些检查可以帮助医生了解您的具体情况，并给出相应的治疗建议。
+
+[2/6] 1.5s, 45 tok
+荨麻疹是一种过敏反应，所以避免食用可能引起过敏的食物是非常重要的。常见的过敏原包括海鲜、坚果、牛奶、鸡蛋等。建议您在饮食上尽量避免这些食物，以免加重症状。
+
+[3/6] 1.8s, 53 tok
+如果孩子的体温超过38.5度，可以考虑使用退烧药物。但是请注意，退烧药物只是缓解症状的方法，并不能治疗病因。建议您先观察孩子的病情，如果症状没有明显改善或出现其他不适，请及时就医。
+
+[4/6] 2.6s, 78 tok
+对于高血压患者来说，日常饮食非常重要。建议您控制盐的摄入量，减少高盐食物的摄入，如腌制食品、方便面等。同时，增加蔬菜和水果的摄入，选择低脂肪、低胆固醇的食物，如瘦肉、鱼类、豆类等。此外，适量摄入全谷物、坚果和种子也有助于控制血压。
+
+[5/6] 3.1s, 92 tok
+失眠多梦的调理方法包括保持良好的睡眠环境、规律作息、避免过度疲劳和精神紧张等。您可以尝试调整睡眠时间，保持安静舒适的睡眠环境，避免使用电子设备和咖啡因等刺激物。此外，放松身心也很重要，可以尝试一些放松技巧，如深呼吸、冥想或温水泡脚等。如果这些方法无效，建议您咨询专业医生以获取更详细的指导和治疗方案。
+
+[6/6] 0.2s, 6 tok
+中国的首都是北京。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+avg latency 1.9s, avg throughput 28.8 tok/s
+wrote /home/jnguan/lab3/results/official/gen_test_dora_r16_all.json /home/jnguan/lab3/results/official/gen_test_dora_r16_all.txt
+=== eval dora_r16_all end Thu Oct 22 12:01:36 PM UTC 2026 ===
+=== ALL DONE Thu Oct 22 12:01:36 PM UTC 2026 ===

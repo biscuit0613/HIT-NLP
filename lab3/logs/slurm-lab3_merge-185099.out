@@ -1,0 +1,4 @@
+=== MERGE job 185099 on gpu21 start Wed Oct 21 04:29:19 PM CST 2026 ===
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:10<00:30, 10.08s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:20<00:20, 10.31s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:31<00:10, 10.49s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:40<00:00,  9.85s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:40<00:00, 10.03s/it]
+merged -> /home/jnguan/lab3/exports/lora_r16_all_merged
+=== DONE Wed Oct 21 04:31:34 PM CST 2026 ===

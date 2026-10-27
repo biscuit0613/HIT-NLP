@@ -1,0 +1,11 @@
+=== V100S TEST job 182998 on gpu13 start Tue Oct 20 11:51:14 AM UTC 2026 ===
+Tesla V100S-PCIE-32GB, 32768 MiB, 580.173.02
+/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/_subclasses/functional_tensor.py:258: UserWarning: Failed to initialize NumPy: numpy.core.multiarray failed to import (Triggered internally at ../torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+torch 2.4.1+cu121 cuda 12.1
+avail True
+dev Tesla V100S-PCIE-32GB cap (7, 0)
+fp16 matmul ok sum -188727.8125
+bf16 supported True
+archs ['sm_50', 'sm_60', 'sm_70', 'sm_75', 'sm_80', 'sm_86', 'sm_90']
+=== DONE Tue Oct 20 11:51:31 AM UTC 2026 ===

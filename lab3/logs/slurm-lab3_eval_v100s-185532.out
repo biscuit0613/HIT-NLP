@@ -1,0 +1,61 @@
+=== LAB3 EVAL job 185532 tags=dora_r16_all on gpu13 start Wed Oct 21 11:55:15 AM UTC 2026 ===
+Tesla V100S-PCIE-32GB, 32768 MiB
+=== EVAL dora_r16_all start Wed Oct 21 11:55:15 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/dora_r16_all dtype=float16
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:07,  2.37s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.14s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.09s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  1.97s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:08<00:00,  2.04s/it]model loaded in 10.2s
+  medical limit 100
+  medical 8/100
+  medical 16/100
+  medical 24/100
+  medical 32/100
+  medical 40/100
+  medical 48/100
+  medical 56/100
+  medical 64/100
+  medical 72/100
+  medical 80/100
+  medical 88/100
+  medical 96/100
+  medical 100/100
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /scratch/jnguan/tmp/jieba.cache
+Loading model cost 0.664 seconds.
+Prefix dict has been built successfully.
+medical {"n": 100, "rouge-1": 0.22262100794558676, "rouge-2": 0.03882599784259318, "rouge-l": 0.17885184567020648, "rouge-1_p": 0.20883552002421843, "rouge-1_r": 0.2583497057898773, "rouge-2_p": 0.03522980028337439, "rouge-2_r": 0.04718091156289228, "rouge-l_p": 0.17288156593688947, "rouge-l_r": 0.20974510237849145, "avg_hyp_chars": 251.44, "avg_ref_chars": 183.58, "empty_hyp": 0, "first100": {"n": 100, "rouge-1": 0.22262100794558676, "rouge-2": 0.03882599784259318, "rouge-l": 0.17885184567020648, "rouge-1_p": 0.20883552002421843, "rouge-1_r": 0.2583497057898773, "rouge-2_p": 0.03522980028337439, "rouge-2_r": 0.04718091156289228, "rouge-l_p": 0.17288156593688947, "rouge-l_r": 0.20974510237849145, "avg_hyp_chars": 251.44, "avg_ref_chars": 183.58, "empty_hyp": 0}, "elapsed_s": 1552.0628049373627}
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 154, "accuracy": 0.7549019607843137, "invalid": 0, "contains_gold": 154, "contains_gold_rate": 0.7549019607843137, "elapsed_s": 105.87672638893127}
+wrote /home/jnguan/lab3/results/metrics_dora_r16_all.json
+=== EVAL dora_r16_all end Wed Oct 21 12:23:11 PM UTC 2026 ===
+=== ALL DONE Wed Oct 21 12:23:11 PM UTC 2026 ===

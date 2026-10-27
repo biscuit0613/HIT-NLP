@@ -1,0 +1,10 @@
+=== sdpa base Thu Oct 22 11:34:25 AM UTC 2026 ===
+usage: eval_models.py [-h] --base-model BASE_MODEL [--adapter ADAPTER] --tag
+                      TAG --data-dir DATA_DIR --out-dir OUT_DIR
+                      [--datasets DATASETS] [--medical-file MEDICAL_FILE]
+                      [--medical-limit MEDICAL_LIMIT]
+                      [--cmmlu-file CMMLU_FILE] [--cmmlu-limit CMMLU_LIMIT]
+                      [--batch-size BATCH_SIZE] [--dtype {bfloat16,float16}]
+                      [--system {official,qwen}] [--merge-adapter]
+eval_models.py: error: unrecognized arguments: --attn sdpa
+=== done Thu Oct 22 11:34:35 AM UTC 2026 ===

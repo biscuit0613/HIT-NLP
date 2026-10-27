@@ -1,0 +1,191 @@
+=== smoke base Thu Oct 22 11:14:49 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=none dtype=bfloat16
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:40<02:00, 40.02s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:15<01:15, 37.58s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [01:52<00:36, 36.93s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:40<00:00, 41.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:40<00:00, 40.15s/it]model loaded in 165.7s
+  medical limit 2
+  medical 2/2
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Building prefix dict from the default dictionary ...
+Loading model from cache /tmp/jieba.cache
+Dumping model to file cache /tmp/jieba.cache
+Dump cache file failed.
+Traceback (most recent call last):
+  File "/home/jnguan/lab3/pylibs38/jieba/__init__.py", line 154, in initialize
+    _replace_file(fpath, cache_file)
+PermissionError: [Errno 1] Operation not permitted: '/tmp/tmpon35u8ov' -> '/tmp/jieba.cache'
+Loading model cost 0.880 seconds.
+Prefix dict has been built successfully.
+Traceback (most recent call last):
+  File "scripts/eval_models.py", line 326, in <module>
+    main()
+  File "scripts/eval_models.py", line 308, in main
+    preds, metrics = evaluate_medical(model, tokenizer, samples, args.batch_size, system)
+  File "scripts/eval_models.py", line 208, in evaluate_medical
+    metrics = medical_metrics(preds)
+  File "scripts/eval_models.py", line 183, in medical_metrics
+    scores = rouge_scores([(p["pred"], p["tgt"]) for p in preds])
+  File "scripts/eval_models.py", line 132, in rouge_scores
+    refs = [" ".join(jieba.cut(ref)) or "。" for _, ref in valid]
+  File "scripts/eval_models.py", line 132, in <listcomp>
+    refs = [" ".join(jieba.cut(ref)) or "。" for _, ref in valid]
+  File "/home/jnguan/lab3/pylibs38/jieba/__init__.py", line 300, in cut
+    sentence = strdecode(sentence)
+  File "/home/jnguan/lab3/pylibs38/jieba/_compat.py", line 79, in strdecode
+    sentence = sentence.decode('utf-8')
+AttributeError: 'list' object has no attribute 'decode'
+=== smoke dora merge Thu Oct 22 11:19:34 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/dora_r16_all dtype=bfloat16
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.78s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:04,  2.49s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.36s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:09<00:00,  2.25s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:09<00:00,  2.34s/it]model loaded in 14.0s
+  medical limit 2
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+Traceback (most recent call last):
+  File "scripts/eval_models.py", line 326, in <module>
+    main()
+  File "scripts/eval_models.py", line 308, in main
+    preds, metrics = evaluate_medical(model, tokenizer, samples, args.batch_size, system)
+  File "scripts/eval_models.py", line 198, in evaluate_medical
+    hyps, lengths = generate_batch(model, tokenizer, prompts, MAX_NEW_TOKENS)
+  File "scripts/eval_models.py", line 104, in generate_batch
+    output = model.generate(
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/jnguan/lab3/pylibs38/transformers/generation/utils.py", line 2024, in generate
+    result = self._sample(
+  File "/home/jnguan/lab3/pylibs38/transformers/generation/utils.py", line 2982, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/jnguan/lab3/pylibs38/transformers/models/qwen2/modeling_qwen2.py", line 1104, in forward
+    outputs = self.model(
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/jnguan/lab3/pylibs38/transformers/models/qwen2/modeling_qwen2.py", line 915, in forward
+    layer_outputs = decoder_layer(
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/jnguan/lab3/pylibs38/transformers/models/qwen2/modeling_qwen2.py", line 655, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/jnguan/lab3/pylibs38/transformers/models/qwen2/modeling_qwen2.py", line 294, in forward
+    query_states = self.q_proj(hidden_states)
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 117, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: self and mat2 must have the same dtype, but got BFloat16 and Float
+=== smoke gen_test Thu Oct 22 11:19:53 AM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=none dtype=bfloat16
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.90s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.56s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:07<00:02,  2.45s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:09<00:00,  2.29s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:09<00:00,  2.39s/it][1/6] 12.1s, 256 tok
+头晕是一个常见的症状，可能由多种因素引起。以下是一些可能导致头晕的原因：
+
+1. **低血压**：血压过低可能导致大脑供血不足，从而引起头晕。
+2. **脱水**：身体缺水时，血液浓度升高，可能会导致头晕。
+3. **贫血**：缺乏足够的红细胞或血红蛋白（如缺铁性贫血）会导致氧气无法有效输送到身体各部位，包括大脑，引起头晕。
+4. **压力和焦虑**：长期的压力和焦虑状态可以影响神经系统，导致头晕。
+5. **睡眠不足**：缺乏充足的睡眠会影响身体的正常功能，包括血液循环，从而导致头晕。
+6. **内耳问题**：例如美尼尔病、前庭神经炎等内耳疾病，会影响平衡感，导致头晕。
+7. **药物副作用**：某些药物可能会引起头晕作为副作用。
+8. **血糖水平异常**：低血糖或高血糖都可能导致头晕。
+9. **心脏问题**：心脏疾病如心律不齐、心肌梗塞等也可能引起头晕。
+10. **眼部问题**：视力问题或眼压异常也可能导致头晕。
+
+如果您的头晕持续存在或者伴有其他严重症状（如剧烈头痛
+
+[2/6] 11.3s, 256 tok
+荨麻疹是一种常见的的过敏性皮肤病，其症状包括皮肤上出现红色或肤色的肿块、瘙痒等。为了避免加重病情或诱发荨麻疹，患者在饮食上应尽量避免以下食物：
+
+1. **海鲜类**：如虾、蟹、贝类等，这些食物容易引起过敏反应。
+2. **坚果和种子类**：如花生、杏仁、核桃等，对某些人来说可能引发过敏。
+3. **柑橘类水果**：如橙子、柚子、柠檬等，这类水果中的某些成分可能会刺激皮肤。
+4. **巧克力**：虽然不是所有人都对其过敏，但有些人食用后可能会导致荨麻疹发作。
+5. **酒精和咖啡因**：这些饮料可能会影响身体的免疫系统，从而加重荨麻疹的症状。
+6. **辛辣食物**：过于辛辣的食物可能会刺激皮肤，导致症状加剧。
+7. **加工食品和含防腐剂的食物**：这些食品中可能含有引发过敏的成分。
+
+每个人的身体对食物的反应不同，因此建议患者在日常生活中记录下自己的饮食与荨麻疹症状的关系，以找出可能的触发因素，并尽量避免。如果症状持续或加重，应及时就医寻求专业
+
+[3/6] 11.1s, 256 tok
+当孩子体温达到38.5度时，并不一定需要立即服用退烧药。首先，建议观察孩子的其他症状，如是否有咳嗽、流鼻涕、呕吐、腹泻、皮疹或精神状态不佳等。这些症状可能与发烧有关，也可能与其他健康问题相关。
+
+在处理孩子发烧的情况时，可以采取以下措施：
+
+1. **保持室内空气流通**：确保房间通风，但避免直接吹风。
+2. **适当穿着**：根据室温给孩子穿合适的的衣服，不要过度包裹。
+3. **多喝水**：鼓励孩子多喝水或其他无糖液体，以防脱水。
+4. **物理降温**：可以使用温水擦浴（不是冷水）帮助降低体温，但避免使用冰袋或冷水直接接触皮肤，以免引起寒战或不适。
+5. **监测体温**：使用体温计（推荐使用耳温枪或额温枪，因为它们更准确且对儿童友好）定期检查体温变化。
+
+如果孩子出现以下情况之一，应考虑就医：
+- 体温持续超过39度或持续不降。
+- 孩子表现出严重的不适，如剧烈头痛、持续的烦躁不安、呼吸困难、抽搐或意识模糊。
+- �
+
+[4/6] 11.0s, 256 tok
+高血压患者的日常饮食需要特别注意，以帮助控制血压、减少心血管疾病的风险。以下是一些建议：
+
+1. **低盐饮食**：减少食盐摄入是关键。世界卫生组织建议每日盐摄入量不超过5克（约一茶匙）。高盐饮食会增加血压，因此应尽量选择低钠食品，避免加工食品和快餐。
+
+2. **多吃蔬菜和水果**：它们富含钾、维生素C和其他抗氧化剂，有助于降低血压。每天至少吃五份不同颜色的蔬菜和水果。
+
+3. **全谷物**：替代精制谷物，如白面包和白米，选择全麦、燕麦等富含纤维的食物，有助于维持健康的体重和血压水平。
+
+4. **限制饮酒**：过量饮酒会导致血压升高。男性每天不超过两杯酒精饮料，女性每天不超过一杯。
+
+5. **适量蛋白质**：选择瘦肉、鱼、豆类和豆制品作为蛋白质来源，避免过多红肉和加工肉类。
+
+6. **健康脂肪**：优先选择单不饱和脂肪和多不饱和脂肪，如橄榄油、坚果、鱼类中的Omega-3脂肪酸，减少饱和脂肪和反式脂肪的摄入。
+
+7. **保持
+
+[5/6] 11.2s, 256 tok
+失眠和多梦是常见的的睡眠问题，可能由多种因素引起，包括压力、焦虑、生活习惯、环境因素等。以下是一些有助于改善失眠和多梦的建议：
+
+1. **建立规律的作息时间**：每天尽量在同一时间上床睡觉和起床，即使在周末也是如此。这有助于调整你的生物钟。
+
+2. **创造良好的睡眠环境**：确保你的卧室安静、黑暗、凉爽，并且床铺舒适。使用遮光窗帘、耳塞或白噪音机可以帮助改善睡眠环境。
+
+3. **限制日间小睡**：如果你白天感到困倦，尽量限制日间的小睡时间，避免超过20分钟，以免影响夜间睡眠。
+
+4. **减少咖啡因和酒精摄入**：尤其是在睡前几小时内，避免摄入咖啡因和酒精，因为它们可能干扰你的睡眠周期。
+
+5. **放松身心**：尝试在睡前进行放松活动，如深呼吸、冥想、瑜伽或温水浴，帮助减轻紧张和压力。
+
+6. **限制晚间屏幕时间**：晚上避免使用手机、电脑和其他电子设备，因为蓝光会抑制褪黑素的产生，影响睡眠质量。
+
+7. **适量运动**：定期进行中等强度
+
+[6/6] 0.3s, 6 tok
+中国的首都是北京。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+avg latency 9.5s, avg throughput 22.5 tok/s
+wrote /home/jnguan/lab3/results/smoke_new/gen_test_base.json /home/jnguan/lab3/results/smoke_new/gen_test_base.txt
+=== done Thu Oct 22 11:21:29 AM UTC 2026 ===

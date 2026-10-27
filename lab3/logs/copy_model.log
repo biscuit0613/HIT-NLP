@@ -1,0 +1,15 @@
+COPY_DONE
+total 15G
+-rw-r--r-- 1 jnguan hpc  663 Oct 20 19:14 config.json
+-rw-r--r-- 1 jnguan hpc  243 Oct 20 19:14 generation_config.json
+-rw-r--r-- 1 jnguan hpc  12K Oct 20 18:59 LICENSE
+-rw-r--r-- 1 jnguan hpc 1.6M Oct 20 19:14 merges.txt
+-rw-r--r-- 1 jnguan hpc 3.7G Oct 20 19:14 model-00001-of-00004.safetensors
+-rw-r--r-- 1 jnguan hpc 3.6G Oct 20 19:14 model-00002-of-00004.safetensors
+-rw-r--r-- 1 jnguan hpc 3.6G Oct 20 19:14 model-00003-of-00004.safetensors
+-rw-r--r-- 1 jnguan hpc 3.4G Oct 20 19:14 model-00004-of-00004.safetensors
+-rw-r--r-- 1 jnguan hpc  28K Oct 20 19:14 model.safetensors.index.json
+-rw-r--r-- 1 jnguan hpc 6.5K Oct 20 18:59 README.md
+-rw-r--r-- 1 jnguan hpc 1.3K Oct 20 19:14 tokenizer_config.json
+-rw-r--r-- 1 jnguan hpc 6.8M Oct 20 19:14 tokenizer.json
+-rw-r--r-- 1 jnguan hpc 2.7M Oct 20 19:14 vocab.json

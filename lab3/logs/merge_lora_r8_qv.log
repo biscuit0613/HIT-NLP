@@ -1,0 +1,6 @@
+[1/4] loading tokenizer from /home/jnguan/lab3/models/Qwen2-7B-Instruct
+[2/4] loading base weights on cpu (float16)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:14<00:43, 14.63s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:32<00:33, 16.76s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:50<00:17, 17.21s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:01<00:00, 14.58s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:01<00:00, 15.29s/it][3/4] merging adapter /home/jnguan/lab3/runs/lora_r8_qv
+[4/4] saving merged checkpoint to /home/jnguan/lab3/exports/lora_r8_qv_merged
+done in 111.1s: 7,615,616,512 parameters -> /home/jnguan/lab3/exports/lora_r8_qv_merged
+

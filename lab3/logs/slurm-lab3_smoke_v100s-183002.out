@@ -1,0 +1,36 @@
+=== LAB3 SMOKE V100S job 183002 on gpu13 start Tue Oct 20 11:57:16 AM UTC 2026 ===
+Tesla V100S-PCIE-32GB, 32768 MiB, 580.173.02
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:06,  2.26s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.05s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:01,  1.97s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.86s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.94s/it][params] trainable=40370176 total=7655986688 pct=0.5273%
+[params] targets=['q_proj', 'k_proj', 'v_proj', 'o_proj', 'gate_proj', 'up_proj', 'down_proj'] dora=False dtype=torch.float16
+[data] kept=500 skipped=0
+
+/home/jnguan/lab3/pylibs38/accelerate/accelerator.py:494: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler(**kwargs)
+max_steps is given, it will override any value given in num_train_epochs
+  0%|          | 0/20 [00:00<?, ?it/s]/home/jnguan/.miniconda/envs/doggybot/lib/python3.8/site-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+  5%|▌         | 1/20 [00:10<03:12, 10.16s/it]                                                5%|▌         | 1/20 [00:10<03:12, 10.16s/it] 10%|█         | 2/20 [00:17<02:28,  8.23s/it]                                               10%|█         | 2/20 [00:17<02:28,  8.23s/it] 15%|█▌        | 3/20 [00:22<01:56,  6.83s/it]                                               15%|█▌        | 3/20 [00:22<01:56,  6.83s/it] 20%|██        | 4/20 [00:30<01:57,  7.35s/it]                                               20%|██        | 4/20 [00:30<01:57,  7.35s/it] 25%|██▌       | 5/20 [00:36<01:41,  6.80s/it]                                               25%|██▌       | 5/20 [00:36<01:41,  6.80s/it] 30%|███       | 6/20 [00:43<01:39,  7.08s/it]                                               30%|███       | 6/20 [00:43<01:39,  7.08s/it] 35%|███▌      | 7/20 [00:49<01:26,  6.68s/it]                                               35%|███▌      | 7/20 [00:49<01:26,  6.68s/it] 40%|████      | 8/20 [00:56<01:22,  6.84s/it]                                               40%|████      | 8/20 [00:56<01:22,  6.84s/it] 45%|████▌     | 9/20 [01:01<01:08,  6.23s/it]                                               45%|████▌     | 9/20 [01:01<01:08,  6.23s/it] 50%|█████     | 10/20 [01:06<00:59,  5.90s/it]                                                50%|█████     | 10/20 [01:06<00:59,  5.90s/it] 55%|█████▌    | 11/20 [01:13<00:56,  6.25s/it]                                                55%|█████▌    | 11/20 [01:13<00:56,  6.25s/it] 60%|██████    | 12/20 [01:19<00:49,  6.19s/it]                                                60%|██████    | 12/20 [01:19<00:49,  6.19s/it] 65%|██████▌   | 13/20 [01:25<00:42,  6.12s/it]                                                65%|██████▌   | 13/20 [01:25<00:42,  6.12s/it] 70%|███████   | 14/20 [01:31<00:36,  6.09s/it]                                                70%|███████   | 14/20 [01:31<00:36,  6.09s/it] 75%|███████▌  | 15/20 [01:38<00:31,  6.21s/it]                                                75%|███████▌  | 15/20 [01:38<00:31,  6.21s/it] 80%|████████  | 16/20 [01:43<00:23,  5.92s/it]                                                80%|████████  | 16/20 [01:43<00:23,  5.92s/it] 85%|████████▌ | 17/20 [01:49<00:17,  5.85s/it]                                                85%|████████▌ | 17/20 [01:49<00:17,  5.85s/it] 90%|█████████ | 18/20 [01:54<00:11,  5.64s/it]                                                90%|█████████ | 18/20 [01:54<00:11,  5.64s/it] 95%|█████████▌| 19/20 [02:00<00:05,  5.76s/it]                                                95%|█████████▌| 19/20 [02:00<00:05,  5.76s/it]100%|██████████| 20/20 [02:07<00:00,  6.00s/it]                                               100%|██████████| 20/20 [02:07<00:00,  6.00s/it]                                               100%|██████████| 20/20 [02:09<00:00,  6.00s/it]100%|██████████| 20/20 [02:09<00:00,  6.48s/it]{'loss': 2.2088, 'grad_norm': 1.134866714477539, 'learning_rate': 0.0002, 'epoch': 0.06}
+{'loss': 2.0186, 'grad_norm': 0.9500995874404907, 'learning_rate': 0.00019863613034027224, 'epoch': 0.13}
+{'loss': 1.7646, 'grad_norm': 0.8270880579948425, 'learning_rate': 0.00019458172417006347, 'epoch': 0.19}
+{'loss': 1.7037, 'grad_norm': 0.7442223429679871, 'learning_rate': 0.0001879473751206489, 'epoch': 0.25}
+{'loss': 1.5965, 'grad_norm': 0.5037380456924438, 'learning_rate': 0.00017891405093963938, 'epoch': 0.32}
+{'loss': 1.5899, 'grad_norm': 0.5009435415267944, 'learning_rate': 0.00016772815716257412, 'epoch': 0.38}
+{'loss': 1.5852, 'grad_norm': 0.6986467242240906, 'learning_rate': 0.00015469481581224272, 'epoch': 0.44}
+{'loss': 1.5202, 'grad_norm': 0.5509110689163208, 'learning_rate': 0.00014016954246529696, 'epoch': 0.51}
+{'loss': 1.413, 'grad_norm': 0.574468195438385, 'learning_rate': 0.00012454854871407994, 'epoch': 0.57}
+{'loss': 1.2451, 'grad_norm': 0.5415064096450806, 'learning_rate': 0.00010825793454723325, 'epoch': 0.63}
+{'loss': 1.4594, 'grad_norm': 0.562717854976654, 'learning_rate': 9.174206545276677e-05, 'epoch': 0.7}
+{'loss': 1.5362, 'grad_norm': 0.4730604290962219, 'learning_rate': 7.54514512859201e-05, 'epoch': 0.76}
+{'loss': 1.2807, 'grad_norm': 0.4907744824886322, 'learning_rate': 5.983045753470308e-05, 'epoch': 0.83}
+{'loss': 1.3321, 'grad_norm': 0.483186274766922, 'learning_rate': 4.530518418775733e-05, 'epoch': 0.89}
+{'loss': 1.4425, 'grad_norm': 0.48050767183303833, 'learning_rate': 3.227184283742591e-05, 'epoch': 0.95}
+{'loss': 1.301, 'grad_norm': 0.5057321190834045, 'learning_rate': 2.1085949060360654e-05, 'epoch': 1.02}
+{'loss': 1.2271, 'grad_norm': 0.4254050552845001, 'learning_rate': 1.2052624879351104e-05, 'epoch': 1.08}
+{'loss': 1.2615, 'grad_norm': 0.46087267994880676, 'learning_rate': 5.418275829936537e-06, 'epoch': 1.14}
+{'loss': 1.2791, 'grad_norm': 0.4267421364784241, 'learning_rate': 1.3638696597277679e-06, 'epoch': 1.21}
+{'loss': 1.4092, 'grad_norm': 0.4117189943790436, 'learning_rate': 0.0, 'epoch': 1.27}
+{'train_runtime': 129.5513, 'train_samples_per_second': 4.94, 'train_steps_per_second': 0.154, 'train_loss': 1.5087217330932616, 'epoch': 1.27}
+[gpu] peak_alloc_gb=22.73
+[done] {"tag": "smoke_v100s", "trainable_params": 40370176, "total_params": 7655986688, "trainable_pct": 0.5273020662807087, "lora_rank": 16, "lora_alpha": 32, "lora_target": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"], "use_dora": false, "learning_rate": 0.0002, "num_samples": 500, "skipped": 0, "steps": 20, "fp16": true, "gradient_checkpointing": true}
+
+=== DONE Tue Oct 20 12:00:01 PM UTC 2026 ===

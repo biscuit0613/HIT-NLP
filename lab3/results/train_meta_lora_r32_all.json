@@ -1,0 +1,24 @@
+{
+  "tag": "lora_r32_all",
+  "trainable_params": 80740352,
+  "total_params": 7696356864,
+  "trainable_pct": 1.0490723523705878,
+  "lora_rank": 32,
+  "lora_alpha": 64,
+  "lora_target": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "use_dora": false,
+  "learning_rate": 0.0002,
+  "num_samples": 12000,
+  "skipped": 0,
+  "steps": 375,
+  "fp16": true,
+  "gradient_checkpointing": true
+}

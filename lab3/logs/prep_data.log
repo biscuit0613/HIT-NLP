@@ -1,0 +1,36 @@
+{
+  "conversations": 464898,
+  "assistant_pairs_raw": 1362284,
+  "empty_pairs": 3,
+  "removed_test_overlap": 0,
+  "train_pairs": 96293,
+  "val_pairs": 2000,
+  "train_groups": 460234,
+  "val_groups": 4648,
+  "src_chars": {
+    "p50": 33,
+    "p90": 133,
+    "p99": 352,
+    "max": 557
+  },
+  "tgt_chars": {
+    "p50": 110,
+    "p90": 204,
+    "p99": 411,
+    "max": 2847
+  },
+  "sources_top": [
+    [
+      "meddial",
+      1289452
+    ],
+    [
+      "CMeKG",
+      50485
+    ],
+    [
+      "cMedQA",
+      22347
+    ]
+  ]
+}

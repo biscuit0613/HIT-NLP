@@ -1,0 +1,438 @@
+=== scaffold base start Thu Oct 22 12:23:38 PM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=none dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:06<00:20,  6.78s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:47<02:04, 62.29s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [01:51<00:35, 35.44s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:54<00:00, 22.65s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:54<00:00, 28.61s/it]model loaded in 144.6s
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 124, "wrong": 30, "unparsed": 50, "accuracy": 0.6078431372549019, "contains_gold": 187, "contains_gold_rate": 0.9166666666666666, "pred_dist": {"A": 51, "B": 36, "C": 36, "D": 31}, "hit_limit": 27, "avg_new_tokens": 105.76470588235294, "elapsed_s": 267.82071447372437, "samples_per_s": 0.7617035884414276}
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/cmmlu_scaffold/metrics_base.json
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:11,  3.95s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:07,  3.56s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:10<00:03,  3.56s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.56s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.59s/it][1/6] role_pediatrician 12.9s
+当然，作为儿科医生，我会以一种既专业又充满关怀的方式与您交流，确保您在面对孩子的发烧情况时能够感到安心和指导。
+
+亲爱的家长，
+
+首先，请接受我的问候，希望您的孩子正在恢复健康。当您的孩子出现发烧的情况时，作为父母，您可能会感到担忧和不安。不过，请相信，通过正确的观察和适当的护理，我们可以帮助孩子尽快恢复。以下是一些关键的观察指标，以及如何处理发烧的一些基本建议：
+
+### 观察指标
+
+1. **体温**：这是最直接的指标。使用耳温枪或额温枪测量孩子的体温，注意记录并比较。正常体温范围因年龄而异，但通常在36.5°C至37.5°C之间。如果体温超过这个范围，尤其是持续升高，应引起重视。
+
+2. **精神状态**：观察孩子是否显得疲倦、烦躁或是异常安静。如果孩子看起来很不舒服，或者不愿意进食，这可能是病情加重的迹象。
+
+3. **呼吸频率**：正常情况下，婴儿的呼吸频率较快，但随着年龄增长而减慢。如果孩子呼吸急促（例如，每分钟呼吸次数超过年龄相关标准），可能需要进一步关注。
+
+4. **
+
+[2/6] role_pharmacist 10.3s
+作为药剂师，我需要强调的是，阿莫西林是一种广谱的青霉素类抗生素，主要用于治疗由敏感细菌引起的感染，如中耳炎、鼻窦炎、肺炎等。它并不适用于所有类型的感冒。
+
+感冒通常是由病毒引起的，包括流感病毒、冠状病毒、腺病毒等多种病毒。抗生素对病毒没有作用，因此，即使你感觉像是感冒，但如果症状是由病毒引起的，阿莫西林或其他抗生素也不会有效。实际上，滥用抗生素，包括自行使用抗生素治疗病毒感染，不仅不会治愈感冒，还可能导致抗生素耐药性的增加，使得未来更难治疗细菌感染。
+
+如果你怀疑自己患有细菌性感染（例如，如果感冒伴有严重的喉咙痛、咳嗽、发热持续不退或出现其他严重症状），你应该尽快就医，让医生进行诊断并决定是否需要使用抗生素。医生会根据你的具体症状和体征，以及可能的病原体类型来判断是否适合使用抗生素，以及选择最合适的药物。
+
+总之，在面对感冒时，请遵循以下建议：
+1. **识别症状**：了解感冒是由病毒引起的基本特征。
+2. **自我护理**：多休息、保持充足的水分摄入、适当使用解热镇痛药缓解症状。
+3
+
+[3/6] short_answer 0.8s
+正常成年人的体温范围是36.1°C至37.2°C。
+
+[4/6] three_points 1.5s
+1. 低盐饮食，控制钠摄入。
+2. 高钾食物，如香蕉、菠菜有益。
+3. 限制饮酒，增加蔬菜水果摄入。
+
+[5/6] chest_pain 3.3s
+我必须强调，我提供的信息不能替代专业医疗建议。您描述的症状可能与心脏问题有关，这需要立即寻求医生或专业医疗人员的帮助。请务必尽快就医，不要自行用药。在等待急救到达的过程中，尽量保持平静，避免剧烈运动，并尝试坐下来，如果可能的话，可以采取半坐姿。请记住，及时的专业医疗干预对于处理这类症状至关重要。
+
+[6/6] multi_turn 6.9s
+如果您的头痛持续存在，或者伴随有其他严重的症状（例如剧烈的头痛、视力模糊、说话困难、肢体无力、意识混乱、恶心呕吐、发热、颈部僵硬等），那么建议您尽快就医，以便医生进行全面的检查和诊断。
+
+对于偶尔的、轻微的头痛，可以通过上述提到的方法进行自我管理。但如果头痛频繁发生，或者头痛的性质、强度、位置发生变化，也应考虑就医，以排除潜在的健康问题。
+
+在决定是否去医院之前，您可以先尝试记录头痛发作的时间、频率、持续时间、触发因素（如特定的食物、活动、环境等）以及任何伴随的症状。这些信息可以帮助医生更好地理解您的情况并提供适当的建议。
+
+总之，如果头痛影响到了日常生活，或者您对自己的健康状况感到担忧，最好咨询医疗专业人士的意见。他们可以根据您的具体情况提供专业的指导和治疗方案。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/hci_probe/hci_probe_base.json /home/jnguan/lab3/results/hci_probe/hci_probe_base.md
+=== scaffold base end Thu Oct 22 12:33:04 PM UTC 2026 ===
+=== scaffold lora_r8_qv start Thu Oct 22 12:33:04 PM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r8_qv dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:18<00:54, 18.07s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:30<00:29, 14.85s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:33<00:09,  9.55s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:36<00:00,  6.94s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:36<00:00,  9.21s/it]model loaded in 40.5s
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 55, "wrong": 18, "unparsed": 131, "accuracy": 0.2696078431372549, "contains_gold": 85, "contains_gold_rate": 0.4166666666666667, "pred_dist": {"A": 23, "B": 16, "C": 15, "D": 19}, "hit_limit": 0, "avg_new_tokens": 32.8578431372549, "elapsed_s": 83.11048221588135, "samples_per_s": 2.4545640069138863}
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/cmmlu_scaffold/metrics_lora_r8_qv.json
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:14,  4.88s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:09<00:09,  4.66s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:13<00:04,  4.18s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:16<00:00,  3.82s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:16<00:00,  4.06s/it][1/6] role_pediatrician 9.1s
+非常理解您的担心。当孩子出现发烧的情况时，作为家长，您可能会感到非常焦虑。但是，请放心，我会尽力帮助您了解如何正确观察孩子的病情。首先，我们需要关注孩子的体温变化。如果孩子的体温持续升高或反复发热，这可能是病情加重的迹象。其次，我们还需要注意孩子的精神状态。如果孩子显得烦躁不安、食欲不振或睡眠质量下降，这也可能意味着病情有所恶化。此外，观察孩子的呼吸情况也很重要。如果孩子呼吸急促或有喘息声，这可能是呼吸道感染的表现。最后，我们还需要关注孩子的其他症状，如咳嗽、流鼻涕、呕吐等。这些症状可能提示孩子患有其他疾病。总之，当孩子出现发烧时，家长需要密切观察孩子的体温、精神状态、呼吸情况以及其他症状的变化。如果您有任何疑问或担忧，请随时向我咨询。
+
+[2/6] role_pharmacist 2.8s
+非常感谢您的咨询。根据您的描述，您可能患有普通感冒。普通感冒是由病毒引起的，而阿莫西林是一种抗生素，主要用于治疗细菌感染。因此，阿莫西林并不能直接治疗普通感冒。如果您有其他症状或担心自己的病情，请及时就医并咨询医生的意见。
+
+[3/6] short_answer 0.8s
+正常成年人的体温范围是36.5℃至37.2℃。
+
+[4/6] three_points 2.3s
+1. 低盐饮食：减少食盐摄入量，避免高盐食物。
+2. 高钾饮食：增加富含钾的食物，如香蕉、土豆等。
+3. 控制热量：合理控制总热量摄入，避免肥胖。
+
+[5/6] chest_pain 4.4s
+根据您的症状描述，您可能正在经历心绞痛。建议您尽快就医，进行进一步的检查和诊断。在此之前，您可以暂时避免剧烈运动和情绪激动，保持心情舒畅。同时，您可以服用一些缓解心绞痛的药物，如硝酸甘油片或速效救心丸等。但是请注意，这些药物只能暂时缓解症状，并不能根治疾病。因此，我还是建议您尽快就医，以便得到更准确的诊断和治疗方案。
+
+[6/6] multi_turn 2.3s
+如果您的头痛症状持续存在或加重，建议您尽快就医，以便进行进一步的检查和治疗。医生会根据您的症状和病史来确定病因，并给出相应的治疗方案。请不要自行诊断或延误就医，以免病情恶化。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/hci_probe/hci_probe_lora_r8_qv.json /home/jnguan/lab3/results/hci_probe/hci_probe_lora_r8_qv.md
+=== scaffold lora_r8_qv end Thu Oct 22 12:36:27 PM UTC 2026 ===
+=== scaffold lora_r16_all_lr1e4 start Thu Oct 22 12:36:27 PM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r16_all_lr1e4 dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:12,  4.17s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:07,  3.81s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:11<00:03,  3.75s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.56s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.67s/it]model loaded in 19.5s
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 98, "wrong": 28, "unparsed": 78, "accuracy": 0.4803921568627451, "contains_gold": 122, "contains_gold_rate": 0.5980392156862745, "pred_dist": {"A": 35, "B": 25, "C": 33, "D": 33}, "hit_limit": 0, "avg_new_tokens": 35.28921568627451, "elapsed_s": 89.32836246490479, "samples_per_s": 2.2837091095209443}
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/cmmlu_scaffold/metrics_lora_r16_all_lr1e4.json
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:12,  4.14s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:07,  3.82s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:11<00:03,  3.69s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.50s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.62s/it][1/6] role_pediatrician 6.9s
+非常理解您的担心。当孩子出现发烧时，我们可以观察一些指标来判断病情的严重程度。首先，我们需要关注孩子的体温变化，如果体温持续升高或反复发热，可能需要进一步检查。其次，观察孩子的精神状态也很重要，如果孩子显得烦躁不安、食欲不振或睡眠质量下降，可能需要引起重视。此外，注意观察孩子的呼吸情况，如果呼吸急促或困难，也需要及时就医。最后，观察孩子的尿量和排便情况，如果出现尿量减少或便秘，可能需要进一步评估。这些指标可以帮助我们更好地了解孩子的病情，但请注意，这只是初步的观察，如果症状持续或加重，请及时就医。
+
+[2/6] role_pharmacist 3.1s
+非常抱歉，我是一个AI医疗助手，无法提供具体的药物治疗建议。但是，我可以告诉您，阿莫西林是一种常用的抗生素，主要用于治疗细菌感染。对于普通感冒，通常是由病毒引起的，因此抗生素是无效的。如果您有感冒症状，建议您咨询医生或药师，以便获得更准确的诊断和治疗建议。
+
+[3/6] short_answer 0.8s
+正常成年人的体温范围是36.5-37.2摄氏度。
+
+[4/6] three_points 2.2s
+1. 低盐饮食：减少食盐摄入，避免高盐食物。
+2. 高钾饮食：增加富含钾的食物，如香蕉、土豆等。
+3. 控制热量摄入：合理控制饮食总热量，避免过度肥胖。
+
+[5/6] chest_pain 3.5s
+非常抱歉听到您的不适。根据您的症状描述，可能是心绞痛引起的。建议您尽快就医，进行进一步的检查和诊断。在等待就医的过程中，您可以尝试一些缓解症状的方法，如保持心情舒畅、避免过度劳累、避免吸烟和饮酒等。同时，您可以咨询医生是否适合使用一些药物来缓解症状，但请注意，药物治疗应在医生的指导下进行。
+
+[6/6] multi_turn 1.8s
+是的，我建议您尽快就医，以便得到专业的诊断和治疗。您可以选择就近的医院或诊所进行咨询和检查。医生会根据您的症状和检查结果制定相应的治疗方案。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/hci_probe/hci_probe_lora_r16_all_lr1e4.json /home/jnguan/lab3/results/hci_probe/hci_probe_lora_r16_all_lr1e4.md
+=== scaffold lora_r16_all_lr1e4 end Thu Oct 22 12:39:07 PM UTC 2026 ===
+=== scaffold lora_r16_all start Thu Oct 22 12:39:07 PM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r16_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:12,  4.09s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:07,  3.76s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:11<00:03,  3.68s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.51s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.62s/it]model loaded in 18.7s
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 97, "wrong": 33, "unparsed": 74, "accuracy": 0.47549019607843135, "contains_gold": 117, "contains_gold_rate": 0.5735294117647058, "pred_dist": {"A": 39, "B": 28, "C": 30, "D": 33}, "hit_limit": 0, "avg_new_tokens": 34.88725490196079, "elapsed_s": 88.34101295471191, "samples_per_s": 2.3092331310302705}
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/cmmlu_scaffold/metrics_lora_r16_all.json
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:04<00:12,  4.13s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:07<00:07,  3.79s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:11<00:03,  3.66s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.50s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:14<00:00,  3.61s/it][1/6] role_pediatrician 9.0s
+非常理解您的担心。当孩子出现发烧时，我们可以观察一些指标来判断病情的严重程度。首先，我们需要关注孩子的体温变化，如果体温持续升高或反复发热，可能需要进一步检查。其次，观察孩子的精神状态也很重要，如果孩子显得烦躁不安、食欲不振或出现其他异常症状，可能需要及时就医。此外，注意孩子的呼吸情况，如果呼吸急促或困难，也需要引起重视。最后，观察孩子的尿量和排便情况，如果出现尿量减少或便秘等情况，也需要及时就医。请您密切观察孩子的这些指标，并在必要时及时就医。
+
+[2/6] role_pharmacist 6.1s
+非常抱歉，我是一个AI医疗助手，无法提供具体的药物治疗建议。但是，我可以告诉您，阿莫西林是一种常用的抗生素，主要用于治疗细菌感染引起的疾病。对于普通感冒，通常是由病毒引起的，抗生素是无效的。因此，我建议您在使用任何药物之前，先咨询医生或药师的意见，以确保正确使用药物并避免不必要的副作用。
+
+[3/6] short_answer 1.3s
+正常成年人的体温范围是36.5-37.2摄氏度。
+
+[4/6] three_points 2.9s
+1. 低盐饮食：减少食盐摄入，控制血压水平。
+2. 高纤维饮食：增加蔬菜、水果和全谷类食物的摄入，有助于降低血压。
+3. 控制体重：保持适当的体重，避免肥胖对血压的影响。
+
+[5/6] chest_pain 7.1s
+非常抱歉听到您的不适。根据您的症状描述，可能是心绞痛引起的。建议您尽快就医，进行进一步的检查和诊断。在等待就医的过程中，您可以尝试一些缓解症状的方法，如保持心情舒畅、避免过度劳累、避免吸烟和饮酒等。同时，您可以咨询医生是否适合使用一些缓解心绞痛的药物，如硝酸甘油等。但请注意，这些药物只是暂时缓解症状，并不能根治疾病，因此还是建议您尽快就医以获得更准确的诊断和治疗方案。
+
+[6/6] multi_turn 4.5s
+根据您的描述，头痛可能是由多种原因引起的。为了更准确地判断病因并制定相应的治疗方案，我建议您尽快就医咨询专业医生的意见。医生会根据您的症状、体格检查和其他相关检查结果来做出诊断，并给出相应的治疗建议。请您尽快预约专科医生的门诊时间，以便得到专业的帮助和指导。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/hci_probe/hci_probe_lora_r16_all.json /home/jnguan/lab3/results/hci_probe/hci_probe_lora_r16_all.md
+=== scaffold lora_r16_all end Thu Oct 22 12:42:03 PM UTC 2026 ===
+=== scaffold lora_r32_all start Thu Oct 22 12:42:03 PM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/lora_r32_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:20<01:01, 20.49s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:35<00:34, 17.10s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:51<00:16, 16.55s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:03<00:00, 14.71s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:03<00:00, 15.75s/it]model loaded in 73.1s
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 105, "wrong": 33, "unparsed": 66, "accuracy": 0.5147058823529411, "contains_gold": 126, "contains_gold_rate": 0.6176470588235294, "pred_dist": {"A": 36, "B": 33, "C": 34, "D": 35}, "hit_limit": 0, "avg_new_tokens": 33.17156862745098, "elapsed_s": 84.20751810073853, "samples_per_s": 2.422586300908629}
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/cmmlu_scaffold/metrics_lora_r32_all.json
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:05<00:17,  5.92s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:11<00:11,  5.71s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:19<00:06,  6.70s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:28<00:00,  7.66s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:28<00:00,  7.12s/it][1/6] role_pediatrician 7.0s
+非常理解您的担心。当孩子出现发烧时，我们首先需要关注孩子的体温变化。如果孩子的体温持续升高或反复发热，我们需要及时就医。此外，我们还需要注意孩子的精神状态和食欲情况。如果孩子出现嗜睡、食欲不振等症状，也需要引起重视。另外，观察孩子的呼吸频率和呼吸困难的情况也很重要。如果孩子呼吸急促或有呼吸困难的表现，也需要及时就医。最后，我们还需要关注孩子的尿量和排尿情况。如果孩子出现尿量减少或排尿困难，也需要及时就医。请您密切关注孩子的这些指标，并在必要时及时就医。
+
+[2/6] role_pharmacist 3.6s
+非常抱歉，我是一个AI医疗助手，无法提供具体的药物治疗建议。但是，我可以告诉您，阿莫西林是一种常用的抗生素，主要用于治疗细菌感染引起的疾病。对于普通感冒，通常是由病毒引起的，抗生素是无效的。因此，我建议您在使用任何药物之前，先咨询医生或药师的意见，以确保正确使用药物并避免不必要的副作用。
+
+[3/6] short_answer 0.6s
+正常成年人的体温范围是36-37℃。
+
+[4/6] three_points 2.6s
+1. 高血压患者应控制盐的摄入量，减少钠盐的摄入。
+2. 增加蔬菜水果的摄入，保证足够的膳食纤维和维生素摄入。
+3. 控制脂肪和胆固醇的摄入，选择低脂、低胆固醇的食物。
+
+[5/6] chest_pain 4.3s
+非常抱歉听到您的不适。根据您的症状描述，可能是心绞痛引起的。建议您尽快就医，进行进一步的检查和诊断。在等待就医的过程中，您可以尝试一些缓解症状的方法，如保持休息、避免剧烈运动、放松心情等。同时，您可以考虑服用一些药物来缓解疼痛，但请注意，药物只是暂时缓解症状，并不能替代专业医生的诊断和治疗。请您尽快就医，以便得到更准确的诊断和治疗方案。
+
+[6/6] multi_turn 1.8s
+根据您的描述，头痛可能是由多种原因引起的。如果您感到不适或症状持续，请及时就医咨询专业医生的意见。医生会根据您的具体情况进行综合评估，并给出相应的治疗建议。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/hci_probe/hci_probe_lora_r32_all.json /home/jnguan/lab3/results/hci_probe/hci_probe_lora_r32_all.md
+=== scaffold lora_r32_all end Thu Oct 22 12:45:57 PM UTC 2026 ===
+=== scaffold dora_r16_all start Thu Oct 22 12:45:57 PM UTC 2026 ===
+loading base=/home/jnguan/lab3/models/Qwen2-7B-Instruct adapter=/home/jnguan/lab3/runs/dora_r16_all dtype=float16 attn=sdpa
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:06<00:20,  6.71s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:13<00:13,  6.96s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:23<00:08,  8.07s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:38<00:00, 10.78s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:38<00:00,  9.54s/it]model loaded in 62.2s
+  cmmlu 204
+  cmmlu 8/204
+  cmmlu 16/204
+  cmmlu 24/204
+  cmmlu 32/204
+  cmmlu 40/204
+  cmmlu 48/204
+  cmmlu 56/204
+  cmmlu 64/204
+  cmmlu 72/204
+  cmmlu 80/204
+  cmmlu 88/204
+  cmmlu 96/204
+  cmmlu 104/204
+  cmmlu 112/204
+  cmmlu 120/204
+  cmmlu 128/204
+  cmmlu 136/204
+  cmmlu 144/204
+  cmmlu 152/204
+  cmmlu 160/204
+  cmmlu 168/204
+  cmmlu 176/204
+  cmmlu 184/204
+  cmmlu 192/204
+  cmmlu 200/204
+  cmmlu 204/204
+cmmlu {"n": 204, "correct": 98, "wrong": 32, "unparsed": 74, "accuracy": 0.4803921568627451, "contains_gold": 116, "contains_gold_rate": 0.5686274509803921, "pred_dist": {"A": 41, "B": 26, "C": 32, "D": 31}, "hit_limit": 0, "avg_new_tokens": 34.75, "elapsed_s": 89.8467857837677, "samples_per_s": 2.2705319090240517}
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/cmmlu_scaffold/metrics_dora_r16_all.json
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:07<00:21,  7.24s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:12<00:12,  6.34s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:21<00:07,  7.35s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:33<00:00,  9.12s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:33<00:00,  8.34s/it][1/6] role_pediatrician 6.6s
+非常理解您的担心。当孩子出现发烧时，我们可以观察一些指标来判断病情的严重程度。首先，我们需要关注孩子的体温变化，如果体温持续升高或反复发热，可能需要进一步检查。其次，观察孩子的精神状态也很重要，如果孩子显得疲倦、食欲不振或有其他不适症状，也需要引起重视。此外，注意观察孩子的呼吸情况，如果呼吸急促或困难，可能需要及时就医。最后，观察孩子的尿量和排便情况，如果出现异常，也需要及时就医。这些指标可以帮助我们更好地了解孩子的病情，但请注意，这只是一般性的建议，具体情况还需要结合孩子的具体情况进行综合判断。
+
+[2/6] role_pharmacist 3.2s
+非常抱歉，我是一个AI医疗助手，无法提供具体的药物治疗建议。但是，我可以告诉您，阿莫西林是一种常用的抗生素，主要用于治疗细菌感染引起的疾病。对于普通感冒，通常是由病毒引起的，抗生素是无效的。因此，我建议您在使用任何药物之前，先咨询医生或药师的意见，以确保正确使用药物并避免不必要的副作用。
+
+[3/6] short_answer 0.8s
+正常成年人的体温范围是36.5-37.2摄氏度。
+
+[4/6] three_points 2.2s
+1. 低盐饮食：减少食盐摄入，控制血压水平。
+2. 高纤维饮食：增加蔬菜、水果和全谷类食物的摄入，有助于降低血压。
+3. 控制体重：保持适当的体重，避免肥胖对血压的影响。
+
+[5/6] chest_pain 4.3s
+非常抱歉听到您的不适。根据您的症状描述，可能是心绞痛引起的。建议您尽快就医，进行进一步的检查和诊断。在等待就医的过程中，您可以尝试一些缓解症状的方法，如保持心情舒畅、避免过度劳累、避免吸烟和饮酒等。同时，您可以咨询医生是否适合使用一些缓解心绞痛的药物，如硝酸甘油等。但请注意，这些药物只是暂时缓解症状，并不能根治疾病，因此还是需要及时就医以获得正确的治疗方案。
+
+[6/6] multi_turn 2.9s
+根据您的描述，头痛可能是由多种原因引起的。为了更准确地判断病因并制定相应的治疗方案，我建议您尽快就医咨询专业医生的意见。医生会根据您的症状、体格检查和其他相关检查结果来做出诊断，并给出相应的治疗建议。请您尽快预约专科医生的门诊时间，以便得到专业的帮助和指导。
+
+
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.7` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.8` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+/home/jnguan/lab3/pylibs38/transformers/generation/configuration_utils.py:589: UserWarning: `do_sample` is set to `False`. However, `top_k` is set to `20` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_k`.
+  warnings.warn(
+wrote /home/jnguan/lab3/results/hci_probe/hci_probe_dora_r16_all.json /home/jnguan/lab3/results/hci_probe/hci_probe_dora_r16_all.md
+=== scaffold dora_r16_all end Thu Oct 22 12:49:51 PM UTC 2026 ===
+=== ALL DONE Thu Oct 22 12:49:51 PM UTC 2026 ===

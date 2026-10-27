@@ -1,0 +1,60 @@
+{
+  "tag": "dora",
+  "adapter": "/home/jnguan/lab3/runs/dora_r16_all",
+  "base": "/home/jnguan/lab3/models/Qwen2-7B-Instruct",
+  "protocol": {
+    "system": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.",
+    "decoding": "greedy",
+    "repetition_penalty": 1.05,
+    "max_new_tokens": 256,
+    "batch_size": 2,
+    "dtype": "float16",
+    "merged_adapter": true
+  },
+  "medical": {
+    "n": 2,
+    "rouge-1": 0.0,
+    "rouge-1_p": 0.0,
+    "rouge-1_r": 0.0,
+    "rouge-2": 0.0,
+    "rouge-2_p": 0.0,
+    "rouge-2_r": 0.0,
+    "rouge-l": 0.0,
+    "rouge-l_p": 0.0,
+    "rouge-l_r": 0.0,
+    "valid": 2,
+    "empty": 0,
+    "avg_chars": 200,
+    "median_chars": 200.0,
+    "short_rate": 0.0,
+    "long_rate": 0.0,
+    "list_rate": 0.0,
+    "question_rate": 0.0,
+    "caution_rate": 0.0,
+    "repeat_4gram": 0.9944776161242397,
+    "cjk_ratio": 0.0,
+    "elapsed_s": 11.630935668945312,
+    "samples_per_s": 0.17195521125097574,
+    "avg_new_tokens": 200.5,
+    "hit_limit": 1
+  },
+  "cmmlu": {
+    "n": 3,
+    "correct": 0,
+    "wrong": 0,
+    "unparsed": 3,
+    "accuracy": 0.0,
+    "contains_gold": 0,
+    "contains_gold_rate": 0.0,
+    "pred_dist": {
+      "A": 0,
+      "B": 0,
+      "C": 0,
+      "D": 0
+    },
+    "hit_limit": 3,
+    "avg_new_tokens": 256,
+    "elapsed_s": 18.845916032791138,
+    "samples_per_s": 0.15918566002836443
+  }
+}
