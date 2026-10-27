@@ -35,4 +35,5 @@ data/
 report/*.aux
 report/*.tmp
 
-# 权重与 adapter 未留存、未上传，复现方式见根目录 MODELS.md
+# 七组 adapter 已归档到 HF biscuitzzz/hit-nlp-course-models 的 lab3/adapters/
+# 基座模型、合并导出与数据集未上传，清单与复现条件见根目录 MODELS.md

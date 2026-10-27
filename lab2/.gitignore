@@ -21,4 +21,5 @@ jobs/*.zip
 # Jupyter 缓存
 **/.ipynb_checkpoints/
 
-# saved_models/ 与 data/ 未上传 HF，复现方式见根目录 MODELS.md
+# 八组 step_final 权重已归档到 HF biscuitzzz/hit-nlp-course-models 的 lab2/weights/
+# data/ 与 transformer.pdopt（优化器状态）未上传，清单与复现条件见根目录 MODELS.md
