@@ -10,9 +10,12 @@
 | --- | --- | --- | --- |
 | `lab1/teaching-package/` | `lab1/实验一情感分析教学包/` | ~971 MB | 实验一教学包全量：两本 notebook、数据、15 个经典模型、微调模型、UER 基座、指标与曲线 |
 | `lab1/report/` | `lab1/report/` | ~684 KB | 实验一报告 PDF 与插图源码 |
-| `lab2/` | `lab2/` | ~18 MB | 代码、结果、日志与报告；无训练权重与数据集 |
-| `lab3/` | `lab3/` | ~12 MB | 配置、脚本、结果、日志与报告；无 LoRA/DoRA adapter 与数据集 |
+| `lab2/weights/` | HPC `lab2/code/saved_models`、`lab2/runs/*/saved_models` | ~2.5 GiB | 8 组 Transformer 终稿参数 `transformer.pdparams`，另含 `rel_pos_bias.npy` |
+| `lab2/` 其余 | `lab2/` | ~18 MB | 代码、结果、日志与报告 |
+| `lab3/adapters/` | HPC `lab3/runs/*/` | ~949 MiB | 7 组 LoRA/DoRA adapter，含配置、tokenizer 与 `trainer_state.json` |
+| `lab3/` 其余 | `lab3/` | ~12 MB | 配置、脚本、结果、日志与报告 |
 | `SHA256SUMS` | — | — | 教学包全部文件的 SHA-256 校验和 |
+| `SHA256SUMS.weights` | — | — | lab2 权重与 lab3 adapter 的 SHA-256 校验和 |
 
 ## 复现条件（lab1）
 
@@ -71,6 +74,45 @@ pred = pipe.predict(["这家店味道很好，服务也不错"])
 
 ## 备注（lab2 / lab3）
 
-- lab2 的 `saved_models/`（Paddle 训练产物）本地未保留；`jobs/`、`scripts/`、`results/`、`run_logs/` 与 `report/` 已同时归档在 HF 的 `lab2/` 下。
-- lab3 的 LoRA/DoRA adapter 未保留；`configs/`、`scripts/`、`results/`、`submission/` 与 `report/` 已同时归档在 HF 的 `lab3/` 下。
-- 两个 lab 的小体积结果与日志均已入库，无需额外下载。
+### lab2 权重
+
+每组只归档 `step_final/transformer.pdparams`；`transformer.pdopt`（优化器状态）与 step_5000/10000/15000 中间检查点未上传，它们只影响断点续训，不影响推理复现。
+
+| HF 路径 | 配置 | 2018 aligned BLEU |
+| --- | --- | --- |
+| `lab2/weights/baseline/` | lr 2.0, warmup 8000, ls 0.1 | 11.31 |
+| `lab2/weights/tuning/base_s23/` | 基线 + seed 23 | 11.01 |
+| `lab2/weights/tuning/combo/` | lr 3.0, warmup 4000, ls 0.05 | 11.00 |
+| `lab2/weights/tuning/lr3/` | lr 3.0 | 11.11 |
+| `lab2/weights/tuning/ls05/` | ls 0.05 | 10.86 |
+| `lab2/weights/tuning/warmup4k/` | warmup 4000 | 11.32 |
+| `lab2/weights/improve/relpos/` | 相对位置偏置（含 `rel_pos_bias.npy`） | 11.45 |
+| `lab2/weights/improve/relpos_s23/` | 相对位置偏置 + seed 23 | 10.89 |
+
+`tuning/beam10` 不训练，复用基线模型仅改解码 beam=10（BLEU 10.88），因此没有权重。
+
+### lab3 adapter
+
+| HF 路径 | 方法 | rank / alpha | target | lr | 大小 |
+| --- | --- | --- | --- | --- | --- |
+| `lab3/adapters/lora_r8_qv/` | LoRA | 8 / 16 | q_proj, v_proj | 1e-4 | 10.1 MB |
+| `lab3/adapters/dora_r8_qv/` | DoRA | 8 / 16 | q_proj, v_proj | 1e-4 | 10.5 MB |
+| `lab3/adapters/lora_r16_all/` | LoRA | 16 / 32 | 全部线性层 | 2e-4 | 161.5 MB |
+| `lab3/adapters/lora_r16_all_lr1e4/` | LoRA | 16 / 32 | 全部线性层 | 1e-4 | 161.5 MB |
+| `lab3/adapters/dora_r16_all/` | DoRA | 16 / 32 | 全部线性层 | 2e-4 | 167.1 MB |
+| `lab3/adapters/lora_r32_all/` | LoRA | 32 / 64 | 全部线性层 | 2e-4 | 323.0 MB |
+| `lab3/adapters/smoke_v100s/` | LoRA（smoke 验证，20 step） | 16 / 32 | 全部线性层 | 2e-4 | 161.5 MB |
+
+每组含 `adapter_model.safetensors`、`adapter_config.json`、tokenizer 文件与 `trainer_state.json`。
+未归档：checkpoint-375（与终稿相同）、`dora_r8_qv` 的 checkpoint-200（中间快照）、`exports/*_merged`（约 15 GB/个，可由 `lab3/scripts/export_merge.py` 重建）、Qwen2-7B-Instruct 基座与数据集。
+
+### 下载与校验
+
+```bash
+hf download biscuitzzz/hit-nlp-course-models --repo-type model \
+  --include "lab2/weights/**" --include "lab3/adapters/**" \
+  --local-dir hit-nlp-models
+cd hit-nlp-models && sha256sum -c SHA256SUMS.weights
+```
+
+两个 lab 的小体积结果与日志均已入库，无需额外下载。
