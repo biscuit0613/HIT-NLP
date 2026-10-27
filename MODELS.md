@@ -10,8 +10,8 @@
 | --- | --- | --- | --- |
 | `lab1/teaching-package/` | `lab1/实验一情感分析教学包/` | ~971 MB | 实验一教学包全量：两本 notebook、数据、15 个经典模型、微调模型、UER 基座、指标与曲线 |
 | `lab1/report/` | `lab1/report/` | ~684 KB | 实验一报告 PDF 与插图源码 |
-| `lab2/README.md` | — | — | 说明：无保留权重，复现依赖本仓库脚本、配置、结果与日志 |
-| `lab3/README.md` | — | — | 说明：LoRA/DoRA adapter 未留存，复现依赖本仓库脚本、配置、日志与报告 |
+| `lab2/` | `lab2/` | ~18 MB | 代码、结果、日志与报告；无训练权重与数据集 |
+| `lab3/` | `lab3/` | ~12 MB | 配置、脚本、结果、日志与报告；无 LoRA/DoRA adapter 与数据集 |
 | `SHA256SUMS` | — | — | 教学包全部文件的 SHA-256 校验和 |
 
 ## 复现条件（lab1）
@@ -71,6 +71,6 @@ pred = pipe.predict(["这家店味道很好，服务也不错"])
 
 ## 备注（lab2 / lab3）
 
-- lab2 的 `saved_models/`（Paddle 训练产物）本地未保留；复现依赖 `jobs/`、`scripts/`、`configs/` 与 `results/**/logs/`，全部在 git 中。
-- lab3 的 LoRA/DoRA adapter 未保留；复现依赖 `configs/`、`scripts/`、`submission/logs/` 与 `submission/results/`，全部在 git 中。
+- lab2 的 `saved_models/`（Paddle 训练产物）本地未保留；`jobs/`、`scripts/`、`results/`、`run_logs/` 与 `report/` 已同时归档在 HF 的 `lab2/` 下。
+- lab3 的 LoRA/DoRA adapter 未保留；`configs/`、`scripts/`、`results/`、`submission/` 与 `report/` 已同时归档在 HF 的 `lab3/` 下。
 - 两个 lab 的小体积结果与日志均已入库，无需额外下载。
