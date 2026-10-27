@@ -39,10 +39,10 @@
       columns: (auto, auto),
       row-gutter: 14pt, column-gutter: 8pt,
       align: (right, left),
-      [姓名：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [学号：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [学院：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [教师：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
+      [姓名：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[邴海诺、高新来]]],
+      [学号：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[2024112353、2024112774]]],
+      [学院：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[计算学部]]],
+      [教师：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[杨沐昀]]],
     )
     ]
   ]

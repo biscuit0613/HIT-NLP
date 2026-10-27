@@ -11,3 +11,6 @@ venv/
 .DS_Store
 .idea/
 .vscode/
+
+# 课程提交用压缩包及其暂存目录（由 lab*/report 与 lab*/code 生成，不入库）
+提交/

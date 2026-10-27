@@ -39,10 +39,10 @@
       columns: (auto, auto),
       row-gutter: 14pt, column-gutter: 8pt,
       align: (right, left),
-      [姓名：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [学号：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [学院：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [教师：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
+      [姓名：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[邴海诺、高新来]]],
+      [学号：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[2024112353、2024112774]]],
+      [学院：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[计算学部]]],
+      [教师：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[杨沐昀]]],
     )
     ]
   ]
@@ -120,7 +120,7 @@ $ a_(i j)^h = (bold(q)_i^h dot bold(k)_j^h) / sqrt(d_(op("model"))) + B_(l, op("
 
 = 实验设置
 
-全部训练与解码在百度 AI Studio 的免费算力上完成（单卡 NVIDIA Tesla V100-SXM2-16GB，16 GB 显存），软件环境为 Python 3.11、PaddlePaddle 3.3.1（CUDA 12.6；Ma 等，2019）。每个任务的训练阶段约 51 分钟（约 6.05 step/s），加上两个测试集的解码与 BLEU 评测后总耗时约 1 小时。除 2.3 节的模型改进外，所有对照实验共享同一份训练数据、词表、模型结构与训练轮数，仅改变 2.2 节所述的因素；改进实验与对应的种子对照共享除偏置模块以外的全部配置，以保证比较的可控性。基线训练超参数汇总于表 1。各实验的训练与 BLEU 原始日志、对齐评测脚本（`scripts/eval_aligned_bleu.py`）、日志解析与绘图脚本均随代码提交，报告中的数值可由日志复算。
+实验代码以课程提供的 Paddle Transformer 参考实现（AI Studio 项目 10747476）为基础。全部训练与解码在实验室 HPC 集群上完成（Slurm 调度，单卡 NVIDIA Tesla V100-SXM2-16GB，16 GB 显存，计算能力 7.0），软件环境为 Python 3.11、PaddlePaddle 3.3.1（CUDA 12.6；Ma 等，2019）。每个任务的训练阶段约 51 分钟（约 6.05 step/s），加上两个测试集的解码与 BLEU 评测后总耗时约 1 小时。除 2.3 节的模型改进外，所有对照实验共享同一份训练数据、词表、模型结构与训练轮数，仅改变 2.2 节所述的因素；改进实验与对应的种子对照共享除偏置模块以外的全部配置，以保证比较的可控性。基线训练超参数汇总于表 1。各实验的训练与 BLEU 原始日志、对齐评测脚本（`scripts/eval_aligned_bleu.py`）、日志解析与绘图脚本均随代码提交，报告中的数值可由日志复算。
 
 #figure(
   kind: table,
@@ -284,12 +284,115 @@ $ a_(i j)^h = (bold(q)_i^h dot bold(k)_j^h) / sqrt(d_(op("model"))) + B_(l, op("
   text(size: 8.5pt)[*工具*], text(size: 8.5pt)[*版本*], text(size: 8.5pt)[*用途*],
   [PaddlePaddle], [3.3.1 (CUDA 12.6)], [Transformer 模型的训练、解码与参数管理],
   [Python], [3.11], [实验主语言],
-  [百度 AI Studio], [免费算力，单卡 V100-SXM2-16GB], [模型训练与批量解码],
+  [实验室 HPC 集群（Slurm）], [单卡 V100-SXM2-16GB], [模型训练与批量解码],
   [NumPy], [1.26.4 / 2.5.3], [训练环境依赖、日志解析与结果汇总],
   [Moses multi-bleu.perl], [—], [语料级 BLEU 评测],
   [Matplotlib], [3.11.2], [训练曲线、BLEU 对照与偏置可视化],
   [Typst], [0.15.1], [本报告的排版与编译],
 ))
+#set par(first-line-indent: 2em)
+
+= 附录 B　实验过程记录（终端日志摘录）
+
+以下摘录取自本实验在实验室 HPC 集群（Slurm 调度，单卡 Tesla V100-SXM2-16GB，计算能力 7.0）上的真实运行记录，来源为 `results/*/logs/` 与 `jobs/hpc/` 下的原始文件，逐字抄录、未作改写，仅将制表符展开为空格，并省略 `multi-bleu.perl` 每次固定输出的风险提示行。括号内「行 N」为原始日志中的行号，便于核对。正文表 2、表 3 的数值与下列记录逐项对应；模型检查点按提交要求不随压缩包上传。
+
+#set par(first-line-indent: 0em)
+#show raw: set text(size: 7.4pt, font: "Liberation Mono")
+
+*B.1　任务提交（`jobs/hpc/run_experiment.sbatch`）*
+
+#block(inset: 5pt, fill: rgb("#f4f4f4"), radius: 2pt)[
+```bash
+$ sbatch --job-name=lab2_lr3 \
+    --export=ALL,TAG=lr3,EXTRA="--learning_rate 3.0" \
+    ~/lab2/jobs/run_experiment.sbatch
+
+#SBATCH -J lab2_exp
+#SBATCH -p compute
+#SBATCH --gres=gpu:tesla_v100-sxm2-16gb:1
+#SBATCH --cpus-per-task=4
+#SBATCH --time=03:30:00
+#SBATCH -o /home/jnguan/lab2/logs/slurm-exp-%j.out
+```
+]
+
+*B.2　基线训练（`results/baseline/logs/train_baseline.log`，行 10–41、63、69、119、252）*
+
+#block(inset: 5pt, fill: rgb("#f4f4f4"), radius: 2pt)[
+```text
+save_step:              5000
+print_step:             100
+save_model_path:        saved_models
+random_seed:            None
+training_file:          /home/jnguan/lab2/data/wmt171819_zhen_data_bpe3/train.tok.clean.bpe.32000.en-zh
+batch_size:             4096
+epoch:                  10
+learning_rate:          2.0
+warmup_steps:           8000
+label_smooth_eps:       0.1
+beam_size:              5
+W1015 19:01:59.793642 817533 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 7.0, Driver API Version: 13.0, Runtime API Version: 12.6
+[2026-10-15 19:02:03,352] [    INFO] train.py:138 - step_idx: 0, epoch: 0, batch: 0, avg loss: 11.034841, normalized loss: 9.653107, ppl: 61996.992837
+[2026-10-15 19:15:52,905] [    INFO] train.py:146 - step_idx: 5000, epoch: 2, batch: 1329, avg loss: 4.163615, normalized loss: 2.781881, ppl: 64.303549, speed: 6.04 step/s
+[2026-10-15 19:52:40,137] [    INFO] train.py:146 - step_idx: 18300, epoch: 9, batch: 1779, avg loss: 3.157074, normalized loss: 1.775340, ppl: 23.501739, speed: 6.03 step/s
+```
+]
+
+*B.3　各调参实验中被改动的参数（对应日志首部参数表的行号）*
+
+#block(inset: 5pt, fill: rgb("#f4f4f4"), radius: 2pt)[
+```text
+results/tuning/lr3/logs/train_lr3.log:35                learning_rate:      3.0
+results/tuning/ls05/logs/train_ls05.log:42              label_smooth_eps:   0.05
+results/tuning/warmup4k/logs/train_warmup4k.log:41      warmup_steps:       4000
+results/tuning/combo/logs/train_combo.log:35,39,40      learning_rate: 3.0
+                                                        warmup_steps: 4000
+                                                        label_smooth_eps: 0.05
+results/tuning/base_s23/logs/train_base_s23.log:19      random_seed:        23
+results/improve/relpos_s23/logs/train_relpos_s23.log:19 random_seed:        23
+results/tuning/beam10/logs/predict_2018.log:41,14       beam_size: 10
+                          init_from_params: /home/jnguan/lab2/code/saved_models/step_final/
+```
+]
+
+除上述条目与各实验各自的 `save_model_path` 外，七个重新训练的变体（lr3、ls05、warmup4k、combo、base_s23、relpos、relpos_s23）参数表与基线逐行一致；`beam10` 不重新训练，仅以基线 `step_final` 权重束宽 10 重新解码。
+
+*B.4　改进模型 relpos 的运行证据（`results/improve/relpos/logs/train_relpos.log`，行 17、65、66、71、254）*
+
+#block(inset: 5pt, fill: rgb("#f4f4f4"), radius: 2pt)[
+```text
+save_model_path:        /home/jnguan/lab2/runs/relpos/saved_models
+W1015 19:11:07.696030 193665 gpu_resources.cc:116] Please NOTE: device: 0, GPU Compute Capability: 7.0, Driver API Version: 13.0, Runtime API Version: 12.6
+/home/jnguan/lab2/code_improve/transformer.py:541: VisibleDeprecationWarning:
+[2026-10-15 19:11:10,601] [    INFO] train.py:138 - step_idx: 0, epoch: 0, batch: 0, avg loss: 11.123986, normalized loss: 9.742252, ppl: 67777.507418
+[2026-10-15 20:04:07,976] [    INFO] train.py:146 - step_idx: 18300, epoch: 9, batch: 1779, avg loss: 3.135651, normalized loss: 1.753917, ppl: 23.003606, speed: 5.78 step/s
+```
+]
+
+该日志与基线参数表逐行比对仅 `save_model_path` 一项不同，即编码器分桶相对位置偏置为唯一改动，与 2.3 节的代码说明一致；`code_improve/transformer.py` 一行的堆栈路径也表明实际执行的是改写后的模型文件。
+
+*B.5　BLEU 评测原始输出（`results/*/logs/bleu_*.log`）*
+
+#block(inset: 5pt, fill: rgb("#f4f4f4"), radius: 2pt)[
+```text
+# results/baseline/logs/bleu_baseline_2018_aligned.log
+# aligned reference: max_length=256, dropped source lines=1415,3708
+BLEU = 11.31, 42.2/15.7/7.1/3.5 (BP=1.000, ratio=1.054, hyp_len=94571, ref_len=89721)
+
+# results/baseline/logs/bleu_2017.log
+BLEU = 10.24, 40.7/14.5/6.3/3.0 (BP=1.000, ratio=1.035, hyp_len=48778, ref_len=47144)
+
+# results/improve/relpos/logs/bleu_relpos_2018_aligned.log
+# aligned reference: max_length=256, dropped source lines=1415,3708
+BLEU = 11.45, 41.9/15.8/7.3/3.6 (BP=1.000, ratio=1.056, hyp_len=94774, ref_len=89721)
+
+# results/improve/relpos/logs/bleu_relpos_2017.log
+BLEU = 10.73, 41.5/14.9/6.6/3.2 (BP=1.000, ratio=1.023, hyp_len=48221, ref_len=47144)
+```
+]
+
+其余七组实验的 BLEU 原始输出格式与上述完全一致，数值见正文表 3；对应的 `.log` 文件与解码译文（`output_file/`）均随 `code/` 一并提交。
+
 #set par(first-line-indent: 2em)
 
 // ---------- 末页：实验成绩与教师签名 ----------

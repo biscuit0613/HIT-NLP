@@ -39,10 +39,10 @@
       columns: (auto, auto),
       row-gutter: 14pt, column-gutter: 8pt,
       align: (right, left),
-      [姓名：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [学号：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [学院：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
-      [教师：], [#box(width: 5.4cm, stroke: (bottom: 0.6pt))],
+      [姓名：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[邴海诺、高新来]]],
+      [学号：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[2024112353、2024112774]]],
+      [学院：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[计算学部]]],
+      [教师：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[杨沐昀]]],
     )
     ]
   ]
@@ -383,6 +383,45 @@ CMMLU 的严格准确率随容量上升（L8 27.0 → L16-1e4 48.0 → L32 51.0�
 
   [12] Sun J. jieba: Chinese text segmentation[CP/OL]. https://github.com/fxsjy/jieba, 2012.
 ]
+#set par(first-line-indent: 2em)
+
+= 附录 A　实验过程截图
+
+以下截图为实验三各环节的真实终端运行记录，含完整命令行与关键输出，对应指导书要求的数据准备、微调训练、导出合并、批量推理与评测环节；训练超参数以 `configs/*.yaml` 给出，与截图中的命令一致。截图按执行顺序排列。
+
+#set par(first-line-indent: 0em)
+#figure(
+  image("figs/shots/01_prepare_data.png", width: 92%),
+  caption: [数据准备：DISC-Med-SFT 训练对构造，以及医疗测试集与 CMMLU 处理脚本的运行。],
+)
+#figure(
+  image("figs/shots/02_train_lora_r8_qv.png", width: 92%),
+  caption: [LoRA 微调训练（$r=8$，目标 $q,v$，12,000 条，1 epoch）：可训练参数 2,523,136（占总量 0.0331%），375 步，训练耗时 1,850 秒，GPU 峰值显存 21.55 GB。],
+)
+#figure(
+  image("figs/shots/03_train_dora_r8_qv.png", width: 92%),
+  caption: [DoRA 同预算对照训练（$r=8$，目标 $q,v$）：与 LoRA 使用同一份数据与配置，仅将 `use_dora` 置为 true。],
+)
+#figure(
+  image("figs/shots/04_merge_export.png", width: 92%),
+  caption: [导出合并：把 LoRA adapter 合并回基座并导出独立 fp16 checkpoint 的四步流程。],
+)
+#figure(
+  image("figs/shots/05_gen_test_inference.png", width: 92%),
+  caption: [批量推理：6 个固定医疗问题的贪心解码（`max_new_tokens=256`），输出写入 `results/official`。],
+)
+#figure(
+  image("figs/shots/06_eval_medical.png", width: 92%),
+  caption: [医疗评测：主集 100 条计算 ROUGE/BLEU-4/EM/F1，扩展 500 条用于推理统计。],
+)
+#figure(
+  image("figs/shots/07_eval_cmmlu.png", width: 92%),
+  caption: [CMMLU 评测：computer_science 204 题，采用官方严格选项解析口径。],
+)
+#figure(
+  image("figs/shots/08_cmmlu_format.png", width: 92%),
+  caption: [CMMLU 格式诊断：严格解析与内容匹配的差值及代理 MRR，用于区分知识缺失与格式不遵循。],
+)
 #set par(first-line-indent: 2em)
 
 // ---------- 末页：实验成绩与教师签名 ----------

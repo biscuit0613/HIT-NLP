@@ -19,7 +19,7 @@
 | 医疗评测脚本 | `scripts/eval_models.py`、`scripts/analyze_medical_extra.py` |
 | CMMLU 评测脚本 | `scripts/eval_models.py`、`scripts/analyze_cmmlu_format.py` |
 | 评测结果图片 | `figures/rouge_compare.png`、`figures/cmmlu_compare.png`、`figures/latency_compare.png` |
-| 实验报告 | `report/report.pdf`（共 9 页：封面 + 8 页正文，含 3 张结果图；`report/report.typ` 为源码） |
+| 实验报告 | `report/report.pdf`（共 12 页：封面 + 7 页正文 + 参考文献 + 附录 A 实验过程截图 8 张 + 成绩页；`report/report.typ` 为源码） |
 
 整理后的运行日志见 `logs/`；截图为真实日志的终端整理版（见第 5 节说明）。
 
@@ -188,7 +188,7 @@ python scripts/evaluate_human.py --packet-dir results/human_eval --out-dir resul
 
 ## 4. 实验报告
 
-- `report/report.pdf`：共 9 页（封面 1 页 + 正文 8 页，其中第 7 页为结论结尾与参考文献、第 8 页为成绩页），正文不含引用约 7 页；ACL 风格，参考文献完整；
+- `report/report.pdf`：共 12 页（封面 1 页 + 正文 7 页，第 8 页为结论结尾、参考文献与附录起始，第 9—11 页为附录 A 的 8 张过程截图，第 12 页为成绩页），正文不含引用约 6.5 页；ACL 风格，参考文献完整；
 - `report/report.typ`：Typst 源码；
 - 报告内已放入 3 张结果图：图 1 医疗 ROUGE 对比、图 2 CMMLU 严格准确率与内容匹配、图 3 5 个医学问题的时延与吞吐；交互结果以表格给出。
 
