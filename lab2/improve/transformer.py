@@ -19,15 +19,17 @@ concatenated sin/cos position encodings, three-way weight sharing between
 the source embedding, the target embedding and the output projection, and
 the label-smoothed cross entropy loss masked by the label weights.
 
-3.7 improvement over the baseline: the encoder self-attention receives a
+3.7 improvements over the baseline: the encoder self-attention receives a
 learnable relative position bias (T5-style bucketed bias, Raffel et al.
 2020; relative position representations for NMT were introduced by Shaw
-et al. 2018). Absolute sinusoid encodings model "where" each token is,
-while the relative bias directly models "how far apart" a query and a key
-are, which matches the word-order reordering that is pervasive in
-En->Zh translation. The bias table is zero-initialized, so training
-starts from the exact baseline function and learns the distances that
-matter.
+et al. 2018) and, in the encoder layers selected by `localness_layers`
+(all six in the final configuration), a query-conditioned Gaussian
+localness bias (Yang et al., EMNLP 2018). Absolute sinusoid
+encodings model "where" each token is, the relative bias models "how far
+apart" a query and a key are, and the localness bias lets each head move
+a soft attention window over the source according to the query content.
+Both extra modules are additive biases on the attention logits, so they
+leave the rest of the Transformer computation unchanged.
 """
 
 import math
@@ -85,6 +87,89 @@ def relative_position_bucket(relative_position,
     return ret + paddle.where(is_small, n, val_if_large)
 
 
+class LocalnessBias(nn.Layer):
+    """
+    3.7 improvement: query-conditioned Gaussian localness bias (Yang et
+    al., "Modeling Localness for Self-Attention Networks", EMNLP 2018).
+
+    For a source sentence of length I, every attention head m predicts,
+    from the query representation h_i of token i, the center P_i^m and
+    the width D_i^m of a Gaussian window over source positions j:
+
+        P_i^m = I * sigmoid(u_p^m . tanh(W_p h_i))
+        D_i^m = I * sigmoid(u_d^m . tanh(W_p h_i))
+        G_ij^m = -(j - P_i^m)^2 / (2 * (D_i^m / 2)^2)
+
+    G is added to the self-attention logits, so each head can attend to a
+    content-dependent local region instead of relying only on the absolute
+    sinusoid encoding or a content-independent relative distance table.
+    The paper applies localness to the lower three encoder layers. On this
+    data and training budget an ablation found all six encoder layers
+    better, so `localness_layers` in transformer.yaml selects the final
+    depth (6).
+
+    The per-head projections are zero-initialized, so training starts with
+    a neutral window (center I/2, width I/2) that the data then
+    specializes. The baseline scales attention logits by d_model**-0.5
+    rather than the standard d_key**-0.5; the learnable per-head scale is
+    therefore initialized to sqrt(d_key / d_model) so that the Gaussian has
+    the same strength relative to the logits as in the paper. With the
+    standard d_key**-0.5 scale it starts at 1.0.
+    """
+
+    def __init__(self, d_model, n_head, d_key, use_std_attn_scale=False):
+        super(LocalnessBias, self).__init__()
+        # Shared query transform, then one center and one width predictor
+        # per head. This parameterization matches the paper's query-specific
+        # window and adds about 0.27M parameters per encoder layer.
+        self.w = nn.Linear(d_model, d_model)
+        self.u_center = nn.Linear(
+            d_model,
+            n_head,
+            weight_attr=nn.initializer.Constant(0.0),
+            bias_attr=nn.initializer.Constant(0.0))
+        self.u_width = nn.Linear(
+            d_model,
+            n_head,
+            weight_attr=nn.initializer.Constant(0.0),
+            bias_attr=nn.initializer.Constant(0.0))
+        init_scale = 1.0 if use_std_attn_scale else math.sqrt(
+            float(d_key) / float(d_model))
+        self.scale = self.create_parameter(
+            shape=[n_head],
+            default_initializer=nn.initializer.Constant(init_scale))
+
+    def forward(self, query, lengths):
+        """
+        Args:
+            query (Tensor): [batch_size, src_len, d_model], the
+                pre-normalized query representation.
+            lengths (Tensor): [batch_size], the actual source lengths.
+                Scaling the window by the real length instead of the
+                padded batch length keeps the Gaussian in each sentence's
+                own coordinate system.
+        Returns:
+            Tensor: [batch_size, n_head, src_len, src_len] additive bias.
+        """
+        src_len = query.shape[1]
+        hidden = paddle.tanh(self.w(query))  # [B, T, d_model]
+        center = self.u_center(hidden)  # [B, T, H]
+        width = self.u_width(hidden)  # [B, T, H]
+        length = lengths.unsqueeze(-1).unsqueeze(-1)  # [B, 1, 1]
+        center = length * F.sigmoid(center)  # [B, T, H]
+        width = length * F.sigmoid(width)  # [B, T, H]
+        # D is the full window width, so the Gaussian standard deviation
+        # is D / 2. The small constant only guards the division.
+        sigma = 0.5 * width + 1e-6
+        center = center.transpose([0, 2, 1]).unsqueeze(-1)  # [B, H, T, 1]
+        sigma = sigma.transpose([0, 2, 1]).unsqueeze(-1)  # [B, H, T, 1]
+        positions = paddle.arange(src_len, dtype="float32").reshape(
+            [1, 1, 1, src_len])
+        diff = positions - center  # [B, H, T, T]
+        bias = -(diff * diff) / (2.0 * sigma * sigma)
+        return bias * self.scale.reshape([1, -1, 1, 1])
+
+
 def position_encoding_init(n_position, d_pos_vec):
     """
     Generate the initial values for the sinusoid position encoding table.
@@ -111,12 +196,16 @@ class MultiHeadAttention(nn.Layer):
     they will not considered in attention weights.
     """
 
-    def __init__(self, d_key, d_value, d_model, n_head=1, dropout_rate=0.):
+    def __init__(self, d_key, d_value, d_model, n_head=1, dropout_rate=0.,
+                 use_std_attn_scale=False):
         super(MultiHeadAttention, self).__init__()
         self.n_head = n_head
         self.d_key = d_key
         self.d_value = d_value
         self.d_model = d_model
+        # 3.7 improvement: optional standard sqrt(d_key) scaling.
+        self.attn_scale = (d_key**-0.5 if use_std_attn_scale
+                           else d_model**-0.5)
         # The q/k/v/o projections are all bias-free as in the original
         # implementation.
         self.q_proj = nn.Linear(d_model, d_key * n_head, bias_attr=False)
@@ -176,7 +265,7 @@ class MultiHeadAttention(nn.Layer):
         # replicate the original static-graph implementation, whose call
         # site passed d_model into scaled_dot_product_attention.
         product = paddle.matmul(x=q, y=k,
-                                transpose_y=True) * (self.d_model**-0.5)
+                                transpose_y=True) * self.attn_scale
         if attn_bias is not None:
             product = product + attn_bias
         weights = F.softmax(product)
@@ -195,12 +284,11 @@ class PositionwiseFeedForward(nn.Layer):
     Position-wise Feed-Forward Networks.
     This module consists of two linear transformations with a ReLU activation
     in between, which is applied to each position separately and identically.
+    Both linear transformations have a bias as in the original implementation.
     """
 
     def __init__(self, d_inner_hid, d_hid, dropout_rate=0.):
         super(PositionwiseFeedForward, self).__init__()
-        # Both of the two linear transformations have a bias as in the
-        # original implementation.
         self.fc1 = nn.Linear(d_hid, d_inner_hid)
         self.fc2 = nn.Linear(d_inner_hid, d_hid)
         self.relu_dropout = nn.Dropout(dropout_rate)
@@ -227,10 +315,14 @@ class EncoderLayer(nn.Layer):
                  d_inner_hid,
                  prepostprocess_dropout,
                  attention_dropout,
-                 relu_dropout):
+                 relu_dropout,
+                 use_rel_pos=True,
+                 use_localness=False,
+                 use_std_attn_scale=False):
         super(EncoderLayer, self).__init__()
         self.self_attn = MultiHeadAttention(d_key, d_value, d_model, n_head,
-                                            attention_dropout)
+                                            attention_dropout,
+                                            use_std_attn_scale)
         self.self_attn_ln = nn.LayerNorm(d_model)
         self.ffn = PositionwiseFeedForward(d_inner_hid, d_model, relu_dropout)
         self.ffn_ln = nn.LayerNorm(d_model)
@@ -243,21 +335,40 @@ class EncoderLayer(nn.Layer):
         self.rel_pos_bias = nn.Embedding(
             REL_POS_NUM_BUCKETS,
             n_head,
-            weight_attr=nn.initializer.Constant(0.0))
+            weight_attr=nn.initializer.Constant(0.0)) if use_rel_pos else None
+        # 3.7 improvement: query-conditioned Gaussian localness bias. It is
+        # enabled on the first `localness_layers` encoder layers; Yang et al.
+        # 2018 used the lower three, while the ablation here prefers all six.
+        self.localness = LocalnessBias(
+            d_model, n_head, d_key,
+            use_std_attn_scale) if use_localness else None
 
     def forward(self, x, attn_bias):
-        # 3.7 improvement: compute the [1, n_head, T, T] relative position
-        # bias of this layer. `relative_position[i, j] = j - i` is the
-        # offset of key j from query i; it is bucketed and looked up in
-        # this layer's table, then broadcast-added to the [B, 1, 1, T]
-        # padding mask before reaching the [B, n_head, T, T] logits.
-        seq_len = x.shape[1]
-        position_ids = paddle.arange(seq_len, dtype="int64")
-        relative_position = position_ids[None, :] - position_ids[:, None]
-        buckets = relative_position_bucket(relative_position)
-        bias = self.rel_pos_bias(buckets).transpose([2, 0, 1]).unsqueeze(0)
-        attn_output = self.self_attn(self.self_attn_ln(x), None, None,
-                                     attn_bias + bias)
+        # Pre-LN query representation shared by the attention projection
+        # and the localness predictor.
+        query = self.self_attn_ln(x)
+        bias = attn_bias
+        if self.rel_pos_bias is not None:
+            # 3.7 improvement: compute the [1, n_head, T, T] relative
+            # position bias of this layer. `relative_position[i, j] = j - i`
+            # is the offset of key j from query i; it is bucketed and looked
+            # up in this layer's table, then broadcast-added to the
+            # [B, n_head, T, T] padding mask before reaching the logits.
+            seq_len = x.shape[1]
+            position_ids = paddle.arange(seq_len, dtype="int64")
+            relative_position = position_ids[None, :] - position_ids[:, None]
+            buckets = relative_position_bucket(relative_position)
+            rel_bias = self.rel_pos_bias(buckets).transpose([2, 0, 1])
+            bias = bias + rel_bias.unsqueeze(0)
+        if self.localness is not None:
+            # 3.7 improvement: derive each example's real source length
+            # from the padding mask so that the Gaussian window is scaled
+            # by the sentence length, not by the padded batch length.
+            lengths = paddle.sum(
+                paddle.cast(attn_bias[:, 0, 0, :] > -1e8, "float32"),
+                axis=-1)
+            bias = bias + self.localness(query, lengths)
+        attn_output = self.self_attn(query, None, None, bias)
         x = x + self.dropout(attn_output)
         ffd_output = self.ffn(self.ffn_ln(x))
         return x + self.dropout(ffd_output)
@@ -278,12 +389,20 @@ class Encoder(nn.Layer):
                  d_inner_hid,
                  prepostprocess_dropout,
                  attention_dropout,
-                 relu_dropout):
+                 relu_dropout,
+                 use_rel_pos=True,
+                 use_localness=False,
+                 localness_layers=0,
+                 use_std_attn_scale=False):
         super(Encoder, self).__init__()
         self.layers = nn.LayerList([
             EncoderLayer(n_head, d_key, d_value, d_model, d_inner_hid,
                          prepostprocess_dropout, attention_dropout,
-                         relu_dropout) for _ in range(n_layer)
+                         relu_dropout, use_rel_pos=use_rel_pos,
+                         use_localness=(use_localness
+                                        and layer_idx < localness_layers),
+                         use_std_attn_scale=use_std_attn_scale)
+            for layer_idx in range(n_layer)
         ])
         self.top_layer_norm = nn.LayerNorm(d_model)
 
@@ -313,13 +432,16 @@ class DecoderLayer(nn.Layer):
                  d_inner_hid,
                  prepostprocess_dropout,
                  attention_dropout,
-                 relu_dropout):
+                 relu_dropout,
+                 use_std_attn_scale=False):
         super(DecoderLayer, self).__init__()
         self.slf_attn = MultiHeadAttention(d_key, d_value, d_model, n_head,
-                                           attention_dropout)
+                                           attention_dropout,
+                                           use_std_attn_scale)
         self.slf_attn_ln = nn.LayerNorm(d_model)
         self.cross_attn = MultiHeadAttention(d_key, d_value, d_model, n_head,
-                                             attention_dropout)
+                                             attention_dropout,
+                                             use_std_attn_scale)
         self.cross_attn_ln = nn.LayerNorm(d_model)
         self.ffn = PositionwiseFeedForward(d_inner_hid, d_model, relu_dropout)
         self.ffn_ln = nn.LayerNorm(d_model)
@@ -375,12 +497,14 @@ class Decoder(nn.Layer):
                  d_inner_hid,
                  prepostprocess_dropout,
                  attention_dropout,
-                 relu_dropout):
+                 relu_dropout,
+                 use_std_attn_scale=False):
         super(Decoder, self).__init__()
         self.layers = nn.LayerList([
             DecoderLayer(n_head, d_key, d_value, d_model, d_inner_hid,
                          prepostprocess_dropout, attention_dropout,
-                         relu_dropout) for _ in range(n_layer)
+                         relu_dropout, use_std_attn_scale)
+            for _ in range(n_layer)
         ])
         self.top_layer_norm = nn.LayerNorm(d_model)
 
@@ -430,7 +554,11 @@ class TransformerModel(nn.Layer):
                  postprocess_cmd="da",
                  weight_sharing=True,
                  label_smooth_eps=0.1,
-                 bos_idx=0):
+                 bos_idx=0,
+                 use_rel_pos=True,
+                 use_localness=False,
+                 localness_layers=0,
+                 use_std_attn_scale=False):
         super(TransformerModel, self).__init__()
         # Only the pre-normalized sub-layer structure of the course
         # configuration is supported by this rewrite.
@@ -453,6 +581,10 @@ class TransformerModel(nn.Layer):
         self.weight_sharing = weight_sharing
         self.label_smooth_eps = label_smooth_eps
         self.bos_idx = bos_idx
+        self.use_rel_pos = use_rel_pos
+        self.use_localness = use_localness
+        self.localness_layers = localness_layers
+        self.use_std_attn_scale = use_std_attn_scale
 
         self.src_word_emb = nn.Embedding(
             src_vocab_size,
@@ -475,10 +607,15 @@ class TransformerModel(nn.Layer):
 
         self.encoder = Encoder(n_layer, n_head, d_key, d_value, d_model,
                                d_inner_hid, prepostprocess_dropout,
-                               attention_dropout, relu_dropout)
+                               attention_dropout, relu_dropout,
+                               use_rel_pos=use_rel_pos,
+                               use_localness=use_localness,
+                               localness_layers=localness_layers,
+                               use_std_attn_scale=use_std_attn_scale)
         self.decoder = Decoder(n_layer, n_head, d_key, d_value, d_model,
                                d_inner_hid, prepostprocess_dropout,
-                               attention_dropout, relu_dropout)
+                               attention_dropout, relu_dropout,
+                               use_std_attn_scale)
         self.prepostprocess_dropout = nn.Dropout(prepostprocess_dropout)
         # The concatenated sin/cos position encodings are constants rather
         # than the externally initialized "parameter tables" of the old
@@ -514,7 +651,11 @@ class TransformerModel(nn.Layer):
             postprocess_cmd=args.postprocess_cmd,
             weight_sharing=args.weight_sharing,
             label_smooth_eps=args.label_smooth_eps,
-            bos_idx=args.bos_idx)
+            bos_idx=args.bos_idx,
+            use_rel_pos=args.use_rel_pos,
+            use_localness=args.use_localness,
+            localness_layers=args.localness_layers,
+            use_std_attn_scale=args.use_std_attn_scale)
 
     def forward(self, src_word, src_pos, src_slf_attn_bias, trg_word, trg_pos,
                 trg_slf_attn_bias, trg_src_attn_bias, lbl_word, lbl_weight):

@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | `lab1/teaching-package/` | `lab1/实验一情感分析教学包/` | ~971 MB | 实验一教学包全量：两本 notebook、数据、15 个经典模型、微调模型、UER 基座、指标与曲线 |
 | `lab1/report/` | `lab1/report/` | ~684 KB | 实验一报告 PDF 与插图源码 |
-| `lab2/weights/` | HPC `lab2/code/saved_models`、`lab2/runs/*/saved_models` | ~2.5 GiB | 8 组 Transformer 终稿参数 `transformer.pdparams`，另含 `rel_pos_bias.npy` |
+| `lab2/weights/` | HPC `lab2/code/saved_models`、`lab2/runs/*/saved_models` | ~7.3 GiB | 23 组 Transformer 终稿参数 `transformer.pdparams`（基线/调参 8 组、结构消融 6 组、4 种子网格 8 组，另含 `rel_pos_bias.npy`） |
 | `lab2/` 其余 | `lab2/` | ~18 MB | 代码、结果、日志与报告 |
 | `lab3/adapters/` | HPC `lab3/runs/*/` | ~949 MiB | 7 组 LoRA/DoRA adapter，含配置、tokenizer 与 `trainer_state.json` |
 | `lab3/` 其余 | `lab3/` | ~12 MB | 配置、脚本、结果、日志与报告 |
@@ -82,14 +82,29 @@ pred = pipe.predict(["这家店味道很好，服务也不错"])
 | --- | --- | --- |
 | `lab2/weights/baseline/` | lr 2.0, warmup 8000, ls 0.1 | 11.31 |
 | `lab2/weights/tuning/base_s23/` | 基线 + seed 23 | 11.01 |
+| `lab2/weights/tuning/base_s42/` | 基线 + seed 42 | 11.27 |
+| `lab2/weights/tuning/base_s7/` | 基线 + seed 7 | 10.24 |
+| `lab2/weights/tuning/base_s123/` | 基线 + seed 123 | 11.31 |
 | `lab2/weights/tuning/combo/` | lr 3.0, warmup 4000, ls 0.05 | 11.00 |
 | `lab2/weights/tuning/lr3/` | lr 3.0 | 11.11 |
 | `lab2/weights/tuning/ls05/` | ls 0.05 | 10.86 |
 | `lab2/weights/tuning/warmup4k/` | warmup 4000 | 11.32 |
 | `lab2/weights/improve/relpos/` | 相对位置偏置（含 `rel_pos_bias.npy`） | 11.45 |
 | `lab2/weights/improve/relpos_s23/` | 相对位置偏置 + seed 23 | 10.89 |
+| `lab2/weights/improve/loconly_s23/` | 局部性（前 3 层）+ seed 23 | 11.11 |
+| `lab2/weights/improve/locrel_s23/` | 相对位置 + 局部性（前 3 层）+ seed 23 | 11.26 |
+| `lab2/weights/improve/locrelstd_s23/` | 相对位置 + 局部性（前 3 层）+ 标准缩放，seed 23 | 11.24 |
+| `lab2/weights/improve/stdscale_s23/` | 仅标准缩放（无偏置），seed 23 | 10.78 |
+| `lab2/weights/improve/loconly6_s23/` | 局部性（6 层）+ seed 23 | 11.41 |
+| `lab2/weights/improve/loconly6_s42/` | 局部性（6 层）+ seed 42 | 11.17 |
+| `lab2/weights/improve/loconly6_s7/` | 局部性（6 层）+ seed 7 | 10.91 |
+| `lab2/weights/improve/loconly6_s123/` | 局部性（6 层）+ seed 123 | 10.62 |
+| `lab2/weights/improve/locrel6_s23/` | **最终配置**：相对位置 + 局部性（6 层），seed 23 | 11.54 |
+| `lab2/weights/improve/locrel6_s42/` | 最终配置 + seed 42 | 11.63 |
+| `lab2/weights/improve/locrel6_s7/` | 最终配置 + seed 7 | 10.68 |
+| `lab2/weights/improve/locrel6_s123/` | 最终配置 + seed 123 | 11.01 |
 
-`tuning/beam10` 不训练，复用基线模型仅改解码 beam=10（BLEU 10.88），因此没有权重。
+4 种子网格用于同种子成对比较：最终配置在 2018 上平均增益 +0.26±0.38（3/4 种子为正），2017 上 +0.11±0.52（3/4 种子为正）。`tuning/beam10` 不训练，复用基线模型仅改解码 beam=10（BLEU 10.88），因此没有权重。
 
 ### lab3 adapter
 

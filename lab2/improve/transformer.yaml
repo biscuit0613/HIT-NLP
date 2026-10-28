@@ -110,3 +110,16 @@ postprocess_cmd: "da"  # dropout + residual connection
 # the flag indicating whether to share embedding and softmax weights.
 # vocabularies in source and target should be same for weight sharing.
 weight_sharing: True
+
+# 3.7 improvement switches:
+# use_rel_pos adds the T5-style bucketed relative position bias to every
+# encoder self-attention layer. use_localness adds the query-conditioned
+# Gaussian localness bias (Yang et al., EMNLP 2018) to the first
+# localness_layers encoder layers. Set both to False to reproduce the
+# baseline model exactly.
+use_rel_pos: True
+use_localness: True
+localness_layers: 6
+# use_std_attn_scale switches the attention logits from the baseline's
+# d_model**-0.5 scaling to the standard d_key**-0.5 scaling.
+use_std_attn_scale: False

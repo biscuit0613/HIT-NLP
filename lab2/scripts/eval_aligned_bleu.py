@@ -27,9 +27,24 @@ RUNS = {
     "ls05": RESULTS / "tuning" / "ls05",
     "combo": RESULTS / "tuning" / "combo",
     "base_s23": RESULTS / "tuning" / "base_s23",
+    "base_s42": RESULTS / "tuning" / "base_s42",
+    "base_s7": RESULTS / "tuning" / "base_s7",
+    "base_s123": RESULTS / "tuning" / "base_s123",
     "beam10": RESULTS / "tuning" / "beam10",
     "relpos": RESULTS / "improve" / "relpos",
     "relpos_s23": RESULTS / "improve" / "relpos_s23",
+    "locrel_s23": RESULTS / "improve" / "locrel_s23",
+    "loconly_s23": RESULTS / "improve" / "loconly_s23",
+    "stdscale_s23": RESULTS / "improve" / "stdscale_s23",
+    "locrelstd_s23": RESULTS / "improve" / "locrelstd_s23",
+    "locrel6_s23": RESULTS / "improve" / "locrel6_s23",
+    "locrel6_s42": RESULTS / "improve" / "locrel6_s42",
+    "locrel6_s7": RESULTS / "improve" / "locrel6_s7",
+    "locrel6_s123": RESULTS / "improve" / "locrel6_s123",
+    "loconly6_s23": RESULTS / "improve" / "loconly6_s23",
+    "loconly6_s42": RESULTS / "improve" / "loconly6_s42",
+    "loconly6_s7": RESULTS / "improve" / "loconly6_s7",
+    "loconly6_s123": RESULTS / "improve" / "loconly6_s123",
 }
 
 BLEU_RE = re.compile(
@@ -55,6 +70,8 @@ def reference_filter(year):
 
 def hyp_path(run_dir, year):
     matches = sorted((run_dir / "output_file").glob(f"*{year}*.tok.txt"))
+    if not matches:
+        return None
     assert len(matches) == 1, (run_dir, matches)
     return matches[0]
 
@@ -83,6 +100,9 @@ def main():
         try:
             for run, run_dir in RUNS.items():
                 hyp = hyp_path(run_dir, year)
+                if hyp is None:
+                    print(f"skip {run} {year}: no hypotheses")
+                    continue
                 n_hyp = sum(1 for _ in open(hyp, "rb"))
                 assert n_hyp == len(keep), (run, year, n_hyp, len(keep))
                 for protocol, ref in (("aligned", aligned_ref),

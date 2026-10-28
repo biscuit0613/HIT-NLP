@@ -1,0 +1,2 @@
+# aligned reference: max_length=256, dropped source lines=1415,3708
+BLEU = 10.91, 40.7/15.1/6.8/3.4 (BP=1.000, ratio=1.089, hyp_len=97670, ref_len=89721)

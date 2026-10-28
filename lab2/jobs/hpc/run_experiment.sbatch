@@ -60,12 +60,18 @@ for YEAR in 2017 2018; do
     --beam_size 5 \
     --max_out_len 255 \
     --output_file $RUN/output_file/predict_${TAG}_${YEAR}.txt \
+    $EXTRA \
     2>&1 | tee $RUN/run_logs/predict_${TAG}_${YEAR}.log
 
   sed -r 's/(@@ )|(@@ ?$)//g' $RUN/output_file/predict_${TAG}_${YEAR}.txt > $RUN/output_file/predict_${TAG}_${YEAR}.tok.txt
-  echo "=== BLEU newstest$YEAR ($TAG) ==="
+  echo "=== BLEU newstest$YEAR course ($TAG), $(wc -l < $RUN/output_file/predict_${TAG}_${YEAR}.tok.txt) hypotheses ==="
   perl $HOME/lab2/code/mosesdecoder/scripts/generic/multi-bleu.perl $DATA/newstest${YEAR}.tok.zh \
     < $RUN/output_file/predict_${TAG}_${YEAR}.tok.txt 2>&1 | tee $RUN/run_logs/bleu_${TAG}_${YEAR}.log
+  if [ "$YEAR" = "2018" ]; then
+    echo "=== BLEU newstest2018 aligned ($TAG) ==="
+    perl $HOME/lab2/code/mosesdecoder/scripts/generic/multi-bleu.perl $DATA/newstest2018.tok.aligned.zh \
+      < $RUN/output_file/predict_${TAG}_${YEAR}.tok.txt 2>&1 | tee $RUN/run_logs/bleu_${TAG}_2018_aligned.log
+  fi
 done
 
 echo "=== DONE $TAG $(date) ==="

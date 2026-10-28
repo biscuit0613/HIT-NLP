@@ -49,6 +49,15 @@ Decoder 具有和 Encoder 类似的结构，只是相比于组成 Encoder 的 la
 - 训练采用按词元数组织批次（一个 batch 内最多 4096 个 token，含填充），Adam 优化器配合 Noam 学习率（warmup 8000 步）。
 - 预测使用 `paddle.nn.BeamSearchDecoder` 束搜索解码（束宽 5），增量 K/V 缓存由框架按束自动重排。
 
+### 3.7 代码级改进：相对位置 + 查询相关局部性偏置
+
+在编码器自注意力的 logits 上叠加两项加性偏置，解码逻辑与推理超参数保持不变：
+
+- **分桶相对位置偏置**（T5 方案）：`relative_position_bucket` 将查询—键距离映射到 32 个桶，`EncoderLayer.rel_pos_bias` 为每层、每个头提供零初始化的可学习偏置表。
+- **查询相关高斯局部性偏置**（Yang et al., EMNLP 2018）：`LocalnessBias` 由每个查询预测各头高斯窗的中心 $P_i^m$ 与宽度 $D_i^m$，默认施加于全部 6 层编码器。
+
+开关位于 `transformer.yaml`：`use_rel_pos`、`use_localness`、`localness_layers`；两项均设为 `False` 即可复现基线。相对基线的参数增量为 1,626,768（+2.5%），训练与解码配置不变。
+
 ## 数据说明
 
 数据位于 `wmt18_zhen_data_bpe3/`，是来自 WMT18 新闻评论文集（news-commentary v13）中英平行语料的预处理产物：
