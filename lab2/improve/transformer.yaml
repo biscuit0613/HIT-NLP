@@ -127,3 +127,6 @@ use_std_attn_scale: False
 # decoder self-attention layer, where the attended distances are causal.
 # Off by default; enabled for the decoder-bias experiment.
 use_dec_rel_pos: False
+# use_sandwich_ln adds a NormFormer-style output LayerNorm to every
+# sublayer residual branch (encoder attn/FFN, decoder self/cross/FFN).
+use_sandwich_ln: False

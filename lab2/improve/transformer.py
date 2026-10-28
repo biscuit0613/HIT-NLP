@@ -32,6 +32,13 @@ sinusoid encodings model "where" each token is, the relative bias models
 head move a soft attention window over the source according to the query
 content. All extra modules are additive biases on the attention logits,
 so they leave the rest of the Transformer computation unchanged.
+
+When `use_sandwich_ln` is set, every sublayer output additionally passes
+through a LayerNorm before the residual add (NormFormer-style sandwich
+normalization, Shleifer et al. 2021), so the residual branch is
+normalized on both sides of each sublayer. This adds parameters and
+computation inside each layer but changes neither the inference
+interface nor any decoding hyper-parameter.
 """
 
 import math
@@ -320,7 +327,8 @@ class EncoderLayer(nn.Layer):
                  relu_dropout,
                  use_rel_pos=True,
                  use_localness=False,
-                 use_std_attn_scale=False):
+                 use_std_attn_scale=False,
+                 use_sandwich_ln=False):
         super(EncoderLayer, self).__init__()
         self.self_attn = MultiHeadAttention(d_key, d_value, d_model, n_head,
                                             attention_dropout,
@@ -344,6 +352,11 @@ class EncoderLayer(nn.Layer):
         self.localness = LocalnessBias(
             d_model, n_head, d_key,
             use_std_attn_scale) if use_localness else None
+        # 3.7 improvement: NormFormer-style sandwich LayerNorm. Each
+        # sublayer is sandwiched between its input LN and an output LN, so
+        # the residual branch enters the residual stream at unit scale.
+        self.attn_out_ln = nn.LayerNorm(d_model) if use_sandwich_ln else None
+        self.ffn_out_ln = nn.LayerNorm(d_model) if use_sandwich_ln else None
 
     def forward(self, x, attn_bias):
         # Pre-LN query representation shared by the attention projection
@@ -371,8 +384,12 @@ class EncoderLayer(nn.Layer):
                 axis=-1)
             bias = bias + self.localness(query, lengths)
         attn_output = self.self_attn(query, None, None, bias)
+        if self.attn_out_ln is not None:
+            attn_output = self.attn_out_ln(attn_output)
         x = x + self.dropout(attn_output)
         ffd_output = self.ffn(self.ffn_ln(x))
+        if self.ffn_out_ln is not None:
+            ffd_output = self.ffn_out_ln(ffd_output)
         return x + self.dropout(ffd_output)
 
 
@@ -395,7 +412,8 @@ class Encoder(nn.Layer):
                  use_rel_pos=True,
                  use_localness=False,
                  localness_layers=0,
-                 use_std_attn_scale=False):
+                 use_std_attn_scale=False,
+                 use_sandwich_ln=False):
         super(Encoder, self).__init__()
         self.layers = nn.LayerList([
             EncoderLayer(n_head, d_key, d_value, d_model, d_inner_hid,
@@ -403,7 +421,8 @@ class Encoder(nn.Layer):
                          relu_dropout, use_rel_pos=use_rel_pos,
                          use_localness=(use_localness
                                         and layer_idx < localness_layers),
-                         use_std_attn_scale=use_std_attn_scale)
+                         use_std_attn_scale=use_std_attn_scale,
+                         use_sandwich_ln=use_sandwich_ln)
             for layer_idx in range(n_layer)
         ])
         self.top_layer_norm = nn.LayerNorm(d_model)
@@ -436,7 +455,8 @@ class DecoderLayer(nn.Layer):
                  attention_dropout,
                  relu_dropout,
                  use_std_attn_scale=False,
-                 use_dec_rel_pos=False):
+                 use_dec_rel_pos=False,
+                 use_sandwich_ln=False):
         super(DecoderLayer, self).__init__()
         self.slf_attn = MultiHeadAttention(d_key, d_value, d_model, n_head,
                                            attention_dropout,
@@ -456,6 +476,14 @@ class DecoderLayer(nn.Layer):
             REL_POS_NUM_BUCKETS, n_head,
             weight_attr=nn.initializer.Constant(0.0))
             if use_dec_rel_pos else None)
+        # 3.7 improvement: NormFormer-style sandwich LayerNorm, mirroring
+        # the encoder on the three decoder sublayers. Both decode paths use
+        # the same modules, so incremental decoding stays equivalent.
+        self.slf_attn_out_ln = (nn.LayerNorm(d_model)
+                                if use_sandwich_ln else None)
+        self.cross_attn_out_ln = (nn.LayerNorm(d_model)
+                                  if use_sandwich_ln else None)
+        self.ffn_out_ln = nn.LayerNorm(d_model) if use_sandwich_ln else None
 
     def _rel_pos_bias(self, query_start, query_len, key_len):
         """
@@ -479,11 +507,17 @@ class DecoderLayer(nn.Layer):
             slf_attn_bias = slf_attn_bias + rel_bias
         slf_attn_output = self.slf_attn(self.slf_attn_ln(x), None, None,
                                         slf_attn_bias)
+        if self.slf_attn_out_ln is not None:
+            slf_attn_output = self.slf_attn_out_ln(slf_attn_output)
         x = x + self.dropout(slf_attn_output)
         enc_attn_output = self.cross_attn(self.cross_attn_ln(x), enc_output,
                                           enc_output, dec_enc_attn_bias)
+        if self.cross_attn_out_ln is not None:
+            enc_attn_output = self.cross_attn_out_ln(enc_attn_output)
         x = x + self.dropout(enc_attn_output)
         ffd_output = self.ffn(self.ffn_ln(x))
+        if self.ffn_out_ln is not None:
+            ffd_output = self.ffn_out_ln(ffd_output)
         return x + self.dropout(ffd_output)
 
     def step(self, x, enc_output, dec_enc_attn_bias, cache):
@@ -507,11 +541,17 @@ class DecoderLayer(nn.Layer):
         rel_bias = self._rel_pos_bias(cached_len, 1, cached_len + 1)
         slf_attn_output, cache = self.slf_attn(
             self.slf_attn_ln(x), None, None, rel_bias, cache=cache)
+        if self.slf_attn_out_ln is not None:
+            slf_attn_output = self.slf_attn_out_ln(slf_attn_output)
         x = x + self.dropout(slf_attn_output)
         enc_attn_output = self.cross_attn(self.cross_attn_ln(x), enc_output,
                                           enc_output, dec_enc_attn_bias)
+        if self.cross_attn_out_ln is not None:
+            enc_attn_output = self.cross_attn_out_ln(enc_attn_output)
         x = x + self.dropout(enc_attn_output)
         ffd_output = self.ffn(self.ffn_ln(x))
+        if self.ffn_out_ln is not None:
+            ffd_output = self.ffn_out_ln(ffd_output)
         return x + self.dropout(ffd_output), cache
 
 
@@ -532,12 +572,14 @@ class Decoder(nn.Layer):
                  attention_dropout,
                  relu_dropout,
                  use_std_attn_scale=False,
-                 use_dec_rel_pos=False):
+                 use_dec_rel_pos=False,
+                 use_sandwich_ln=False):
         super(Decoder, self).__init__()
         self.layers = nn.LayerList([
             DecoderLayer(n_head, d_key, d_value, d_model, d_inner_hid,
                          prepostprocess_dropout, attention_dropout,
-                         relu_dropout, use_std_attn_scale, use_dec_rel_pos)
+                         relu_dropout, use_std_attn_scale, use_dec_rel_pos,
+                         use_sandwich_ln)
             for _ in range(n_layer)
         ])
         self.top_layer_norm = nn.LayerNorm(d_model)
@@ -593,7 +635,8 @@ class TransformerModel(nn.Layer):
                  use_localness=False,
                  localness_layers=0,
                  use_std_attn_scale=False,
-                 use_dec_rel_pos=False):
+                 use_dec_rel_pos=False,
+                 use_sandwich_ln=False):
         super(TransformerModel, self).__init__()
         # Only the pre-normalized sub-layer structure of the course
         # configuration is supported by this rewrite.
@@ -621,6 +664,7 @@ class TransformerModel(nn.Layer):
         self.localness_layers = localness_layers
         self.use_std_attn_scale = use_std_attn_scale
         self.use_dec_rel_pos = use_dec_rel_pos
+        self.use_sandwich_ln = use_sandwich_ln
 
         self.src_word_emb = nn.Embedding(
             src_vocab_size,
@@ -647,11 +691,13 @@ class TransformerModel(nn.Layer):
                                use_rel_pos=use_rel_pos,
                                use_localness=use_localness,
                                localness_layers=localness_layers,
-                               use_std_attn_scale=use_std_attn_scale)
+                               use_std_attn_scale=use_std_attn_scale,
+                               use_sandwich_ln=use_sandwich_ln)
         self.decoder = Decoder(n_layer, n_head, d_key, d_value, d_model,
                                d_inner_hid, prepostprocess_dropout,
                                attention_dropout, relu_dropout,
-                               use_std_attn_scale, use_dec_rel_pos)
+                               use_std_attn_scale, use_dec_rel_pos,
+                               use_sandwich_ln)
         self.prepostprocess_dropout = nn.Dropout(prepostprocess_dropout)
         # The concatenated sin/cos position encodings are constants rather
         # than the externally initialized "parameter tables" of the old
@@ -692,7 +738,8 @@ class TransformerModel(nn.Layer):
             use_localness=args.use_localness,
             localness_layers=args.localness_layers,
             use_std_attn_scale=args.use_std_attn_scale,
-            use_dec_rel_pos=args.use_dec_rel_pos)
+            use_dec_rel_pos=args.use_dec_rel_pos,
+            use_sandwich_ln=args.use_sandwich_ln)
 
     def forward(self, src_word, src_pos, src_slf_attn_bias, trg_word, trg_pos,
                 trg_slf_attn_bias, trg_src_attn_bias, lbl_word, lbl_weight):
