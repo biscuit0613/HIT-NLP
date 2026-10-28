@@ -60,7 +60,37 @@ def build_example(tokenizer, user, target, cutoff_len):
     if ids[: len(prefix_ids)] != prefix_ids:
         raise RuntimeError("prompt tokenization is not a prefix of the full conversation")
     labels = [-100] * len(prefix_ids) + ids[len(prefix_ids):]
-    return ids[:cutoff_len], labels[:cutoff_len]
+    return ids[:cutoff_len], labels[:cutoff_len], len(ids) > cutoff_len
+
+
+def build_samples(tokenizer, path, cutoff_len, seed, max_samples, label):
+    """Render an Alpaca JSON file into prompt-masked training samples."""
+    with open(path, encoding="utf-8") as f:
+        raw = json.load(f)
+    random.Random(seed).shuffle(raw)
+    if max_samples:
+        raw = raw[: int(max_samples)]
+
+    samples, skipped, truncated = [], 0, 0
+    for i, ex in enumerate(raw):
+        user = (ex.get("instruction") or "").strip()
+        extra = (ex.get("input") or "").strip()
+        if extra:
+            user = user + "\n" + extra
+        target_text = (ex.get("output") or "").strip()
+        if not user or not target_text:
+            skipped += 1
+            continue
+        ids, labels, cut = build_example(tokenizer, user, target_text, cutoff_len)
+        if len(ids) < 2 or all(label == -100 for label in labels):
+            skipped += 1
+            continue
+        truncated += int(cut)
+        samples.append({"input_ids": ids, "labels": labels})
+        if (i + 1) % 5000 == 0:
+            print(f"[data] prepared {i + 1}/{len(raw)}", flush=True)
+    print(f"[data] {label}: kept={len(samples)} skipped={skipped} truncated={truncated}", flush=True)
+    return samples, skipped, truncated
 
 
 def main():
@@ -128,34 +158,18 @@ def main():
         model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
 
     data_dir = args.data_dir or cfg["dataset_dir"]
-    data_path = os.path.join(data_dir, "train.json")
-    with open(data_path, encoding="utf-8") as f:
-        raw = json.load(f)
-    random.Random(seed).shuffle(raw)
-    max_samples = args.max_samples if args.max_samples is not None else cfg.get("max_samples")
-    if max_samples:
-        raw = raw[: int(max_samples)]
     cutoff_len = int(cfg.get("cutoff_len", 1024))
+    max_samples = args.max_samples if args.max_samples is not None else cfg.get("max_samples")
+    samples, skipped, truncated = build_samples(
+        tokenizer, os.path.join(data_dir, "train.json"), cutoff_len, seed, max_samples, "train")
 
-    samples = []
-    skipped = 0
-    for i, ex in enumerate(raw):
-        user = (ex.get("instruction") or "").strip()
-        extra = (ex.get("input") or "").strip()
-        if extra:
-            user = user + "\n" + extra
-        target_text = (ex.get("output") or "").strip()
-        if not user or not target_text:
-            skipped += 1
-            continue
-        ids, labels = build_example(tokenizer, user, target_text, cutoff_len)
-        if len(ids) < 2 or all(label == -100 for label in labels):
-            skipped += 1
-            continue
-        samples.append({"input_ids": ids, "labels": labels})
-        if (i + 1) % 5000 == 0:
-            print(f"[data] prepared {i + 1}/{len(raw)}", flush=True)
-    print(f"[data] kept={len(samples)} skipped={skipped}", flush=True)
+    eval_samples = None
+    val_path = os.path.join(data_dir, "val.json")
+    if os.path.exists(val_path):
+        eval_samples, _, _ = build_samples(
+            tokenizer, val_path, cutoff_len, seed, cfg.get("eval_max_samples", 500), "val")
+    else:
+        print(f"[data] no {val_path}; training without validation", flush=True)
 
     out_dir = args.out_dir or cfg["output_dir"]
     os.makedirs(out_dir, exist_ok=True)
@@ -193,10 +207,17 @@ def main():
         args=training_args,
         train_dataset=SFTDataset(samples),
         data_collator=PadCollator(tokenizer.pad_token_id),
-        tokenizer=tokenizer,
+        **{("processing_class" if major >= 5 else "tokenizer"): tokenizer},
     )
     trainer.train()
     print(f"[gpu] peak_alloc_gb={torch.cuda.max_memory_allocated() / 2**30:.2f}", flush=True)
+
+    eval_loss = None
+    if eval_samples:
+        eval_out = trainer.evaluate(eval_dataset=SFTDataset(eval_samples), metric_key_prefix="eval")
+        eval_loss = eval_out.get("eval_loss")
+        print(f"[eval] val_loss={eval_loss:.4f} val_samples={len(eval_samples)}", flush=True)
+
     model.save_pretrained(out_dir)
     tokenizer.save_pretrained(out_dir)
     trainer.save_state()
@@ -214,6 +235,11 @@ def main():
         "learning_rate": cfg.get("learning_rate"),
         "num_samples": len(samples),
         "skipped": skipped,
+        "truncated": truncated,
+        "cutoff_len": cutoff_len,
+        "eff_batch_size": int(cfg.get("per_device_train_batch_size", 8)) * int(cfg.get("gradient_accumulation_steps", 4)),
+        "val_samples": len(eval_samples) if eval_samples else 0,
+        "val_loss": eval_loss,
         "steps": int(trainer.state.global_step),
         "fp16": fp16,
         "gradient_checkpointing": gradient_checkpointing,

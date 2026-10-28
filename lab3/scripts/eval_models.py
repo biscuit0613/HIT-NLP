@@ -35,6 +35,7 @@ SYSTEMS = {
 }
 MAX_NEW_TOKENS = 256
 REPETITION_PENALTY = 1.05
+MAX_INPUT_TOKENS = 1024
 
 RE_ALONE = re.compile(r"^\s*[（(]?\s*([ABCD])\s*[）)\.．、]?\s*$")
 RE_EXPLICIT = re.compile(r"(?:答案|选项|选择|选)\s*(?:是|为)?\s*[:：]?\s*[（(]?\s*([ABCD])(?![A-Za-z])")
@@ -82,6 +83,9 @@ def load_samples(path, limit=None):
 
 def load_model(base_path, adapter_path, dtype, merge_adapter, attn):
     tokenizer = AutoTokenizer.from_pretrained(base_path, trust_remote_code=True, padding_side="left")
+    # Over-length prompts must lose their head (the system turn), never the trailing
+    # assistant\n cue that the chat template appends.
+    tokenizer.truncation_side = "left"
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     torch_dtype = {"bfloat16": torch.bfloat16, "float16": torch.float16}[dtype]
@@ -104,7 +108,11 @@ def load_model(base_path, adapter_path, dtype, merge_adapter, attn):
 
 
 def generate_batch(model, tokenizer, prompts, max_new_tokens):
-    inputs = tokenizer(prompts, return_tensors="pt", padding=True, truncation=True, max_length=1024)
+    inputs = tokenizer(prompts, return_tensors="pt", padding=True,
+                       truncation=True, max_length=MAX_INPUT_TOKENS)
+    # attention_mask row sums are the unpadded prompt lengths, so a row sitting
+    # exactly on the cap is a prompt that left-truncation cut part of.
+    truncated = int((inputs["attention_mask"].sum(dim=1) >= MAX_INPUT_TOKENS).sum())
     inputs = {k: v.to(model.device) for k, v in inputs.items()}
     with torch.inference_mode():
         output = model.generate(
@@ -118,7 +126,7 @@ def generate_batch(model, tokenizer, prompts, max_new_tokens):
     generated = output[:, inputs["input_ids"].shape[1]:]
     texts = tokenizer.batch_decode(generated, skip_special_tokens=True)
     lengths = (generated != tokenizer.pad_token_id).sum(dim=1).tolist()
-    return [t.strip() for t in texts], lengths
+    return [t.strip() for t in texts], lengths, truncated
 
 
 def clean_answer(text):
@@ -196,11 +204,13 @@ def medical_metrics(preds):
 
 def evaluate_medical(model, tokenizer, samples, batch_size, system):
     preds = []
+    truncated = 0
     t0 = time.time()
     for start in range(0, len(samples), batch_size):
         chunk = samples[start:start + batch_size]
         prompts = [build_prompt(tokenizer, s["src"], system) for s in chunk]
-        hyps, lengths = generate_batch(model, tokenizer, prompts, MAX_NEW_TOKENS)
+        hyps, lengths, n_trunc = generate_batch(model, tokenizer, prompts, MAX_NEW_TOKENS)
+        truncated += n_trunc
         for s, hyp, ntok in zip(chunk, hyps, lengths):
             preds.append({
                 "idx": s["idx"],
@@ -213,6 +223,7 @@ def evaluate_medical(model, tokenizer, samples, batch_size, system):
     metrics = medical_metrics(preds)
     if len(preds) > 100:
         metrics["first100"] = medical_metrics(preds[:100])
+    metrics["truncated_prompts"] = truncated
     metrics["elapsed_s"] = time.time() - t0
     metrics["samples_per_s"] = len(preds) / max(metrics["elapsed_s"], 1e-6)
     metrics["avg_new_tokens"] = statistics.mean(p["new_tokens"] for p in preds)
@@ -222,6 +233,7 @@ def evaluate_medical(model, tokenizer, samples, batch_size, system):
 
 def evaluate_cmmlu(model, tokenizer, samples, batch_size, system, instruction=""):
     preds = []
+    truncated = 0
     t0 = time.time()
     for start in range(0, len(samples), batch_size):
         chunk = samples[start:start + batch_size]
@@ -229,7 +241,8 @@ def evaluate_cmmlu(model, tokenizer, samples, batch_size, system, instruction=""
             build_prompt(tokenizer, s["src"] + (f"\n\n{instruction}" if instruction else ""), system)
             for s in chunk
         ]
-        outs, lengths = generate_batch(model, tokenizer, prompts, MAX_NEW_TOKENS)
+        outs, lengths, n_trunc = generate_batch(model, tokenizer, prompts, MAX_NEW_TOKENS)
+        truncated += n_trunc
         for s, raw, ntok in zip(chunk, outs, lengths):
             choice = parse_choice(raw)
             preds.append({
@@ -258,6 +271,7 @@ def evaluate_cmmlu(model, tokenizer, samples, batch_size, system, instruction=""
         "contains_gold_rate": contains_gold / max(1, n),
         "pred_dist": dist,
         "hit_limit": sum(1 for p in preds if p["new_tokens"] >= MAX_NEW_TOKENS),
+        "truncated_prompts": truncated,
         "avg_new_tokens": statistics.mean(p["new_tokens"] for p in preds),
         "elapsed_s": time.time() - t0,
         "samples_per_s": n / max(time.time() - t0, 1e-6),
@@ -308,6 +322,7 @@ def main():
             "decoding": "greedy",
             "repetition_penalty": REPETITION_PENALTY,
             "max_new_tokens": MAX_NEW_TOKENS,
+            "max_input_tokens": MAX_INPUT_TOKENS,
             "batch_size": args.batch_size,
             "dtype": args.dtype,
             "attn": args.attn,
@@ -323,7 +338,8 @@ def main():
         elif dataset == "cmmlu":
             samples = load_samples(os.path.join(args.data_dir, args.cmmlu_file), args.cmmlu_limit)
             print(f"  cmmlu {len(samples)}", flush=True)
-            preds, metrics = evaluate_cmmlu(model, tokenizer, samples, args.batch_size, system)
+            preds, metrics = evaluate_cmmlu(model, tokenizer, samples, args.batch_size, system,
+                                            args.cmmlu_instruction)
         else:
             raise ValueError(dataset)
         all_metrics[dataset] = metrics

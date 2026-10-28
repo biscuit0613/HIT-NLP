@@ -63,7 +63,19 @@ def src_text(item):
     return first(item.get("src"))
 
 
-def load_metrics(results_dir):
+def load_med500(results500_dir, tag):
+    """Medical metrics from the 500-sample run, or {} when it was not done."""
+    if not results500_dir:
+        return {}
+    path = os.path.join(results500_dir, f"metrics_{tag}.json")
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as f:
+        med = json.load(f).get("medical", {})
+    return med if med.get("n", 0) >= 500 else {}
+
+
+def load_metrics(results_dir, results500_dir=None):
     rows = []
     for tag in ORDER:
         path = os.path.join(results_dir, f"metrics_{tag}.json")
@@ -74,7 +86,7 @@ def load_metrics(results_dir):
         med = m.get("medical", {})
         first100 = med.get("first100", med)
         cm = m.get("cmmlu", {})
-        full_med = med.get("n", 0) >= 500
+        med500 = med if med.get("n", 0) >= 500 else load_med500(results500_dir, tag)
         rows.append({
             "tag": tag,
             "label": LABELS.get(tag, tag),
@@ -87,9 +99,9 @@ def load_metrics(results_dir):
             "r2r_100": first100.get("rouge-2_r"),
             "rlp_100": first100.get("rouge-l_p"),
             "rlr_100": first100.get("rouge-l_r"),
-            "r1_500": med.get("rouge-1") if full_med else None,
-            "r2_500": med.get("rouge-2") if full_med else None,
-            "rl_500": med.get("rouge-l") if full_med else None,
+            "r1_500": med500.get("rouge-1"),
+            "r2_500": med500.get("rouge-2"),
+            "rl_500": med500.get("rouge-l"),
             "acc": cm.get("accuracy"),
             "cmmlu_correct": cm.get("correct"),
             "cmmlu_n": cm.get("n"),
@@ -425,11 +437,13 @@ def plot_loss(results_dir, path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results")
+    ap.add_argument("--results500", default="results/official500",
+                    help="directory with the 500-sample medical metrics; skipped when absent")
     ap.add_argument("--figs", default="report/figs")
     ap.add_argument("--bootstrap", type=int, default=500, help="bootstrap resamples (0 disables)")
     args = ap.parse_args()
     os.makedirs(args.figs, exist_ok=True)
-    rows = load_metrics(args.results)
+    rows = load_metrics(args.results, args.results500)
     if not rows:
         raise SystemExit("no metrics files found")
     rows = add_style(rows, args.results)
