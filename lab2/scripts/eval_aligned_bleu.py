@@ -45,6 +45,10 @@ RUNS = {
     "loconly6_s42": RESULTS / "improve" / "loconly6_s42",
     "loconly6_s7": RESULTS / "improve" / "loconly6_s7",
     "loconly6_s123": RESULTS / "improve" / "loconly6_s123",
+    "dec6_s23": RESULTS / "improve" / "dec6_s23",
+    "dec6_s42": RESULTS / "improve" / "dec6_s42",
+    "dec6_s7": RESULTS / "improve" / "dec6_s7",
+    "dec6_s123": RESULTS / "improve" / "dec6_s123",
 }
 
 BLEU_RE = re.compile(
