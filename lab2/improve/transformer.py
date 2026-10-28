@@ -24,12 +24,14 @@ learnable relative position bias (T5-style bucketed bias, Raffel et al.
 2020; relative position representations for NMT were introduced by Shaw
 et al. 2018) and, in the encoder layers selected by `localness_layers`
 (all six in the final configuration), a query-conditioned Gaussian
-localness bias (Yang et al., EMNLP 2018). Absolute sinusoid
-encodings model "where" each token is, the relative bias models "how far
-apart" a query and a key are, and the localness bias lets each head move
-a soft attention window over the source according to the query content.
-Both extra modules are additive biases on the attention logits, so they
-leave the rest of the Transformer computation unchanged.
+localness bias (Yang et al., EMNLP 2018). When `use_dec_rel_pos` is set,
+the same bucketed relative position table is also applied to the decoder
+self-attention, where the attended distances are causal. Absolute
+sinusoid encodings model "where" each token is, the relative bias models
+"how far apart" a query and a key are, and the localness bias lets each
+head move a soft attention window over the source according to the query
+content. All extra modules are additive biases on the attention logits,
+so they leave the rest of the Transformer computation unchanged.
 """
 
 import math
@@ -433,7 +435,8 @@ class DecoderLayer(nn.Layer):
                  prepostprocess_dropout,
                  attention_dropout,
                  relu_dropout,
-                 use_std_attn_scale=False):
+                 use_std_attn_scale=False,
+                 use_dec_rel_pos=False):
         super(DecoderLayer, self).__init__()
         self.slf_attn = MultiHeadAttention(d_key, d_value, d_model, n_head,
                                            attention_dropout,
@@ -446,8 +449,34 @@ class DecoderLayer(nn.Layer):
         self.ffn = PositionwiseFeedForward(d_inner_hid, d_model, relu_dropout)
         self.ffn_ln = nn.LayerNorm(d_model)
         self.dropout = nn.Dropout(prepostprocess_dropout)
+        # 3.7 improvement: optional T5-style relative position bias on the
+        # decoder self-attention. Zero initialization keeps the layer at
+        # the baseline function at step 0.
+        self.rel_pos_bias = (nn.Embedding(
+            REL_POS_NUM_BUCKETS, n_head,
+            weight_attr=nn.initializer.Constant(0.0))
+            if use_dec_rel_pos else None)
+
+    def _rel_pos_bias(self, query_start, query_len, key_len):
+        """
+        Build the [1, n_head, query_len, key_len] relative position bias.
+        `query_start` is the absolute position of the first query, so the
+        same method serves a full teacher-forcing sequence (start 0) and
+        the single cached step of incremental decoding (start key_len - 1).
+        """
+        if self.rel_pos_bias is None:
+            return None
+        query_pos = paddle.arange(
+            query_start, query_start + query_len, dtype="int64")
+        key_pos = paddle.arange(key_len, dtype="int64")
+        relative_position = key_pos[None, :] - query_pos[:, None]
+        buckets = relative_position_bucket(relative_position)
+        return self.rel_pos_bias(buckets).transpose([2, 0, 1]).unsqueeze(0)
 
     def forward(self, x, enc_output, slf_attn_bias, dec_enc_attn_bias):
+        rel_bias = self._rel_pos_bias(0, x.shape[1], x.shape[1])
+        if rel_bias is not None:
+            slf_attn_bias = slf_attn_bias + rel_bias
         slf_attn_output = self.slf_attn(self.slf_attn_ln(x), None, None,
                                         slf_attn_bias)
         x = x + self.dropout(slf_attn_output)
@@ -461,19 +490,23 @@ class DecoderLayer(nn.Layer):
         """
         One incremental decoding step, where `cache` is the cached
         self-attention K/V tuple of this layer and the updated one is
-        returned. No self-attention bias is needed since only the history
-        positions are attended. Only the self-attention K/V are cached: the
-        old static-graph `fast_decode` additionally computed the
-        encoder-decoder attention K/V once (via `static_kv=True` plus
-        `wrap_layer_with_block`) and reused that projection across steps,
-        whereas here they are re-projected from `enc_output` at every step.
-        The two paths are numerically equivalent (identical projection
-        weights applied to the same `enc_output`); the difference is only
-        that this version recomputes, rather than caches, those K/V per
-        step.
+        returned. With `use_dec_rel_pos` the cached keys span positions
+        0..cached_len and the current query sits at cached_len, so the
+        causal relative bias covers exactly the attended history; without
+        it no self-attention bias is needed. Only the self-attention K/V
+        are cached: the old static-graph `fast_decode` additionally
+        computed the encoder-decoder attention K/V once (via
+        `static_kv=True` plus `wrap_layer_with_block`) and reused that
+        projection across steps, whereas here they are re-projected from
+        `enc_output` at every step. The two paths are numerically
+        equivalent (identical projection weights applied to the same
+        `enc_output`); the difference is only that this version
+        recomputes, rather than caches, those K/V per step.
         """
+        cached_len = cache[0].shape[2]
+        rel_bias = self._rel_pos_bias(cached_len, 1, cached_len + 1)
         slf_attn_output, cache = self.slf_attn(
-            self.slf_attn_ln(x), None, None, None, cache=cache)
+            self.slf_attn_ln(x), None, None, rel_bias, cache=cache)
         x = x + self.dropout(slf_attn_output)
         enc_attn_output = self.cross_attn(self.cross_attn_ln(x), enc_output,
                                           enc_output, dec_enc_attn_bias)
@@ -498,12 +531,13 @@ class Decoder(nn.Layer):
                  prepostprocess_dropout,
                  attention_dropout,
                  relu_dropout,
-                 use_std_attn_scale=False):
+                 use_std_attn_scale=False,
+                 use_dec_rel_pos=False):
         super(Decoder, self).__init__()
         self.layers = nn.LayerList([
             DecoderLayer(n_head, d_key, d_value, d_model, d_inner_hid,
                          prepostprocess_dropout, attention_dropout,
-                         relu_dropout, use_std_attn_scale)
+                         relu_dropout, use_std_attn_scale, use_dec_rel_pos)
             for _ in range(n_layer)
         ])
         self.top_layer_norm = nn.LayerNorm(d_model)
@@ -558,7 +592,8 @@ class TransformerModel(nn.Layer):
                  use_rel_pos=True,
                  use_localness=False,
                  localness_layers=0,
-                 use_std_attn_scale=False):
+                 use_std_attn_scale=False,
+                 use_dec_rel_pos=False):
         super(TransformerModel, self).__init__()
         # Only the pre-normalized sub-layer structure of the course
         # configuration is supported by this rewrite.
@@ -585,6 +620,7 @@ class TransformerModel(nn.Layer):
         self.use_localness = use_localness
         self.localness_layers = localness_layers
         self.use_std_attn_scale = use_std_attn_scale
+        self.use_dec_rel_pos = use_dec_rel_pos
 
         self.src_word_emb = nn.Embedding(
             src_vocab_size,
@@ -615,7 +651,7 @@ class TransformerModel(nn.Layer):
         self.decoder = Decoder(n_layer, n_head, d_key, d_value, d_model,
                                d_inner_hid, prepostprocess_dropout,
                                attention_dropout, relu_dropout,
-                               use_std_attn_scale)
+                               use_std_attn_scale, use_dec_rel_pos)
         self.prepostprocess_dropout = nn.Dropout(prepostprocess_dropout)
         # The concatenated sin/cos position encodings are constants rather
         # than the externally initialized "parameter tables" of the old
@@ -655,7 +691,8 @@ class TransformerModel(nn.Layer):
             use_rel_pos=args.use_rel_pos,
             use_localness=args.use_localness,
             localness_layers=args.localness_layers,
-            use_std_attn_scale=args.use_std_attn_scale)
+            use_std_attn_scale=args.use_std_attn_scale,
+            use_dec_rel_pos=args.use_dec_rel_pos)
 
     def forward(self, src_word, src_pos, src_slf_attn_bias, trg_word, trg_pos,
                 trg_slf_attn_bias, trg_src_attn_bias, lbl_word, lbl_weight):

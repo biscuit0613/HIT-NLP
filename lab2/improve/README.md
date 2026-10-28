@@ -55,8 +55,9 @@ Decoder 具有和 Encoder 类似的结构，只是相比于组成 Encoder 的 la
 
 - **分桶相对位置偏置**（T5 方案）：`relative_position_bucket` 将查询—键距离映射到 32 个桶，`EncoderLayer.rel_pos_bias` 为每层、每个头提供零初始化的可学习偏置表。
 - **查询相关高斯局部性偏置**（Yang et al., EMNLP 2018）：`LocalnessBias` 由每个查询预测各头高斯窗的中心 $P_i^m$ 与宽度 $D_i^m$，默认施加于全部 6 层编码器。
+- **解码器相对位置偏置**（实验开关 `use_dec_rel_pos`，默认关闭）：同一套分桶表加到解码器自注意力，距离为因果距离；teacher-forcing 与增量解码共用 `DecoderLayer._rel_pos_bias`，解码逐 token 路径从缓存长度推出当前查询位置。
 
-开关位于 `transformer.yaml`：`use_rel_pos`、`use_localness`、`localness_layers`；两项均设为 `False` 即可复现基线。相对基线的参数增量为 1,626,768（+2.5%），训练与解码配置不变。
+开关位于 `transformer.yaml`：`use_rel_pos`、`use_localness`、`localness_layers`、`use_dec_rel_pos`；全部设为 `False` 即可复现基线。编码器两项相对基线的参数增量为 1,626,768（+2.5%），解码器偏置另加 32 × 8 × 6 = 1,536，训练与解码配置不变。
 
 ## 数据说明
 
