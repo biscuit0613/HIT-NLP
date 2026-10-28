@@ -49,6 +49,10 @@ RUNS = {
     "dec6_s42": RESULTS / "improve" / "dec6_s42",
     "dec6_s7": RESULTS / "improve" / "dec6_s7",
     "dec6_s123": RESULTS / "improve" / "dec6_s123",
+    "sand6_s23": RESULTS / "improve" / "sand6_s23",
+    "sand6_s42": RESULTS / "improve" / "sand6_s42",
+    "sand6_s7": RESULTS / "improve" / "sand6_s7",
+    "sand6_s123": RESULTS / "improve" / "sand6_s123",
 }
 
 BLEU_RE = re.compile(

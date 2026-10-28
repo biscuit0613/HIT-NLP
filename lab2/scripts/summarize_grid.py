@@ -13,6 +13,7 @@ GROUPS = {
     "loconly6": "loconly6_s",
     "locrel6": "locrel6_s",
     "dec6": "dec6_s",
+    "sand6": "sand6_s",
 }
 
 SINGLES = ["relpos", "relpos_s23", "loconly_s23", "locrel_s23",
@@ -56,7 +57,7 @@ def main():
             "mean_2018": float(vals[2018].mean()),
             "std_2018": float(vals[2018].std(ddof=1)),
         }
-    for group in ("loconly6", "locrel6", "dec6"):
+    for group in ("loconly6", "locrel6", "dec6", "sand6"):
         for year in (2017, 2018):
             d = np.array(out[group][str(year)]) - np.array(out["base"][str(year)])
             out[group][f"delta_{year}"] = [float(x) for x in d]
