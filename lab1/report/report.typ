@@ -26,23 +26,26 @@
 #show figure: set block(breakable: false)
 
 // ---------- 封面（无页眉页码）----------
-#page(header: none, footer: none, margin: (x: 2.4cm, top: 4.5cm, bottom: 2.4cm))[
+#page(header: none, footer: none, margin: (x: 2.4cm, top: 5.0cm, bottom: 2.4cm))[
   #align(center)[
-    #text(size: 22pt, font: "Noto Sans CJK SC", weight: "bold")[哈尔滨工业大学] #v(1.6cm)
-    #text(size: 18pt, font: "Noto Sans CJK SC")[自然语言处理] #v(0.4cm)
-    #text(size: 18pt, font: "Noto Sans CJK SC")[实验报告] #v(1.2cm)
-    #text(size: 13pt, font: "Noto Sans CJK SC")[（2026 年秋季学期）] #v(3.2cm)
+    #text(size: 36pt, font: "Noto Sans CJK SC")[哈尔滨工业大学] #v(1.18cm)
+    #text(size: 26pt, font: "Noto Sans CJK SC", weight: "bold")[自然语言处理] #v(0cm)
+    #text(size: 26pt, font: "Noto Sans CJK SC", weight: "bold")[实验报告] #v(2.14cm)
+    #text(size: 21pt, font: "Noto Serif CJK SC", weight: "bold")[(2026 年秋季学期)] #v(4.0cm)
   ]
   #align(center)[
     #text(size: 12pt, font: "Noto Sans CJK SC")[
     #grid(
-      columns: (auto, auto),
-      row-gutter: 14pt, column-gutter: 8pt,
-      align: (right, left),
-      [姓名：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[邴海诺、高新来]]],
-      [学号：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[2024112353、2024112774]]],
-      [学院：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[计算学部]]],
-      [教师：], [#box(width: 6.6cm, stroke: (bottom: 0.6pt))[#align(center)[杨沐昀]]],
+      columns: (3.25cm, 6.5cm),
+      rows: (1.12cm, 1.12cm, 1.12cm, 1.12cm),
+      stroke: 0.6pt,
+      inset: 4pt,
+      align: center,
+      fill: (x, y) => if x == 0 { rgb("#CCEDFF") },
+      text(size: 14pt, font: "Noto Sans CJK SC", weight: "bold")[姓名：], [邴海诺、高新来],
+      text(size: 14pt, font: "Noto Sans CJK SC", weight: "bold")[学号：], [2024112353、2024112774],
+      text(size: 14pt, font: "Noto Sans CJK SC", weight: "bold")[学院：], [计算学部],
+      text(size: 14pt, font: "Noto Sans CJK SC", weight: "bold")[教师：], [杨沐昀],
     )
     ]
   ]

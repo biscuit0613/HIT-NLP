@@ -3,7 +3,9 @@
 
 The official parser only accepts an explicit option letter.  This script adds a
 content-level diagnostic for otherwise unparsed outputs: the option whose text
-has the largest character-trigram Jaccard overlap with the answer.
+has the largest character-trigram Jaccard overlap with the answer.  Parsed but
+wrong letters are never reclassified.  Unparsed outputs with no overlap against
+any option carry no ranking evidence and contribute zero reciprocal rank.
 """
 import argparse
 import csv
@@ -13,7 +15,8 @@ import re
 import unicodedata
 
 TAGS = ["base", "lora_r8_qv", "lora_r16_all_lr1e4", "lora_r16_all",
-        "lora_r32_all", "dora_r16_all", "dora_r8_qv"]
+        "lora_r32_all", "dora_r16_all", "dora_r8_qv",
+        "lora_r8_qv_fmt", "lora_r8_qv_replay"]
 RE_ALONE = re.compile(r"^\s*[（(]?\s*([ABCD])\s*[）)\.．、]?\s*$")
 RE_EXPLICIT = re.compile(r"(?:答案|选项|选择|选)\s*(?:是|为)?\s*[:：]?\s*[（(]?\s*([ABCD])(?![A-Za-z])")
 RE_LEADING = re.compile(r"^\s*[（(]?\s*([ABCD])(?![A-Za-z])")
@@ -65,13 +68,22 @@ def load(path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results/official")
-    ap.add_argument("--out", default="results/official/cmmlu_format.csv")
-    ap.add_argument("--mrr-out", default="results/official/cmmlu_mrr.csv")
+    ap.add_argument("--out", default=None,
+                    help="default: <results>/cmmlu_format.csv")
+    ap.add_argument("--mrr-out", default=None,
+                    help="default: <results>/cmmlu_mrr.csv")
     args = ap.parse_args()
+    args.out = args.out or os.path.join(args.results, "cmmlu_format.csv")
+    args.mrr_out = args.mrr_out or os.path.join(args.results, "cmmlu_mrr.csv")
+
+    present = {name[len("pred_"):-len("_cmmlu.jsonl")]
+               for name in os.listdir(args.results)
+               if name.startswith("pred_") and name.endswith("_cmmlu.jsonl")}
+    tags = [t for t in TAGS if t in present] + sorted(present - set(TAGS))
 
     rows = []
     mrr_rows = []
-    for tag in TAGS:
+    for tag in tags:
         preds = load(os.path.join(args.results, f"pred_{tag}_cmmlu.jsonl"))
         if not preds:
             continue
@@ -90,14 +102,20 @@ def main():
                 pred = norm(r["pred"])
                 scores = {k: overlap(pred, v) for k, v in opts.items()}
                 gold_score = scores.get(gold, 0.0)
-                rank = 1 + sum(v > gold_score + 1e-12 for v in scores.values())
-                reciprocal_rank += 1.0 / rank
+                if gold_score > 0:
+                    rank = 1 + sum(v > gold_score + 1e-12 for v in scores.values())
+                    reciprocal_rank += 1.0 / rank
             if r["correct"]:
                 relaxed += 1
                 continue
+            if choice is not None:
+                continue
             opts = options(r["src"][0])
             pred = norm(r["pred"])
-            pick = max(opts, key=lambda k: overlap(pred, opts[k])) if opts else None
+            scores = {k: overlap(pred, v) for k, v in opts.items()}
+            if not opts or max(scores.values()) <= 0:
+                continue
+            pick = max(opts, key=lambda k: scores[k])
             if pick == gold:
                 relaxed += 1
                 recovered += 1

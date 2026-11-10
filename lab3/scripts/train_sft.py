@@ -9,7 +9,7 @@ from dataclasses import dataclass
 import torch
 import transformers
 import yaml
-from peft import LoraConfig, TaskType, get_peft_model
+from peft import LoraConfig, PeftModel, TaskType, get_peft_model
 from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
 
 SYSTEM = "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
@@ -44,14 +44,14 @@ class PadCollator:
         return {"input_ids": input_ids, "labels": labels, "attention_mask": attention}
 
 
-def build_example(tokenizer, user, target, cutoff_len):
+def build_example(tokenizer, user, target, cutoff_len, system=SYSTEM):
     prefix_ids = tokenizer.apply_chat_template(
-        [{"role": "system", "content": SYSTEM}, {"role": "user", "content": user}],
+        [{"role": "system", "content": system}, {"role": "user", "content": user}],
         tokenize=True,
         add_generation_prompt=True,
     )
     messages = [
-        {"role": "system", "content": SYSTEM},
+        {"role": "system", "content": system},
         {"role": "user", "content": user},
         {"role": "assistant", "content": target},
     ]
@@ -72,6 +72,7 @@ def build_samples(tokenizer, path, cutoff_len, seed, max_samples, label):
         raw = raw[: int(max_samples)]
 
     samples, skipped, truncated = [], 0, 0
+    system_counts = {}
     for i, ex in enumerate(raw):
         user = (ex.get("instruction") or "").strip()
         extra = (ex.get("input") or "").strip()
@@ -81,16 +82,19 @@ def build_samples(tokenizer, path, cutoff_len, seed, max_samples, label):
         if not user or not target_text:
             skipped += 1
             continue
-        ids, labels, cut = build_example(tokenizer, user, target_text, cutoff_len)
+        system = (ex.get("system") or SYSTEM).strip()
+        ids, labels, cut = build_example(tokenizer, user, target_text, cutoff_len, system=system)
         if len(ids) < 2 or all(label == -100 for label in labels):
             skipped += 1
             continue
         truncated += int(cut)
         samples.append({"input_ids": ids, "labels": labels})
+        system_counts[system] = system_counts.get(system, 0) + 1
         if (i + 1) % 5000 == 0:
             print(f"[data] prepared {i + 1}/{len(raw)}", flush=True)
-    print(f"[data] {label}: kept={len(samples)} skipped={skipped} truncated={truncated}", flush=True)
-    return samples, skipped, truncated
+    print(f"[data] {label}: kept={len(samples)} skipped={skipped} truncated={truncated} "
+          f"systems={system_counts}", flush=True)
+    return samples, skipped, truncated, system_counts
 
 
 def main():
@@ -100,6 +104,7 @@ def main():
     ap.add_argument("--model", default=None, help="base model path (overrides config)")
     ap.add_argument("--data-dir", default=None, help="directory with train.json (overrides config)")
     ap.add_argument("--out-dir", default=None, help="adapter output directory (overrides config)")
+    ap.add_argument("--train-file", default=None, help="training JSON (overrides config)")
     ap.add_argument("--meta-dir", default="results")
     ap.add_argument("--max-samples", type=int, default=None)
     ap.add_argument("--max-steps", type=int, default=-1)
@@ -143,7 +148,12 @@ def main():
         bias="none",
         use_dora=cfg["use_dora"],
     )
-    model = get_peft_model(model, lora_config)
+    init_adapter = cfg.get("init_adapter")
+    if init_adapter:
+        model = PeftModel.from_pretrained(model, init_adapter, is_trainable=True)
+        print(f"[init] continuing from adapter={init_adapter}", flush=True)
+    else:
+        model = get_peft_model(model, lora_config)
     if fp16:
         for _, p in model.named_parameters():
             if p.requires_grad:
@@ -158,15 +168,16 @@ def main():
         model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
 
     data_dir = args.data_dir or cfg["dataset_dir"]
+    train_path = args.train_file or cfg.get("train_file") or os.path.join(data_dir, "train.json")
     cutoff_len = int(cfg.get("cutoff_len", 1024))
     max_samples = args.max_samples if args.max_samples is not None else cfg.get("max_samples")
-    samples, skipped, truncated = build_samples(
-        tokenizer, os.path.join(data_dir, "train.json"), cutoff_len, seed, max_samples, "train")
+    samples, skipped, truncated, system_counts = build_samples(
+        tokenizer, train_path, cutoff_len, seed, max_samples, "train")
 
     eval_samples = None
     val_path = os.path.join(data_dir, "val.json")
     if os.path.exists(val_path):
-        eval_samples, _, _ = build_samples(
+        eval_samples, _, _, _ = build_samples(
             tokenizer, val_path, cutoff_len, seed, cfg.get("eval_max_samples", 500), "val")
     else:
         print(f"[data] no {val_path}; training without validation", flush=True)
@@ -225,6 +236,8 @@ def main():
     os.makedirs(args.meta_dir, exist_ok=True)
     meta = {
         "tag": args.tag,
+        "train_file": train_path,
+        "init_adapter": init_adapter,
         "trainable_params": trainable,
         "total_params": total,
         "trainable_pct": 100 * trainable / total,
@@ -234,6 +247,7 @@ def main():
         "use_dora": cfg["use_dora"],
         "learning_rate": cfg.get("learning_rate"),
         "num_samples": len(samples),
+        "system_counts": system_counts,
         "skipped": skipped,
         "truncated": truncated,
         "cutoff_len": cutoff_len,

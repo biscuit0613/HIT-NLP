@@ -32,6 +32,7 @@ jieba.dt.tmp_dir = _jieba_cache
 SYSTEMS = {
     "qwen": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant.",
     "official": "You are a helpful assistant.",
+    "cmmlu": "你是一名计算机科学考试助手。只输出正确选项的字母（A/B/C/D），不要解释，不要重复题干。",
 }
 MAX_NEW_TOKENS = 256
 REPETITION_PENALTY = 1.05
@@ -107,7 +108,8 @@ def load_model(base_path, adapter_path, dtype, merge_adapter, attn):
     return tokenizer, model
 
 
-def generate_batch(model, tokenizer, prompts, max_new_tokens):
+def generate_batch(model, tokenizer, prompts, max_new_tokens,
+                   repetition_penalty=REPETITION_PENALTY):
     inputs = tokenizer(prompts, return_tensors="pt", padding=True,
                        truncation=True, max_length=MAX_INPUT_TOKENS)
     # attention_mask row sums are the unpadded prompt lengths, so a row sitting
@@ -119,7 +121,7 @@ def generate_batch(model, tokenizer, prompts, max_new_tokens):
             **inputs,
             max_new_tokens=max_new_tokens,
             do_sample=False,
-            repetition_penalty=REPETITION_PENALTY,
+            repetition_penalty=repetition_penalty,
             pad_token_id=tokenizer.pad_token_id,
             eos_token_id=tokenizer.eos_token_id,
         )
@@ -202,14 +204,17 @@ def medical_metrics(preds):
     return out
 
 
-def evaluate_medical(model, tokenizer, samples, batch_size, system):
+def evaluate_medical(model, tokenizer, samples, batch_size, system,
+                     max_new_tokens=MAX_NEW_TOKENS,
+                     repetition_penalty=REPETITION_PENALTY):
     preds = []
     truncated = 0
     t0 = time.time()
     for start in range(0, len(samples), batch_size):
         chunk = samples[start:start + batch_size]
         prompts = [build_prompt(tokenizer, s["src"], system) for s in chunk]
-        hyps, lengths, n_trunc = generate_batch(model, tokenizer, prompts, MAX_NEW_TOKENS)
+        hyps, lengths, n_trunc = generate_batch(
+            model, tokenizer, prompts, max_new_tokens, repetition_penalty)
         truncated += n_trunc
         for s, hyp, ntok in zip(chunk, hyps, lengths):
             preds.append({
@@ -227,11 +232,13 @@ def evaluate_medical(model, tokenizer, samples, batch_size, system):
     metrics["elapsed_s"] = time.time() - t0
     metrics["samples_per_s"] = len(preds) / max(metrics["elapsed_s"], 1e-6)
     metrics["avg_new_tokens"] = statistics.mean(p["new_tokens"] for p in preds)
-    metrics["hit_limit"] = sum(1 for p in preds if p["new_tokens"] >= MAX_NEW_TOKENS)
+    metrics["hit_limit"] = sum(1 for p in preds if p["new_tokens"] >= max_new_tokens)
     return preds, metrics
 
 
-def evaluate_cmmlu(model, tokenizer, samples, batch_size, system, instruction=""):
+def evaluate_cmmlu(model, tokenizer, samples, batch_size, system, instruction="",
+                   max_new_tokens=MAX_NEW_TOKENS,
+                   repetition_penalty=REPETITION_PENALTY):
     preds = []
     truncated = 0
     t0 = time.time()
@@ -241,7 +248,8 @@ def evaluate_cmmlu(model, tokenizer, samples, batch_size, system, instruction=""
             build_prompt(tokenizer, s["src"] + (f"\n\n{instruction}" if instruction else ""), system)
             for s in chunk
         ]
-        outs, lengths, n_trunc = generate_batch(model, tokenizer, prompts, MAX_NEW_TOKENS)
+        outs, lengths, n_trunc = generate_batch(
+            model, tokenizer, prompts, max_new_tokens, repetition_penalty)
         truncated += n_trunc
         for s, raw, ntok in zip(chunk, outs, lengths):
             choice = parse_choice(raw)
@@ -270,7 +278,7 @@ def evaluate_cmmlu(model, tokenizer, samples, batch_size, system, instruction=""
         "contains_gold": contains_gold,
         "contains_gold_rate": contains_gold / max(1, n),
         "pred_dist": dist,
-        "hit_limit": sum(1 for p in preds if p["new_tokens"] >= MAX_NEW_TOKENS),
+        "hit_limit": sum(1 for p in preds if p["new_tokens"] >= max_new_tokens),
         "truncated_prompts": truncated,
         "avg_new_tokens": statistics.mean(p["new_tokens"] for p in preds),
         "elapsed_s": time.time() - t0,
@@ -299,6 +307,10 @@ def main():
     ap.add_argument("--cmmlu-limit", type=int, default=None)
     ap.add_argument("--cmmlu-instruction", default="",
                     help="optional answer-format instruction appended to CMMLU prompts")
+    ap.add_argument("--cmmlu-system", default=None, choices=sorted(SYSTEMS),
+                    help="system prompt for CMMLU; defaults to --system")
+    ap.add_argument("--cmmlu-max-new-tokens", type=int, default=MAX_NEW_TOKENS)
+    ap.add_argument("--cmmlu-repetition-penalty", type=float, default=REPETITION_PENALTY)
     ap.add_argument("--batch-size", type=int, default=8)
     ap.add_argument("--dtype", default="bfloat16", choices=["bfloat16", "float16"])
     ap.add_argument("--attn", default="sdpa", choices=["sdpa", "eager"])
@@ -306,6 +318,7 @@ def main():
     ap.add_argument("--merge-adapter", action="store_true")
     args = ap.parse_args()
     system = SYSTEMS[args.system]
+    cmmlu_system = SYSTEMS[args.cmmlu_system] if args.cmmlu_system else system
 
     os.makedirs(args.out_dir, exist_ok=True)
     print(f"loading base={args.base_model} adapter={args.adapter} dtype={args.dtype} attn={args.attn}", flush=True)
@@ -319,9 +332,12 @@ def main():
         "base": args.base_model,
         "protocol": {
             "system": system,
+            "cmmlu_system": cmmlu_system,
             "decoding": "greedy",
             "repetition_penalty": REPETITION_PENALTY,
             "max_new_tokens": MAX_NEW_TOKENS,
+            "cmmlu_max_new_tokens": args.cmmlu_max_new_tokens,
+            "cmmlu_repetition_penalty": args.cmmlu_repetition_penalty,
             "max_input_tokens": MAX_INPUT_TOKENS,
             "batch_size": args.batch_size,
             "dtype": args.dtype,
@@ -338,8 +354,10 @@ def main():
         elif dataset == "cmmlu":
             samples = load_samples(os.path.join(args.data_dir, args.cmmlu_file), args.cmmlu_limit)
             print(f"  cmmlu {len(samples)}", flush=True)
-            preds, metrics = evaluate_cmmlu(model, tokenizer, samples, args.batch_size, system,
-                                            args.cmmlu_instruction)
+            preds, metrics = evaluate_cmmlu(
+                model, tokenizer, samples, args.batch_size, cmmlu_system,
+                args.cmmlu_instruction, args.cmmlu_max_new_tokens,
+                args.cmmlu_repetition_penalty)
         else:
             raise ValueError(dataset)
         all_metrics[dataset] = metrics

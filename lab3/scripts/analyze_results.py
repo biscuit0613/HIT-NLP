@@ -31,6 +31,8 @@ ORDER = [
     "lora_r32_all",
     "dora_r8_qv",
     "dora_r16_all",
+    "lora_r8_qv_fmt",
+    "lora_r8_qv_replay",
 ]
 LABELS = {
     "base": "基座模型",
@@ -40,9 +42,11 @@ LABELS = {
     "lora_r32_all": "LoRA r=32 all",
     "dora_r8_qv": "DoRA r=8 q,v",
     "dora_r16_all": "DoRA r=16 all",
+    "lora_r8_qv_fmt": "LoRA r=8 q,v + 格式对齐",
+    "lora_r8_qv_replay": "LoRA r=8 q,v + 回放对照",
 }
 COLORS = ["#8a8a8a", "#4c72b0", "#7aa6d8", "#2f5d8f", "#1b3a5c",
-          "#55a868", "#c44e52"]
+          "#55a868", "#c44e52", "#dd8452", "#937860"]
 
 
 def first(value):
@@ -182,7 +186,8 @@ def add_bootstrap(rows, results_dir, n_boot):
     return rows
 
 
-def paired_comparisons(rows, results_dir, n_boot):
+def paired_comparisons(rows, results_dir, n_boot, n_boot_cm=None):
+    n_boot_cm = n_boot_cm or n_boot
     tags = {r["tag"] for r in rows}
     pairs = [
         ("lora_r8_qv", "base"),
@@ -195,6 +200,11 @@ def paired_comparisons(rows, results_dir, n_boot):
         ("dora_r16_all", "lora_r16_all"),
         ("dora_r16_all", "lora_r8_qv"),
         ("dora_r16_all", "base"),
+        ("lora_r8_qv_fmt", "base"),
+        ("lora_r8_qv_fmt", "lora_r8_qv"),
+        ("lora_r8_qv_fmt", "lora_r8_qv_replay"),
+        ("lora_r8_qv_replay", "base"),
+        ("lora_r8_qv_replay", "lora_r8_qv"),
     ]
     out = []
     for a, b in pairs:
@@ -207,7 +217,7 @@ def paired_comparisons(rows, results_dir, n_boot):
             rec["d_r1_100"] = bootstrap_delta(pa_med, pb_med, "rouge-1", n_boot)
             rec["d_rl_100"] = bootstrap_delta(pa_med, pb_med, "rouge-l", n_boot)
         if pa_cm and pb_cm:
-            rec["d_acc"] = bootstrap_delta(pa_cm, pb_cm, "correct", n_boot)
+            rec["d_acc"] = bootstrap_delta(pa_cm, pb_cm, "correct", n_boot_cm)
         out.append(rec)
     with open(os.path.join(results_dir, "paired_bootstrap.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
@@ -360,25 +370,6 @@ def plot_rouge(rows, path):
     plt.close(fig)
 
 
-def plot_cmmlu(rows, path):
-    rows = [r for r in rows if r["acc"] is not None]
-    fig, ax = plt.subplots(figsize=(7.2, 3.2))
-    x = np.arange(len(rows))
-    vals = [r["acc"] for r in rows]
-    ax.bar(x, vals, 0.55, color=[COLORS[ORDER.index(r["tag"])] for r in rows])
-    for xi, v in zip(x, vals):
-        ax.text(xi, v + 0.012, f"{v:.3f}", ha="center", va="bottom", fontsize=8)
-    ax.set_xticks(x)
-    ax.set_xticklabels([r["label"] for r in rows], fontsize=8, rotation=12, ha="right")
-    ax.set_ylabel("CMMLU computer_science accuracy")
-    ax.set_ylim(0, min(1.0, max(vals) * 1.25))
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.grid(axis="y", alpha=0.25, lw=0.6)
-    fig.tight_layout()
-    fig.savefig(path, dpi=200)
-    plt.close(fig)
-
-
 def plot_latency(rows, path):
     rows = [r for r in rows if r.get("latency_s")]
     if not rows:
@@ -441,6 +432,8 @@ def main():
                     help="directory with the 500-sample medical metrics; skipped when absent")
     ap.add_argument("--figs", default="report/figs")
     ap.add_argument("--bootstrap", type=int, default=500, help="bootstrap resamples (0 disables)")
+    ap.add_argument("--cmmlu-bootstrap", type=int, default=None,
+                    help="CMMLU bootstrap resamples; defaults to --bootstrap")
     args = ap.parse_args()
     os.makedirs(args.figs, exist_ok=True)
     rows = load_metrics(args.results, args.results500)
@@ -450,11 +443,10 @@ def main():
     rows = add_interaction(rows, args.results)
     if args.bootstrap > 0:
         rows = add_bootstrap(rows, args.results, args.bootstrap)
-        paired_comparisons(rows, args.results, args.bootstrap)
+        paired_comparisons(rows, args.results, args.bootstrap, args.cmmlu_bootstrap)
         write_examples(rows, args.results, os.path.join(args.results, "examples.md"))
     write_csv(rows, os.path.join(args.results, "summary.csv"))
     plot_rouge(rows, os.path.join(args.figs, "rouge_compare.png"))
-    plot_cmmlu(rows, os.path.join(args.figs, "cmmlu_compare.png"))
     plot_latency(rows, os.path.join(args.figs, "latency_compare.png"))
     plot_loss(args.results, os.path.join(args.figs, "loss_curves.png"))
     print("figures ->", args.figs)
